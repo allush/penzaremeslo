@@ -1,59 +1,102 @@
 <?php /* @var $this Controller */ ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html lang="ru">
+
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="language" content="en" />
+    <title><?php echo CHtml::encode($this->pageTitle); ?></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<!-- blueprint CSS framework -->
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/screen.css" media="screen, projection" />
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/print.css" media="print" />
-	<!--[if lt IE 8]>
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/ie.css" media="screen, projection" />
-	<![endif]-->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="language" content="en"/>
 
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css" />
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
-
-	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
 </head>
 
 <body>
 
-<div class="container" id="page">
+<div class="container">
 
-	<div id="header">
-		<div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?></div>
-	</div><!-- header -->
+    <div class="row" id="header">
+        <div class="col-md-12">
+            <div id="logo"><h1><?php echo CHtml::encode(Yii::app()->name); ?></h1></div>
+        </div>
+    </div>
 
-	<div id="mainmenu">
-		<?php $this->widget('zii.widgets.CMenu',array(
-			'items'=>array(
-				array('label'=>'Home', 'url'=>array('/site/index')),
-				array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
-				array('label'=>'Contact', 'url'=>array('/site/contact')),
-				array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
-				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
-			),
-		)); ?>
-	</div><!-- mainmenu -->
-	<?php if(isset($this->breadcrumbs)):?>
-		<?php $this->widget('zii.widgets.CBreadcrumbs', array(
-			'links'=>$this->breadcrumbs,
-		)); ?><!-- breadcrumbs -->
-	<?php endif?>
+    <div class="row" id="mainmenu">
+        <div class="col-md-12">
+            <nav class="navbar navbar-default" role="navigation">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse"
+                            data-target=".navbar-ex1-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#"></a>
+                </div>
 
-	<?php echo $content; ?>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse navbar-ex1-collapse">
+                    <?php
+                    $this->widget('zii.widgets.CMenu', array(
+                        'items' => array(
+                            array('label' => 'Главная', 'url' => array('/site/index')),
+                            array('label' => 'Мастера', 'url' => array('/master/index')),
+                            array('label' => 'Каталог', 'url' => array('/product/index')),
+                            array('label' => 'О нас', 'url' => array('/about')),
+                            array('label' => 'Контакты', 'url' => array('/contacts')),
+                            array('label' => 'Вход', 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),
+                            array('label' => 'Выйти (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest)
+                        ),
+                        'htmlOptions' => array(
+                            'class' => 'nav navbar-nav',
+                        )
+                    ));
+                    ?>
 
-	<div class="clear"></div>
+                    <form class="navbar-form navbar-left pull-right" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Поиск">
+                        </div>
+                        <button type="submit" class="btn btn-default">Найти</button>
+                    </form>
+                </div>
+                <!-- /.navbar-collapse -->
+            </nav>
+        </div>
+    </div>
 
-	<div id="footer">
-		Copyright &copy; <?php echo date('Y'); ?> by My Company.<br/>
-		All Rights Reserved.<br/>
-		<?php echo Yii::powered(); ?>
-	</div><!-- footer -->
+    <?php if (isset($this->breadcrumbs)): ?>
+        <div class="row" id="breadcrumbs">
+            <div class="col-md-12">
+                <?php $this->widget('zii.widgets.CBreadcrumbs', array(
+                    'links' => $this->breadcrumbs,
+                )); ?>
+            </div>
+        </div>
+    <?php endif ?>
 
-</div><!-- page -->
+    <div class="row" id="content">
+        <div class="col-md-12">
+            <?php echo $content; ?>
+        </div>
+    </div>
+
+
+    <footer class="row" id="footer">
+        <div class="col-md-12">
+            Copyright &copy; <?php echo date('Y'); ?> by My Company.<br/>
+            All Rights Reserved.<br/>
+            <?php echo Yii::powered(); ?>
+        </div>
+    </footer>
+
+</div>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
 
 </body>
 </html>
