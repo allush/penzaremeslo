@@ -5,7 +5,7 @@
 <?php $this->beginContent('//layouts/main'); ?>
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
             <ul>
                 <?php
                 foreach ($this->catalogs as $catalog) {
@@ -50,7 +50,7 @@
             </ul>
         </div>
         <!--.left-sidebar-->
-        <div class="col-md-6">
+        <div class="col-md-8">
             <?php echo $content; ?>
         </div>
     </div>

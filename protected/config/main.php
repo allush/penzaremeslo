@@ -41,6 +41,7 @@ return array(
                 '/signOut' => '/site/signOut',
                 '/signUp' => '/site/signUp',
                 '/about' => '/site/about',
+                '/contacts' => '/site/contacts',
                 '<controller:\w+>/<id:\d+>' => '<controller>/view',
                 '<controller:\w+>/<news:\w+>/<id:\d+>' => '<controller>/<news>',
                 '<controller:\w+>/<news:\w+>' => '<controller>/<news>',

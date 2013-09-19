@@ -24,22 +24,20 @@ $form = $this->beginWidget('CActiveForm', array(
 ));
 ?>
 
-<div>
+<div class="form-group">
     <?php echo $form->labelEx($model, 'header'); ?>
-    <?php echo $form->textField($model, 'header', array('class' => 'span5')); ?>
+    <?php echo $form->textField($model, 'header', array('class' => 'form-control')); ?>
     <?php echo $form->error($model, 'header'); ?>
 </div>
 
-<div>
+<div class="form-group">
     <?php echo $form->labelEx($model, 'content'); ?>
     <?php echo $form->textArea($model, 'content'); ?>
     <?php echo $form->error($model, 'content'); ?>
 </div>
 
-<br>
-
-<div>
-    <?php echo CHtml::submitButton($model->isNewRecord ? 'Создать' : 'Сохранить', array('class' => 'btn')); ?>
+<div class="form-group">
+    <?php echo CHtml::submitButton($model->isNewRecord ? 'Создать' : 'Сохранить', array('class' => 'btn btn-default')); ?>
 </div>
 
 <?php $this->endWidget(); ?>

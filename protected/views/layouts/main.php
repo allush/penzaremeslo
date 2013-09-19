@@ -42,13 +42,14 @@
                     <?php
                     $this->widget('zii.widgets.CMenu', array(
                         'items' => array(
-                            array('label' => 'Главная', 'url' => array('/site/index')),
+                            array('label' => 'Главная', 'url' => array('/')),
+                            array('label' => 'Новости', 'url' => array('/news/index')),
                             array('label' => 'Мастера', 'url' => array('/master/index')),
                             array('label' => 'Каталог', 'url' => array('/product/index')),
                             array('label' => 'О нас', 'url' => array('/about')),
                             array('label' => 'Контакты', 'url' => array('/contacts')),
-                            array('label' => 'Вход', 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),
-                            array('label' => 'Выйти (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest)
+                            array('label' => 'Вход', 'url' => array('/signIn'), 'visible' => Yii::app()->user->isGuest),
+                            array('label' => 'Выйти (' . Yii::app()->user->name . ')', 'url' => array('/signOut'), 'visible' => !Yii::app()->user->isGuest)
                         ),
                         'htmlOptions' => array(
                             'class' => 'nav navbar-nav',

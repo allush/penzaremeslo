@@ -8,5 +8,6 @@
  */
 $this->menu = array(
     array('label' => 'Все товары', 'url' => array('/product/index')),
-    array('label' => 'Добавить', 'url' => array('/product/create')),
+    array('label' => 'Добавить товары', 'url' => array('/product/create')),
+    array('label' => 'Создать каталог', 'url' => array('/catalog/create')),
 );

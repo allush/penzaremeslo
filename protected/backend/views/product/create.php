@@ -4,7 +4,7 @@
 
 $this->breadcrumbs = array(
     'Товары' => array('index'),
-    'Добавление нового товара',
+    'Добавление новых товаров',
 );
 
 $this->renderPartial('_menu');
