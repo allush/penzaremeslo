@@ -1,19 +1,20 @@
 <?php
-/* @var $this NewsController */
+/* @var $this ProductController */
 /* @var $dataProvider CActiveDataProvider */
-/* @var $popularNews CActiveDataProvider */
-
+/* @var $hierarchy array */
 
 $this->breadcrumbs = array(
-    'Новости',
+    'Каталог',
 );
 
 $this->widget('zii.widgets.CListView', array(
     'dataProvider' => $dataProvider,
     'itemView' => '_view',
+    'viewData' => array(
+        'itemCount' => $dataProvider->itemCount,
+    ),
     'template' => '{items} {pager}',
     'summaryText' => '',
-    'emptyText' => '',
     'pagerCssClass' => 'pager',
     'pager' => array(
         'firstPageLabel' => '<<',
@@ -26,8 +27,6 @@ $this->widget('zii.widgets.CListView', array(
         'selectedPageCssClass' => 'active',
     ),
     'id' => 'product-container',
-    'afterAjaxUpdate' => 'pageProductLoaded',
+    'afterAjaxUpdate'=>'pageProductLoaded',
     'beforeAjaxUpdate' => 'pageProductLoading'
 ));
-?>
-

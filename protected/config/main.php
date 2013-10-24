@@ -7,8 +7,8 @@
 // CWebApplication properties can be configured here.
 return array(
     'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..',
-    'name' => 'Атрибут',
-    'defaultController' => 'news',
+    'name' => 'Ремесленная палата Пензенской области',
+    'defaultController' => 'site',
 
     // preloading 'log' component
     'preload' => array('log'),

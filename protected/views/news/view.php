@@ -18,9 +18,21 @@
     }
 </style>
 
+<?php
+echo CHtml::link('<= Все новости', array('index'), array('class' => 'btn btn-default'));
+?>
+
 <div class="action">
-    <div class="action-header"><?php echo $model->header;?></div>
+    <div class="action-header"><?php echo $model->header; ?></div>
     <div class="action-content">
-        <?php echo $model->content;?>
+        <?php echo $model->content; ?>
     </div>
+</div>
+
+<div class="clearfix"></div>
+
+<div style="height: 50px;">
+    <script type="text/javascript" src="//yandex.st/share/share.js" charset="utf-8"></script>
+    <div class="yashare-auto-init" data-yashareL10n="ru" data-yashareType="none"
+         data-yashareQuickServices="vkontakte,facebook,twitter,odnoklassniki,moimir,gplus"></div>
 </div>
