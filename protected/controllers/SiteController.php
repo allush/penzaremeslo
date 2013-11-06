@@ -36,7 +36,6 @@ class SiteController extends FrontController
      */
     public function actionIndex()
     {
-
         $this->catalogs = Catalog::model()->findAll(array(
             'condition' => 'parent IS NULL',
             'order' => 'name ASC'
