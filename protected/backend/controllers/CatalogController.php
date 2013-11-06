@@ -41,7 +41,7 @@ class CatalogController extends BackendController
         if (isset($_POST['Catalog'])) {
             $model->attributes = $_POST['Catalog'];
             if ($model->save()) {
-                $this->redirect(array('index'));
+                $this->redirect(array('/product/index', 'c' => $model->catalogID));
             }
         }
 
@@ -62,7 +62,7 @@ class CatalogController extends BackendController
         if (isset($_POST['Catalog'])) {
             $model->attributes = $_POST['Catalog'];
             if ($model->save()) {
-                $this->redirect(array('index'));
+                $this->redirect(array('/product/index', 'c' => $model->catalogID));
             }
         }
 
@@ -80,9 +80,8 @@ class CatalogController extends BackendController
     {
         $this->loadModel($id)->delete();
 
-        // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
         if (!isset($_GET['ajax'])) {
-            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
+            $this->redirect(array('/product/index'));
         }
     }
 
@@ -111,7 +110,6 @@ class CatalogController extends BackendController
             throw new CHttpException(404, 'The requested page does not exist.');
         return $model;
     }
-
 
 
     public function hierarchy()

@@ -97,4 +97,30 @@ class User extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+    /**
+     * Проверяет пароль пользователя на соответствие введенному в поле
+     * @param $password
+     * @return bool
+     */
+    public function validatePassword($password)
+    {
+        return crypt($password, $this->password) === $this->password;
+    }
+
+    /**
+     * Создает хэш пароля
+     * @param $password
+     * @return string
+     */
+    public static function hashPassword($password)
+    {
+        return crypt($password, self::generateSalt());
+    }
+
+    public static function generateSalt()
+    {
+        return time();
+    }
+
 }

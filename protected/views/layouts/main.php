@@ -1,4 +1,4 @@
-<?php /* @var $this Controller */ ?>
+<?php /* @var $this FrontController */ ?>
 <!DOCTYPE html>
 <html lang="ru">
 
@@ -10,6 +10,12 @@
     <meta name="language" content="en"/>
 
     <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/front.main.css">
+
+    <script src="/js/jquery-2.0.3.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/page_ini.js"></script>
+
 </head>
 
 <body>
@@ -17,8 +23,52 @@
 <div class="container">
 
     <div class="row" id="header">
-        <div class="col-md-12">
-            <div id="logo"><h1><?php echo CHtml::encode(Yii::app()->name); ?></h1></div>
+        <div class="col-md-7">
+            <div id="logo">
+                <?php echo CHtml::link(CHtml::image(Yii::app()->baseUrl . '/img/logo.png'), '/') ?>
+            </div>
+        </div>
+
+        <div class="col-md-5">
+            <h3>Вход/Регистрация</h3>
+
+            <?php
+            /** @var CActiveForm $form */
+            $form = $this->beginWidget('CActiveForm', array(
+                'id' => 'news-form',
+                'enableAjaxValidation' => false,
+                'htmlOptions' => array(
+                    'class' => 'form-horizontal',
+                    'role' => 'form'
+                ),
+            ));
+            ?>
+
+            <div class="form-group">
+                <?php echo $form->labelEx($this->sigInForm, 'email', array('class' => 'col-md-5 control-label')); ?>
+                <div class="col-md-7">
+                    <?php echo $form->textField($this->sigInForm, 'email', array('class' => 'form-control')); ?>
+                    <?php echo $form->error($this->sigInForm, 'email'); ?>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <?php echo $form->labelEx($this->sigInForm, 'password', array('class' => 'col-md-5 control-label')); ?>
+                <div class="col-md-7">
+                    <?php echo $form->textField($this->sigInForm, 'password', array('class' => 'form-control')); ?>
+                    <?php echo $form->error($this->sigInForm, 'password'); ?>
+                </div>
+            </div>
+
+            <div class="form-group">
+                    <?php echo CHtml::link('Регистрация',array('/signUp'),array('class'=>'col-md-5 control-label'))?>
+                <div class="col-md-7">
+                <?php echo CHtml::submitButton('Войти', array('class' => 'btn btn-default form-control')); ?>
+                </div>
+            </div>
+
+            <?php $this->endWidget(); ?>
+
         </div>
     </div>
 
@@ -42,13 +92,14 @@
                     <?php
                     $this->widget('zii.widgets.CMenu', array(
                         'items' => array(
-                            array('label' => 'Главная', 'url' => array('/site/index')),
+                            array('label' => 'Главная', 'url' => '/'),
+                            array('label' => 'Новости', 'url' => array('/news/index')),
                             array('label' => 'Мастера', 'url' => array('/master/index')),
                             array('label' => 'Каталог', 'url' => array('/product/index')),
                             array('label' => 'О нас', 'url' => array('/about')),
                             array('label' => 'Контакты', 'url' => array('/contacts')),
-                            array('label' => 'Вход', 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),
-                            array('label' => 'Выйти (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest)
+                            array('label' => 'Вход', 'url' => array('/signIn'), 'visible' => Yii::app()->user->isGuest),
+                            array('label' => 'Выйти (' . Yii::app()->user->name . ')', 'url' => array('/signOut'), 'visible' => !Yii::app()->user->isGuest)
                         ),
                         'htmlOptions' => array(
                             'class' => 'nav navbar-nav',
@@ -69,10 +120,14 @@
     </div>
 
     <?php if (isset($this->breadcrumbs)): ?>
-        <div class="row" id="breadcrumbs">
+        <div class="row">
             <div class="col-md-12">
                 <?php $this->widget('zii.widgets.CBreadcrumbs', array(
                     'links' => $this->breadcrumbs,
+                    'separator' => ' / ',
+                    'htmlOptions' => array(
+                        'class' => 'breadcrumb',
+                    )
                 )); ?>
             </div>
         </div>
@@ -95,8 +150,6 @@
 
 </div>
 
-<script src="/js/jquery-2.0.3.min.js"></script>
-<script src="/js/bootstrap.min.js"></script>
 
 </body>
 </html>

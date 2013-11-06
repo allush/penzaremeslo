@@ -21,25 +21,23 @@ $form = $this->beginWidget('CActiveForm', array(
 ));
 ?>
 
-<div>
+<div class="form-group">
     <?php echo $form->labelEx($model, 'name'); ?>
-    <?php echo $form->textField($model, 'name', array('class' => 'span5')); ?>
+    <?php echo $form->textField($model, 'name', array('class' => 'form-control')); ?>
     <?php echo $form->error($model, 'name'); ?>
 </div>
 
-<div>
+<div class="form-group">
     <?php echo $form->labelEx($model, 'content'); ?>
-    <?php echo $form->textArea($model, 'content', array('rows' => 6, 'class' => 'span5')); ?>
+    <?php echo $form->textArea($model, 'content', array('rows' => 6, 'class' => 'form-control')); ?>
     <?php echo $form->error($model, 'content'); ?>
 </div>
 
-<br>
-<div>
-    <?php echo CHtml::submitButton($model->isNewRecord ? 'Создать' : 'Сохранить', array('class' => 'btn span2')); ?>
+<div class="form-group">
+    <?php echo CHtml::submitButton($model->isNewRecord ? 'Создать' : 'Сохранить', array('class' => 'btn btn-default')); ?>
 </div>
 
 <?php $this->endWidget(); ?>
-
 
 <script>
     var editor = CKEDITOR.replace('Page[content]');

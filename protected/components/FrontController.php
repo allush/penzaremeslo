@@ -13,6 +13,12 @@ class FrontController extends CController
     public $pageTitle = 'Ремесленная палата Пензенской области';
     public $description = 'Ремесленная палата Пензенской области';
 
+    public $sigInForm = null;
+
+    public function __construct($id, $module){
+        $this->sigInForm = new SignInForm();
+        parent::__construct($id, $module);
+    }
     public function pageTitle()
     {
         return $this->pageTitleBase . ' - ' . $this->pageTitle;

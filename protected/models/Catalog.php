@@ -168,14 +168,6 @@ class Catalog extends CActiveRecord
             array('order' => 'name asc')
         );
         foreach ($catalogs as $catalog) {
-            $catalogArr = array();
-            if ($mode == 'edit') {
-                $catalogArr['text'] = CHtml::link($catalog->name, array("/catalog/update", 'id' => $catalog->catalogID));
-            } else {
-                $catalogArr['text'] = CHtml::link($catalog->name, array("/product/index", 'c' => $catalog->catalogID));
-            }
-
-
             // добавляем себя
             $ids = array();
             Catalog::childrenRecursively($ids, $catalog->catalogID);
@@ -188,8 +180,11 @@ class Catalog extends CActiveRecord
                 ->where('product.catalogID IN (' . $ids . ') AND deleted=0')
                 ->query()
                 ->rowCount;
+            $catalogArr = array();
+            $catalogArr['text'] = CHtml::link('<span class="glyphicon glyphicon-edit"></span>', array("/catalog/update", 'id' => $catalog->catalogID), array('data-toggle'=>'tooltip' , 'title'=>'Редактировать'));
 
-            $catalogArr['text'] .= ' <small>(' . $productCount . ')</small>';
+            $catalogArr['text'] .= ' <span class="badge pull-right">' . $productCount . '</span>';
+            $catalogArr['text'] .= CHtml::link($catalog->name, array("/product/index", 'c' => $catalog->catalogID));
 
 
             $children = array();

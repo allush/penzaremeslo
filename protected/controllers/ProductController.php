@@ -108,7 +108,7 @@ class ProductController extends FrontController
         $dataProvider = new CActiveDataProvider('Product', array(
             'criteria' => $criteria,
             'pagination' => array(
-                'pageSize' => 21,
+                'pageSize' => 20,
             ),
             'sort' => array(
                 'defaultOrder' => 'createdOn DESC'

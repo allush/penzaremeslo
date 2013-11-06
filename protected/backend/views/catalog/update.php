@@ -2,14 +2,15 @@
 /* @var $this CatalogController */
 /* @var $model Catalog */
 
+$returnUrl = isset(Yii::app()->request->urlReferrer) ? Yii::app()->request->urlReferrer : array('/product/index', 'c' => $model->catalogID);
+
 $this->breadcrumbs = array(
-    'Каталоги' => array('index'),
-    $model->name => array('view', 'id' => $model->catalogID),
-    'Редактирование',
+    'Товары' => $returnUrl,
+    'Редактирование каталога',
 );
 
 $this->menu = array(
-    array('label' => 'Назад', 'url' => array('index')),
+    array('label' => 'Назад', 'url' => $returnUrl),
     array(
         'label' => 'Удалить',
         'url' => '#',

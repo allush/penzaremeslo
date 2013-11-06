@@ -9,7 +9,6 @@ if ($index == 0) {
     <tr>
         <th class="span1" style="text-align: center;"><?php echo CHtml::checkBox('checkAll');?></th>
         <th class="span1"><?php echo CHtml::encode($data->getAttributeLabel('productID'));?></th>
-        <th class="span2"><?php echo CHtml::encode($data->getAttributeLabel('group'));?></th>
         <th class="span2">Картинка</th>
         <th class="span2"><?php echo CHtml::encode($data->getAttributeLabel('name'));?></th>
         <th class="span1"><?php echo CHtml::encode($data->getAttributeLabel('productStatusID'));?></th>
@@ -25,15 +24,14 @@ if ($index == 0) {
     <th class="span1"
         style="text-align: center;"><?php echo CHtml::checkBox('productID[]', false, array('value' => $data->productID));?></th>
     <td class="span1"><?php echo CHtml::link($data->productID, array('view', 'id' => $data->productID));?></td>
-    <td class="span1"><?php echo ($data->group !== null) ? $data->group : 'Нет';?></td>
     <td class="span2 product-image-cell"><?php echo CHtml::link(CHtml::image($data->thumbnail()), array('view', 'id' => $data->productID));?></td>
     <td class="span2"><?php echo CHtml::link($data->name, array('view', 'id' => $data->productID)); ?></td>
     <td class="span1"><?php echo CHtml::encode(ProductStatus::model()->findByPk($data->productStatusID)->name); ?></td>
     <td class="span1"><?php echo CHtml::encode($data->discount); ?></td>
     <td class="span1">
-        <small><?php echo CHtml::encode(date("H:i:s d/m/Y", $data->createdOn)); ?></small>
+        <small><?php echo CHtml::encode(date("d/m/Y", $data->createdOn)); ?></small>
     </td>
     <td class="span1">
-        <small><?php echo CHtml::encode(date("H:i:s d/m/Y", $data->modifiedOn)); ?></small>
+        <small><?php echo CHtml::encode(date("d/m/Y", $data->modifiedOn)); ?></small>
     </td>
 </tr>

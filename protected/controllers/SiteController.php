@@ -2,8 +2,13 @@
 
 class SiteController extends FrontController
 {
+    public $catalogs = array();
+
     public function actionAbout()
     {
+        $this->breadcrumbs = array(
+            'О нас',
+        );
         $this->pageTitle = 'О нас';
         /** @var $page Page */
         $page = Page::model()->findByPk(1);
@@ -14,6 +19,9 @@ class SiteController extends FrontController
 
     public function actionContacts()
     {
+        $this->breadcrumbs = array(
+            'Контакты',
+        );
         $this->pageTitle = 'Контакты';
         /** @var $page Page */
         $page = Page::model()->findByPk(2);
@@ -28,10 +36,14 @@ class SiteController extends FrontController
      */
     public function actionIndex()
     {
-        $dataProvider = new CActiveDataProvider('News');
-        $this->render('/news/index', array(
-            'dataProvider' => $dataProvider,
+
+        $this->catalogs = Catalog::model()->findAll(array(
+            'condition' => 'parent IS NULL',
+            'order' => 'name ASC'
         ));
+
+        $this->layout = 'catalog';
+        $this->render('index');
     }
 
     /**
