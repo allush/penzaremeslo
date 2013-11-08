@@ -72,11 +72,10 @@ class SiteController extends FrontController
             $model->attributes = $_POST['User'];
             $model->password = User::hashPassword($model->password);
             if ($model->save()) {
-
-                $message = 'Для активации Вашего профиля перейдите по ссылке: http://attribute.pro/user/activate?c=' . md5($model->email);
+                $message = 'Для активации Вашего профиля перейдите по ссылке: http://penzaremeslo.ru/user/activate?c=' . md5($model->email);
 
                 $mailer = new Mailer();
-                $mailer->sendMailSimple($model, 'Регистрация на сайте Attribute.pro', $message);
+                $mailer->sendMailSimple($model, 'Регистрация на сайте "' . Yii::app()->name . '"', $message);
 
                 Yii::app()->user->setFlash('signUp', true);
                 $this->redirect('/');
@@ -96,11 +95,11 @@ class SiteController extends FrontController
 
         $this->pageTitle = 'Вход';
 
-        $model = new LoginForm;
+        $model = new SignInForm();
 
         // collect user input data
-        if (isset($_POST['LoginForm'])) {
-            $model->attributes = $_POST['LoginForm'];
+        if (isset($_POST['SignInForm'])) {
+            $model->attributes = $_POST['SignInForm'];
             // validate user input and redirect to the previous page if valid
             if ($model->validate() && $model->login()) {
                 $this->redirect(Yii::app()->user->returnUrl);

@@ -13,6 +13,8 @@ class SignInForm extends CFormModel
     public $email;
     public $password;
 
+    private $_identity = null;
+
     /**
      * Declares the validation rules.
      */
@@ -37,5 +39,22 @@ class SignInForm extends CFormModel
             'email' => 'Электронная почта',
             'password' => 'Пароль'
         );
+    }
+
+    /**
+     * Logs in the user using the given username and password in the model.
+     * @return boolean whether login is successful
+     */
+    public function login()
+    {
+        if ($this->_identity === null) {
+            $this->_identity = new UserIdentity($this->email, $this->password);
+            $this->_identity->authenticate();
+        }
+        if ($this->_identity->errorCode === UserIdentity::ERROR_NONE) {
+            Yii::app()->user->login($this->_identity, 0);
+            return true;
+        } else
+            return false;
     }
 }

@@ -4,43 +4,44 @@
 /* @var $form CActiveForm */
 
 ?>
-
-<h1>Регистрация</h1>
-
+    <h1>Регистрация</h1>
 <?php
 $form = $this->beginWidget('CActiveForm', array(
-    'action'=>array('/site/signUp'),
+    'action' => array('/site/signUp'),
     'id' => 'signup-form',
     'enableAjaxValidation' => false,
     'focus' => array($user, 'name'),
-    'htmlOptions' => array()
+    'htmlOptions' => array(
+        'class' => 'form-horizontal',
+        'role' => 'form'
+    )
 ));
 ?>
-<table>
+    <div class="form-group">
+        <?php echo $form->labelEx($user, 'name', array('class' => 'col-md-1 control-label')); ?>
+        <div class="col-md-3">
+            <?php echo $form->textField($user, 'name', array('required' => 'required', 'class' => 'form-control')); ?>
+            <?php echo $form->error($user, 'name'); ?>
+        </div>
+    </div>
+    <div class="form-group">
+        <?php echo $form->labelEx($user, 'email', array('class' => 'col-md-1 control-label')); ?>
+        <div class="col-md-3">
+            <?php echo $form->emailField($user, 'email', array('required' => 'required', 'class' => 'form-control')); ?>
+            <?php echo $form->error($user, 'email'); ?>
+        </div>
+    </div>
+    <div class="form-group">
+        <?php echo $form->labelEx($user, 'password', array('class' => 'col-md-1 control-label')); ?>
+        <div class="col-md-3">
+            <?php echo $form->passwordField($user, 'password', array('required' => 'required', 'class' => 'form-control')); ?>
+            <?php echo $form->error($user, 'password'); ?>
+        </div>
+    </div>
 
-    <tr>
-        <td><?php echo $form->labelEx($user, 'name'); ?></td>
-        <td><?php echo $form->textField($user, 'name', array('required'=>'required')); ?></td>
-        <td><?php echo $form->error($user, 'name'); ?></td>
-    </tr>
-
-    <tr>
-        <td> <?php echo $form->labelEx($user, 'email'); ?></td>
-        <td><?php echo $form->emailField($user, 'email', array('required'=>'required')); ?></td>
-        <td><?php echo $form->error($user, 'email'); ?></td>
-    </tr>
-
-    <tr>
-        <td><?php echo $form->labelEx($user, 'password'); ?></td>
-        <td><?php echo $form->passwordField($user, 'password', array('required'=>'required')); ?></td>
-        <td><?php echo $form->error($user, 'password'); ?></td>
-    </tr>
-
-    <tr>
-        <td><?php echo CHtml::submitButton('Зарегистироваться', array('style' => 'padding: 4px 16px;cursor: pointer;')); ?></td>
-        <td><?php echo CHtml::link('Вход', array('signIn')); ?></td>
-        <td></td>
-    </tr>
-</table>
-
+    <div class="form-group">
+        <div class="col-md-offset-1 col-md-3">
+            <?php echo CHtml::submitButton('Зарегистироваться', array('class' => 'form-control btn btn-default')); ?>
+        </div>
+    </div>
 <?php $this->endWidget(); ?>

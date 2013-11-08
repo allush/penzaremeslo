@@ -35,7 +35,8 @@
             <?php
             /** @var CActiveForm $form */
             $form = $this->beginWidget('CActiveForm', array(
-                'id' => 'news-form',
+                'id' => 'login-form',
+                'action' => array('/site/signIn'),
                 'enableAjaxValidation' => false,
                 'htmlOptions' => array(
                     'class' => 'form-horizontal',
@@ -55,7 +56,7 @@
             <div class="form-group">
                 <?php echo $form->labelEx($this->sigInForm, 'password', array('class' => 'col-md-5 control-label')); ?>
                 <div class="col-md-7">
-                    <?php echo $form->textField($this->sigInForm, 'password', array('class' => 'form-control')); ?>
+                    <?php echo $form->passwordField($this->sigInForm, 'password', array('class' => 'form-control')); ?>
                     <?php echo $form->error($this->sigInForm, 'password'); ?>
                 </div>
             </div>
@@ -98,9 +99,7 @@
                             array('label' => 'Каталог', 'url' => array('/product/index')),
                             array('label' => 'О нас', 'url' => array('/about')),
                             array('label' => 'Контакты', 'url' => array('/contacts')),
-                            array('label' => 'Вход', 'url' => array('/signIn'), 'visible' => Yii::app()->user->isGuest),
-                            array('label' => 'Выйти (' . Yii::app()->user->name . ')', 'url' => array('/signOut'), 'visible' => !Yii::app()->user->isGuest)
-                        ),
+                         ),
                         'htmlOptions' => array(
                             'class' => 'nav navbar-nav',
                         )
