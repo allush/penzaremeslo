@@ -70,12 +70,6 @@ class SiteController extends BackendController
         $this->layout = "clear";
         $model = new BackendLoginForm();
 
-        // if it is ajax validation request
-        if (isset($_POST['ajax']) && $_POST['ajax'] === 'login-form') {
-            echo CActiveForm::validate($model);
-            Yii::app()->end();
-        }
-
         // collect user input data
         if (isset($_POST['BackendLoginForm'])) {
             $model->attributes = $_POST['BackendLoginForm'];

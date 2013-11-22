@@ -12,6 +12,7 @@ class SignInForm extends CFormModel
 
     public $email;
     public $password;
+    public $rememberMe = false;
 
     private $_identity = null;
 
@@ -25,6 +26,8 @@ class SignInForm extends CFormModel
             array('email, password', 'required'),
             // email has to be a valid email address
             array('email', 'email'),
+            // rememberMe needs to be a boolean
+            array('rememberMe', 'boolean'),
         );
     }
 
@@ -37,7 +40,8 @@ class SignInForm extends CFormModel
     {
         return array(
             'email' => 'Электронная почта',
-            'password' => 'Пароль'
+            'password' => 'Пароль',
+            'rememberMe' => 'Запомнить меня',
         );
     }
 
@@ -45,16 +49,25 @@ class SignInForm extends CFormModel
      * Logs in the user using the given username and password in the model.
      * @return boolean whether login is successful
      */
-    public function login()
+    public function signIn()
     {
         if ($this->_identity === null) {
-            $this->_identity = new UserIdentity($this->email, $this->password);
-            $this->_identity->authenticate();
+            $this->_identity = new FrontUserIdentity($this->email, $this->password);
+
+            $authCode = $this->_identity->authenticate();
+            if ($authCode === FrontUserIdentity::ERROR_NOT_ACTIVATED) {
+                $this->addError('password', 'Учетная запись не активирована');
+            } elseif ($authCode !== true) {
+                $this->addError('password', 'Неверный адрес электронной почты или пароль');
+            }
         }
-        if ($this->_identity->errorCode === UserIdentity::ERROR_NONE) {
-            Yii::app()->user->login($this->_identity, 0);
+
+        if ($this->_identity->errorCode === FrontUserIdentity::ERROR_NONE) {
+            $duration = $this->rememberMe ? 3600 * 24 * 30 : 0; // 30 days
+            Yii::app()->user->login($this->_identity, $duration);
             return true;
-        } else
+        } else{
             return false;
+        }
     }
 }

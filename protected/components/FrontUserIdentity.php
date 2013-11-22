@@ -5,7 +5,7 @@
  * It contains the authentication method that checks if the provided
  * data can identity the user.
  */
-class UserIdentity extends CUserIdentity
+class FrontUserIdentity extends CUserIdentity
 {
     const ERROR_NOT_ACTIVATED = -1;
     const ERROR_EMAIL_NOT_EXISTS = -2;

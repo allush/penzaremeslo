@@ -11,33 +11,34 @@ $this->breadcrumbs = array(
 
 <h1>Вход</h1>
 
-<div class="form">
-    <?php $form = $this->beginWidget('CActiveForm', array(
+<?php $form = $this->beginWidget('CActiveForm', array(
     'id' => 'login-form',
     'focus' => array($model, 'email'),
+    'htmlOptions' => array(
+        'role' => 'form',
+    )
 )); ?>
 
-    <div>
-        <?php echo $form->labelEx($model, 'email'); ?>
-        <?php echo $form->textField($model, 'email', array('class' => 'span3')); ?>
-        <?php echo $form->error($model, 'email'); ?>
-    </div>
+<div class="form-group">
+    <?php echo $form->labelEx($model, 'email'); ?>
+    <?php echo $form->textField($model, 'email', array('class' => 'form-control')); ?>
+    <?php echo $form->error($model, 'email'); ?>
+</div>
 
-    <div>
-        <?php echo $form->labelEx($model, 'password'); ?>
-        <?php echo $form->passwordField($model, 'password', array('class' => 'span3')); ?>
-        <?php echo $form->error($model, 'password'); ?>
-    </div>
+<div class="form-group">
+    <?php echo $form->labelEx($model, 'password'); ?>
+    <?php echo $form->passwordField($model, 'password', array('class' => 'form-control')); ?>
+    <?php echo $form->error($model, 'password'); ?>
+</div>
 
-    <div class="rememberMe">
-        <?php echo $form->checkBox($model, 'rememberMe', array('style' => 'margin: 8px 8px 12px 0;')); ?>
-        <?php echo $form->label($model, 'rememberMe', array('style' => 'display: inline;')); ?>
-        <?php echo $form->error($model, 'rememberMe'); ?>
-    </div>
+<div class="checkbox">
+    <?php echo $form->label($model, 'rememberMe'); ?>
+    <?php echo $form->checkBox($model, 'rememberMe'); ?>
+    <?php echo $form->error($model, 'rememberMe'); ?>
+</div>
 
-    <div class="buttons">
-        <?php echo CHtml::submitButton('Войти', array('class' => 'span3 btn')); ?>
-    </div>
+<div class="form-group">
+    <?php echo CHtml::submitButton('Войти', array('class' => 'btn btn-default')); ?>
+</div>
 
-    <?php $this->endWidget(); ?>
-</div><!-- form -->
+<?php $this->endWidget(); ?>

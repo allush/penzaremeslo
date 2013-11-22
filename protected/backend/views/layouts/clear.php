@@ -16,11 +16,9 @@
 
 <body>
 <div class="row">
-    <div class="span6 offset5">
+    <div class="col-md-3 col-md-offset-4">
         <?php echo $content; ?>
-
     </div>
-
 </div>
 </body>
 

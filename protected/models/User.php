@@ -18,8 +18,10 @@
  * @property string $country
  * @property string $phone
  * @property string $region
- * @property string $sity
+ * @property string $city
  * @property boolean $isAdmin
+ * @property string $photo
+ * @property string $description
  *
  */
 class User extends CActiveRecord
@@ -54,11 +56,8 @@ class User extends CActiveRecord
             array('activated, index', 'numerical', 'integerOnly' => true),
             array('email', 'unique'),
             array('isAdmin', 'boolean'),
-            array('surname, name, patronymic, email, password, address, country, phone, region, sity', 'length', 'max' => 255),
-            array('lastVisit, createdOn', 'safe'),
-            // The following rule is used by search().
-            // Please remove those attributes that should not be searched.
-            array('userID, surname, name, patronymic, email, password, activated, lastVisit, createdOn, address, index, country, phone, region, sity', 'safe', 'on' => 'search'),
+            array('surname, name, patronymic, email, password, address, country, phone, region, city, photo', 'length', 'max' => 255),
+            array('lastVisit, createdOn, description', 'safe'),
         );
     }
 
@@ -84,7 +83,7 @@ class User extends CActiveRecord
             'surname' => 'Фамилия',
             'name' => 'Имя',
             'patronymic' => 'Отчество',
-            'email' => 'email',
+            'email' => 'Электронная почта',
             'password' => 'Пароль',
             'activated' => 'Активирован',
             'lastVisit' => 'Последнее посещение',
@@ -94,41 +93,11 @@ class User extends CActiveRecord
             'country' => 'Страна',
             'phone' => 'Телефон',
             'region' => 'Регион/область',
-            'sity' => 'Город',
+            'city' => 'Город',
             'isAdmin' => 'Администратор',
+            'description' => 'О себе',
+            'photo' => 'Фотография'
         );
-    }
-
-    /**
-     * Retrieves a list of models based on the current search/filter conditions.
-     * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
-     */
-    public function search()
-    {
-        // Warning: Please modify the following code to remove attributes that
-        // should not be searched.
-
-        $criteria = new CDbCriteria;
-
-        $criteria->compare('userID', $this->userID);
-        $criteria->compare('surname', $this->surname, true);
-        $criteria->compare('name', $this->name, true);
-        $criteria->compare('patronymic', $this->patronymic, true);
-        $criteria->compare('email', $this->email, true);
-        $criteria->compare('password', $this->password, true);
-        $criteria->compare('activated', $this->activated);
-        $criteria->compare('lastVisit', $this->lastVisit, true);
-        $criteria->compare('createdOn', $this->createdOn, true);
-        $criteria->compare('address', $this->address, true);
-        $criteria->compare('index', $this->index);
-        $criteria->compare('country', $this->country, true);
-        $criteria->compare('phone', $this->phone, true);
-        $criteria->compare('region', $this->region, true);
-        $criteria->compare('sity', $this->sity, true);
-
-        return new CActiveDataProvider($this, array(
-            'criteria' => $criteria,
-        ));
     }
 
     /**

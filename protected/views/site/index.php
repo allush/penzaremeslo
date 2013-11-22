@@ -1,12 +1,17 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: alexey
- * Date: 05.10.13
- * Time: 13:29
- * To change this template use File | Settings | File Templates.
- */
+/* @var $this SiteController */
+
+if (Yii::app()->user->hasFlash('signUp') and Yii::app()->user->getFlash('signUp') == true) {
+    ?>
+    <div class="alert alert-success">
+        <p>Регистрация прошла успешно!</p>
+
+        <p>На указанный адрес электронной почты было выслано письмо с ссылкой для активации профиля.</p>
+    </div>
+<?php
+}
 ?>
+
 
 <div class="row">
     <div class="col-md-9">

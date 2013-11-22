@@ -6,20 +6,22 @@ class UserController extends FrontController
     {
         /** @var $user User */
         $user = User::model()->find(array(
-            'condition' => 'MD5(`email`)=:src and (activated=0 OR activated IS NULL)',
+            'condition' => 'MD5(`email`)=:email and (activated=0 OR activated IS NULL)',
             'params' => array(
-                ':src' => $c,
+                ':email' => $c,
             ),
         ));
 
         if ($user !== null) {
-            $user->activated = true;
-            $user->save();
-            Yii::app()->user->setFlash('activated', true);
+            $user->activated = 1;
+            if ($user->save()) {
+                Yii::app()->user->setFlash('activated', true);
+                $this->redirect(Yii::app()->homeUrl);
+            }
         }
 
-
-        $this->redirect('/');
+        Yii::app()->user->setFlash('activated', false);
+        $this->redirect(Yii::app()->homeUrl);
     }
 
     /**
@@ -39,6 +41,18 @@ class UserController extends FrontController
                 }
             }
         }
+    }
+
+    /**
+     * Lists all models.
+     */
+    public function actionView($id)
+    {
+        $model = $this->loadModel($id);
+
+        $this->render('view', array(
+            'model' => $model,
+        ));
     }
 
     /**

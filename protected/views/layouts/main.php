@@ -30,46 +30,12 @@
         </div>
 
         <div class="col-md-5">
-            <h3>Вход/Регистрация</h3>
-
-            <?php
-            /** @var CActiveForm $form */
-            $form = $this->beginWidget('CActiveForm', array(
-                'id' => 'login-form',
-                'action' => array('/site/signIn'),
-                'enableAjaxValidation' => false,
-                'htmlOptions' => array(
-                    'class' => 'form-horizontal',
-                    'role' => 'form'
-                ),
-            ));
-            ?>
-
-            <div class="form-group">
-                <?php echo $form->labelEx($this->sigInForm, 'email', array('class' => 'col-md-5 control-label')); ?>
-                <div class="col-md-7">
-                    <?php echo $form->textField($this->sigInForm, 'email', array('class' => 'form-control')); ?>
-                    <?php echo $form->error($this->sigInForm, 'email'); ?>
+            <form class="navbar-form navbar-left pull-right" role="search">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Поиск">
                 </div>
-            </div>
-
-            <div class="form-group">
-                <?php echo $form->labelEx($this->sigInForm, 'password', array('class' => 'col-md-5 control-label')); ?>
-                <div class="col-md-7">
-                    <?php echo $form->passwordField($this->sigInForm, 'password', array('class' => 'form-control')); ?>
-                    <?php echo $form->error($this->sigInForm, 'password'); ?>
-                </div>
-            </div>
-
-            <div class="form-group">
-                    <?php echo CHtml::link('Регистрация',array('/signUp'),array('class'=>'col-md-5 control-label'))?>
-                <div class="col-md-7">
-                <?php echo CHtml::submitButton('Войти', array('class' => 'btn btn-default form-control')); ?>
-                </div>
-            </div>
-
-            <?php $this->endWidget(); ?>
-
+                <button type="submit" class="btn btn-default">Найти</button>
+            </form>
         </div>
     </div>
 
@@ -93,25 +59,22 @@
                     <?php
                     $this->widget('zii.widgets.CMenu', array(
                         'items' => array(
-                            array('label' => 'Главная', 'url' => '/'),
                             array('label' => 'Новости', 'url' => array('/news/index')),
                             array('label' => 'Мастера', 'url' => array('/master/index')),
                             array('label' => 'Каталог', 'url' => array('/product/index')),
                             array('label' => 'О нас', 'url' => array('/about')),
                             array('label' => 'Контакты', 'url' => array('/contacts')),
-                         ),
+
+                            array('label' => 'Вход', 'url' => array('/signIn'), 'visible' => Yii::app()->user->isGuest),
+                            array('label' => 'Регистрация', 'url' => array('/signUp'), 'visible' => Yii::app()->user->isGuest),
+                            array('label' => 'Мой профиль', 'url' => array('/user/view','id' => Yii::app()->user->getState('userID')), 'visible' => !Yii::app()->user->isGuest),
+                            array('label' => 'Выйти', 'url' => array('/signOut'), 'visible' => !Yii::app()->user->isGuest),
+                        ),
                         'htmlOptions' => array(
                             'class' => 'nav navbar-nav',
                         )
                     ));
                     ?>
-
-                    <form class="navbar-form navbar-left pull-right" role="search">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Поиск">
-                        </div>
-                        <button type="submit" class="btn btn-default">Найти</button>
-                    </form>
                 </div>
                 <!-- /.navbar-collapse -->
             </nav>
@@ -141,9 +104,7 @@
 
     <footer class="row" id="footer">
         <div class="col-md-12">
-            Copyright &copy; <?php echo date('Y'); ?> by My Company.<br/>
-            All Rights Reserved.<br/>
-            <?php echo Yii::powered(); ?>
+            Copyright &copy; <?php echo date('Y'); ?> by CodeRoom.ru.<br/>
         </div>
     </footer>
 

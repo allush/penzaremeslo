@@ -86,6 +86,18 @@ class UserController extends BackendController
     /**
      * Lists all models.
      */
+    public function actionView($id)
+    {
+        $model = $this->loadModel($id);
+
+        $this->render('view', array(
+            'model' => $model,
+        ));
+    }
+
+    /**
+     * Lists all models.
+     */
     public function actionIndex()
     {
         $dataProvider = new CActiveDataProvider('User');

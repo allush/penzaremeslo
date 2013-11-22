@@ -42,7 +42,7 @@ $form = $this->beginWidget('CActiveForm', array(
 
 <?php $this->endWidget(); ?>
 
-<script>
+<script type="text/javascript">
     var editor = CKEDITOR.replace('News[content]');
     CKFinder.setupCKEditor(editor, '/ckfinder/');
 </script>

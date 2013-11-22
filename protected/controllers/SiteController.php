@@ -61,51 +61,45 @@ class SiteController extends FrontController
     public function actionSignUp()
     {
         if (!Yii::app()->user->isGuest) {
-            $this->redirect('/');
+            $this->redirect(Yii::app()->homeUrl);
         }
 
-        $this->pageTitle = 'Регистрация';
+        $this->pageTitle .= ' - Регистрация';
 
-        $model = new User();
+        $model = new SignUpForm();
 
-        if (isset($_POST['User'])) {
-            $model->attributes = $_POST['User'];
+        if (isset($_POST['SignUpForm'])) {
+            $model->attributes = $_POST['SignUpForm'];
             $model->password = User::hashPassword($model->password);
-            if ($model->save()) {
-                $message = 'Для активации Вашего профиля перейдите по ссылке: http://penzaremeslo.ru/user/activate?c=' . md5($model->email);
 
-                $mailer = new Mailer();
-                $mailer->sendMailSimple($model, 'Регистрация на сайте "' . Yii::app()->name . '"', $message);
-
-                Yii::app()->user->setFlash('signUp', true);
-                $this->redirect('/');
+            if ($model->validate() and $model->signUp()) {
+                Yii::app()->user->setFlash('signUp', 'true');
+                $this->redirect(Yii::app()->homeUrl);
             }
         }
-        $this->render('signUp', array('user' => $model));
+
+        $this->render('signUp', array('model' => $model));
     }
 
-    /**
-     * Displays the login page
-     */
+
     public function actionSignIn()
     {
         if (!Yii::app()->user->isGuest) {
-            $this->redirect('/');
+            $this->redirect(Yii::app()->homeUrl);
         }
 
-        $this->pageTitle = 'Вход';
+        $this->pageTitle .= ' - Вход';
 
         $model = new SignInForm();
 
-        // collect user input data
         if (isset($_POST['SignInForm'])) {
             $model->attributes = $_POST['SignInForm'];
-            // validate user input and redirect to the previous page if valid
-            if ($model->validate() && $model->login()) {
+
+            if ($model->validate() and $model->signIn()) {
                 $this->redirect(Yii::app()->user->returnUrl);
             }
         }
-        // display the login form
+
         $this->render('signIn', array('model' => $model));
     }
 
