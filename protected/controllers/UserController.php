@@ -46,6 +46,10 @@ class UserController extends FrontController
     {
         $model = $this->loadModel($id);
 
+        if (Yii::app()->user->getState('userID') != $model->userID) {
+            $this->redirect(array('view', 'id' => $model->userID));
+        }
+
         if (isset($_POST['User'])) {
 
             $photoExists = $model->photo;
@@ -87,14 +91,23 @@ class UserController extends FrontController
         $model = $this->loadModel($id);
 
         if ($model->userID == Yii::app()->user->getState('userID')) {
-            $this->render('profile', array(
-                'model' => $model,
-            ));
+            $this->menu = array(
+                array('label' => 'Редактировать', 'url' => array('update', 'id' => $model->userID)),
+            );
+
+            $this->breadcrumbs = array(
+                'Мой профиль',
+            );
         } else {
-            $this->render('view', array(
-                'model' => $model,
-            ));
+            $this->breadcrumbs = array(
+                'Мастера' => array('index'),
+                $model->fullName(),
+            );
         }
+
+        $this->render('view', array(
+            'model' => $model,
+        ));
     }
 
     /**
