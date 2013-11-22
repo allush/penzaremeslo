@@ -6,6 +6,10 @@ $this->menu = array(
     array('label' => 'Редактировать', 'url' => array('update', 'id' => $model->userID)),
 );
 
+$this->breadcrumbs = array(
+    'Мой профиль',
+);
+
 $this->widget('zii.widgets.CDetailView', array(
     'data' => $model,
     'attributes' => array(

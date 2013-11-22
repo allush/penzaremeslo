@@ -3,13 +3,12 @@
 /* @var $model User */
 
 $this->breadcrumbs = array(
-    'Пользователи' => array('index'),
-    $model->surname . ' ' . $model->name => array('view', 'id' => $model->userID),
+    'Мой профиль' => array('view','id' => $model->userID),
     'Редактирование',
 );
 
 $this->menu = array(
-    array('label' => 'Назад', 'url' => Yii::app()->request->urlReferrer),
+    array('label' => 'Назад', 'url' => array('view','id' => $model->userID)),
 );
 
 echo $this->renderPartial('_form', array('model' => $model));

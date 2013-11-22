@@ -38,7 +38,7 @@ $this->breadcrumbs = array(
 </div>
 
 <div class="form-group">
-    <?php echo CHtml::submitButton('Войти', array('class' => 'btn btn-default')); ?>
+    <?php echo CHtml::submitButton('Войти', array('class' => 'btn btn-default col-md-12')); ?>
 </div>
 
 <?php $this->endWidget(); ?>

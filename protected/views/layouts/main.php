@@ -56,8 +56,7 @@
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
-                    <?php
-                    $this->widget('zii.widgets.CMenu', array(
+                    <?php $this->widget('zii.widgets.CMenu', array(
                         'items' => array(
                             array('label' => 'Новости', 'url' => array('/news/index')),
                             array('label' => 'Мастера', 'url' => array('/master/index')),
@@ -67,21 +66,20 @@
 
                             array('label' => 'Вход', 'url' => array('/signIn'), 'visible' => Yii::app()->user->isGuest),
                             array('label' => 'Регистрация', 'url' => array('/signUp'), 'visible' => Yii::app()->user->isGuest),
-                            array('label' => 'Мой профиль', 'url' => array('/user/view','id' => Yii::app()->user->getState('userID')), 'visible' => !Yii::app()->user->isGuest),
+                            array('label' => 'Мой профиль', 'url' => array('/user/view', 'id' => Yii::app()->user->getState('userID')), 'visible' => !Yii::app()->user->isGuest),
                             array('label' => 'Выйти', 'url' => array('/signOut'), 'visible' => !Yii::app()->user->isGuest),
                         ),
                         'htmlOptions' => array(
                             'class' => 'nav navbar-nav',
                         )
-                    ));
-                    ?>
+                    )); ?>
                 </div>
                 <!-- /.navbar-collapse -->
             </nav>
         </div>
     </div>
 
-    <?php if (isset($this->breadcrumbs)): ?>
+    <?php if (count($this->breadcrumbs) > 0): ?>
         <div class="row">
             <div class="col-md-12">
                 <?php $this->widget('zii.widgets.CBreadcrumbs', array(
@@ -95,12 +93,22 @@
         </div>
     <?php endif ?>
 
+    <div class="row" id='menu'>
+        <div class="col-md-12">
+            <?php $this->widget('zii.widgets.CMenu', array(
+                'items' => $this->menu,
+                'htmlOptions' => array(
+                    'class' => 'nav nav-pills'
+                )
+            )); ?>
+        </div>
+    </div>
+
     <div class="row" id="content">
         <div class="col-md-12">
             <?php echo $content; ?>
         </div>
     </div>
-
 
     <footer class="row" id="footer">
         <div class="col-md-12">
@@ -109,7 +117,6 @@
     </footer>
 
 </div>
-
 
 </body>
 </html>

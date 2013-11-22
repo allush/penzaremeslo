@@ -10,6 +10,22 @@ if (Yii::app()->user->hasFlash('signUp') and Yii::app()->user->getFlash('signUp'
     </div>
 <?php
 }
+
+if (Yii::app()->user->hasFlash('activated')) {
+    if (Yii::app()->user->getFlash('activated') == true) {
+        ?>
+        <div class="alert alert-success">
+            <p>Профиль активирован!</p>
+        </div>
+    <?php
+    }else{
+        ?>
+        <div class="alert alert-warning">
+            <p>Активация профиля не удалась!</p>
+        </div>
+    <?php
+    }
+}
 ?>
 
 

@@ -36,11 +36,13 @@ class UserController extends FrontController
         if (isset($_POST['User'])) {
             $model->attributes = $_POST['User'];
             if ($model->save()) {
-                if (Yii::app()->request->isAjaxRequest) {
-                    Yii::app()->end();
-                }
+                $this->redirect(array('view', 'id' => $model->userID));
             }
         }
+
+        $this->render('update', array(
+            'model' => $model,
+        ));
     }
 
     /**
