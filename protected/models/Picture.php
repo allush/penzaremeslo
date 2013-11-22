@@ -99,6 +99,10 @@ class Picture extends CActiveRecord
     {
         $logo = Yii::app()->basePath . '/../img/watermark.png';
 
+        if(!file_exists($logo) or is_file($logo)){
+            return false;
+        }
+
         $largePath = Yii::app()->basePath . '/..' . $this->large();
         $watermarkPath = Yii::app()->basePath . '/..' .$this->watermark();
 
@@ -113,12 +117,12 @@ class Picture extends CActiveRecord
      */
     public function createThumbnail()
     {
-        $watermarkPath = Yii::app()->basePath . '/..' . $this->watermark();
+        $largePath = Yii::app()->basePath . '/..' . $this->large();
         $thumbnailPath = Yii::app()->basePath . '/..' . $this->thumbnail();
 
         // создать и сохранить миниатюру
         $ih = new CImageHandler();
-        $ih->load($watermarkPath)
+        $ih->load($largePath)
             ->thumb(400, 300)
             ->save($thumbnailPath);
     }

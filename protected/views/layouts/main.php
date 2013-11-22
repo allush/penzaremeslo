@@ -71,6 +71,7 @@
                             array('label' => 'Вход', 'url' => array('/signIn'), 'visible' => Yii::app()->user->isGuest),
                             array('label' => 'Регистрация', 'url' => array('/signUp'), 'visible' => Yii::app()->user->isGuest),
                             array('label' => 'Мой профиль', 'url' => array('/user/view', 'id' => Yii::app()->user->getState('userID')), 'visible' => !Yii::app()->user->isGuest),
+                            array('label' => 'Мои товары', 'url' => array('/product/self'), 'visible' => !Yii::app()->user->isGuest),
                             array('label' => 'Выйти', 'url' => array('/signOut'), 'visible' => !Yii::app()->user->isGuest),
                         ),
                         'htmlOptions' => array(

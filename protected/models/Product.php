@@ -20,6 +20,7 @@
  * @property integer $deleted
  * @property integer $group
  * @property integer $views
+ * @property integer $userID
  *
  * The followings are the available model relations:
  * @property OrderItem[] $orderItems
@@ -56,7 +57,7 @@ class Product extends CActiveRecord
         // will receive user inputs.
         return array(
             array('productStatusID', 'required'),
-            array('productStatusID, group, catalogID, discount, createdOn, modifiedOn', 'numerical', 'integerOnly' => true),
+            array('productStatusID, group, catalogID, discount, createdOn, modifiedOn, userID', 'numerical', 'integerOnly' => true),
             array('deleted', 'boolean'),
             array('price, existence, purchase', 'numerical'),
             array('name, unit, productNumber', 'length', 'max' => 255),
@@ -102,7 +103,8 @@ class Product extends CActiveRecord
             'existence' => 'Наличие',
             'productNumber' => 'Артикул',
             'group' => 'Группа',
-            'views' => 'Количество просмотров'
+            'views' => 'Количество просмотров',
+            'userID' => 'Автор'
         );
     }
 
