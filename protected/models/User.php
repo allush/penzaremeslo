@@ -100,6 +100,11 @@ class User extends CActiveRecord
         );
     }
 
+    public function fullName()
+    {
+        return $this->name . ' ' . $this->surname;
+    }
+
     /**
      * Проверяет пароль пользователя на соответствие введенному в поле
      * @param $password
@@ -123,5 +128,16 @@ class User extends CActiveRecord
     public static function generateSalt()
     {
         return time();
+    }
+
+    public function photo()
+    {
+        $url = Yii::app()->baseUrl . '/img/user/' . $this->photo;
+        $path = Yii::app()->basePath . '/..' . $url;
+        if (file_exists($path) and is_file($path)) {
+            return $url;
+        }
+
+        return Yii::app()->baseUrl . '/img/user/photo_no_available.jpg';
     }
 }

@@ -2,33 +2,30 @@
 /* @var $this UserController */
 /* @var $model User */
 
-$this->menu = array(
-    array('label' => 'Редактировать', 'url' => array('update', 'id' => $model->userID)),
-);
-
 $this->breadcrumbs = array(
-    'Мой профиль',
+    'Мастера' => array('index'),
+    $model->fullName(),
 );
 
-$this->widget('zii.widgets.CDetailView', array(
-    'data' => $model,
-    'attributes' => array(
-        'surname',
-        'name',
-        'patronymic',
-        'address',
-        'index',
-        'country',
-        'region',
-        'city',
-        'email',
-        'phone',
-        array(
-            'name' => 'activated',
-            'value' => ($model->activated == 1 ? 'Да' : 'Нет')
-        ),
-    ),
-    'htmlOptions' => array(
-        'class' => 'table table-striped table-condensed'
-    )
-));
+?>
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="text-center" style="margin-bottom: 12px;">
+            <?php echo CHtml::image($model->photo(), '', array('class' => 'img-rounded')); ?>
+        </div>
+
+        <div class="text-center"><?php echo $model->fullName(); ?></div>
+        <div class="text-center"><?php echo $model->phone; ?></div>
+        <div class="text-center"><?php echo $model->email; ?></div>
+
+        <div class="text-center">
+            <?php echo CHtml::link('Посмотреть работы мастера', array(), array('class' => 'btn btn-default')) ?>
+        </div>
+    </div>
+
+    <div class="col-md-9">
+
+        <?php echo $model->description; ?>
+    </div>
+</div>

@@ -2,6 +2,10 @@
     margin-bottom: 12px;
 }
 
+#contacts{
+    text-align: right;
+}
+
 .products-item{
     margin-bottom: 24px;
 }
@@ -21,6 +25,7 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    text-align: center;
 }
 
 .products-item a {

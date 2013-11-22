@@ -29,8 +29,12 @@
             </div>
         </div>
 
-        <div class="col-md-5">
-            <form class="navbar-form navbar-left pull-right" role="search">
+        <div class="col-md-5" id="contacts">
+
+            <p>г.Пенза, ул.Окружная 3, офис ххх</p>
+            <p>тел. 8 (8412) 123-456</p>
+
+            <form class="navbar-form  pull-right" role="search">
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="Поиск">
                 </div>
@@ -59,7 +63,7 @@
                     <?php $this->widget('zii.widgets.CMenu', array(
                         'items' => array(
                             array('label' => 'Новости', 'url' => array('/news/index')),
-                            array('label' => 'Мастера', 'url' => array('/master/index')),
+                            array('label' => 'Мастера', 'url' => array('/user/index')),
                             array('label' => 'Каталог', 'url' => array('/product/index')),
                             array('label' => 'О нас', 'url' => array('/about')),
                             array('label' => 'Контакты', 'url' => array('/contacts')),

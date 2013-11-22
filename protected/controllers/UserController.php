@@ -2,6 +2,19 @@
 
 class UserController extends FrontController
 {
+    public function actionIndex()
+    {
+        $dataProvider = new CActiveDataProvider('User', array(
+            'criteria' => array(
+                'order' => 'userID DESC',
+            ),
+        ));
+
+        $this->render('index', array(
+            'dataProvider' => $dataProvider,
+        ));
+    }
+
     public function actionActivate($c)
     {
         /** @var $user User */
@@ -34,8 +47,29 @@ class UserController extends FrontController
         $model = $this->loadModel($id);
 
         if (isset($_POST['User'])) {
+
+            $photoExists = $model->photo;
+
             $model->attributes = $_POST['User'];
+
+            /** @var $files CUploadedFile[] */
+            $file = CUploadedFile::getInstanceByName('User[photo]');
+            if ($file) {
+                $model->photo = md5(crypt($file->getName())) . ".jpg";
+            } else {
+                $model->photo = $photoExists;
+            }
+
             if ($model->save()) {
+                if ($file) {
+                    $path = Yii::app()->basePath . '/../img/user/' . $model->photo;
+                    $file->saveAs($path);
+
+                    $ih = new CImageHandler();
+                    $ih->load($path);
+
+                    $ih->thumb(400, 300)->save();
+                }
                 $this->redirect(array('view', 'id' => $model->userID));
             }
         }
@@ -52,9 +86,15 @@ class UserController extends FrontController
     {
         $model = $this->loadModel($id);
 
-        $this->render('view', array(
-            'model' => $model,
-        ));
+        if ($model->userID == Yii::app()->user->getState('userID')) {
+            $this->render('profile', array(
+                'model' => $model,
+            ));
+        } else {
+            $this->render('view', array(
+                'model' => $model,
+            ));
+        }
     }
 
     /**

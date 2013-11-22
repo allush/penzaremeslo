@@ -9,10 +9,10 @@ if ($index % 6 == 0) {
 ?>
     <div class="col-md-2 products-item">
         <div class="product-image">
-            <?php echo 'image'; ?>
+            <?php echo CHtml::link(CHtml::image($data->photo()), array('view', 'id' => $data->userID)); ?>
         </div>
         <div class="name-product">
-            <?php echo CHtml::link($data->name, array('view', 'id' => $data->userID)); ?>
+            <?php echo CHtml::link($data->fullName(), array('view', 'id' => $data->userID)); ?>
         </div>
     </div>
 <?php
