@@ -48,6 +48,7 @@ class SignUpForm extends CFormModel
     {
         $user = new User();
         $user->attributes = $this->attributes;
+        $user->createdOn = time();
 
         if ($user->save()) {
             $message = 'Для активации Вашего профиля перейдите по ссылке: ' . Yii::app()->createAbsoluteUrl('/') . '/user/activate?c=' . md5($user->email);

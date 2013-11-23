@@ -19,13 +19,12 @@ class Mailer
     public function sendMailWithAttachment($user, $subject, $msg, $order)
     {
 //----------------текст письма---------------
-        $message = $user->name . ', здравствуйте!<br>';
+        $message = 'Здравствуйте' . (strlen($user->name) > 0 ? ', ' . $user->name : '') . '!<br><br> ';
         $message .= $msg . '<br><br>';
 
         $message .= '----------------------------------------<br>';
-        $message .= 'С уважением, Ольга Махова .<br > ';
-        $message .= 'Attribute.pro <br>';
-        $message .= 'http://attribute.pro ';
+        $message .= Yii::app()->name.'<br>';
+        $message .= 'http://penzaremeslo.ru ';
 
         $bound = md5(time()); //разделитель
 
@@ -33,7 +32,7 @@ class Mailer
         $to = $user->email;
         $subject = '=?utf-8?b?' . base64_encode($subject) . '?=';
 
-        $header = 'From: =?utf-8?b?' . base64_encode("Интернет-магазин модных аксессуаров Attribute.pro") . '?= <info@attribute.pro> \r\n';
+        $header = 'From: =?utf-8?b?' . base64_encode(Yii::app()->name) . '?= <info@penzaremeslo.ru> \r\n';
         $header .= 'MIME-Version:1.0 \r\n';
         $header .= 'Content-type:multipart/mixed; boundary=' . $bound . ' \r\n';
 
@@ -65,18 +64,17 @@ class Mailer
 
     public function sendMailSimple($user, $subject, $msg)
     {
-        $message = $user->name . ', здравствуйте!<br><br > ';
+        $message = 'Здравствуйте' . (strlen($user->name) > 0 ? ', ' . $user->name : '') . '!<br><br> ';
         $message .= $msg . '<br ><br > ';
 
         $message .= '----------------------------------------<br>';
-        $message .= 'С уважением, Ольга Махова .<br > ';
-        $message .= 'Attribute.pro<br>';
-        $message .= 'http://attribute.pro ';
+        $message .= Yii::app()->name . '<br>';
+        $message .= 'http://penzaremeslo.ru ';
 
         $to = $user->email;
         $subject = "=?utf-8?b?" . base64_encode($subject) . "?=";
 
-        $header = "From: =?utf-8?b?" . base64_encode("Интернет-магазин модных аксессуаров Attribute.pro") . "?= <info@attribute.pro> \r\n";
+        $header = "From: =?utf-8?b?" . base64_encode(Yii::app()->name) . "?= <info@penzaremeslo.ru> \r\n";
         $header .= 'Content-type: text/html; charset=utf-8\r\n';
 
         return mail($to, $subject, $message, $header);

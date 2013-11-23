@@ -53,11 +53,11 @@ class User extends CActiveRecord
         // will receive user inputs.
         return array(
             array('name, email, password', 'required'),
-            array('activated, index', 'numerical', 'integerOnly' => true),
+            array('activated, index, createdOn, lastVisit', 'numerical', 'integerOnly' => true),
             array('email', 'unique'),
             array('isAdmin', 'boolean'),
             array('surname, name, patronymic, email, password, address, country, phone, region, city, photo', 'length', 'max' => 255),
-            array('lastVisit, createdOn, description', 'safe'),
+            array('description', 'safe'),
         );
     }
 

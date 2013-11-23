@@ -31,6 +31,9 @@ class FrontUserIdentity extends CUserIdentity
             $this->errorCode = self::ERROR_NOT_ACTIVATED;
         }
         else {
+            $user->lastVisit = time();
+            $user->save();
+
             $this->_id = $user->userID;
             $this->username = $user->email;
 
