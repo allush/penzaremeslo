@@ -1,12 +1,12 @@
 <?php
 
 $this->breadcrumbs = array(
-    'Мои товары' => array('self'),
+    'Мои товары' => array('index'),
     'Добавление новых товаров',
 );
 
 $this->menu = array(
-    array('label' => 'Назад', 'url' => array('self')),
+    array('label' => 'Назад', 'url' => array('index')),
 );
 
 ?>

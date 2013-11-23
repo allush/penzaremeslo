@@ -2,7 +2,6 @@
 
 class ProductController extends FrontController
 {
-
     /**
      * @var $catalogs Catalog[]
      */
@@ -119,85 +118,6 @@ class ProductController extends FrontController
             'dataProvider' => $dataProvider,
             'catalogs' => $this->catalogs,
         ));
-    }
-
-    public function actionSelf()
-    {
-        if (!Yii::app()->user->hasState('userID')) {
-            $this->redirect(Yii::app()->homeUrl);
-        }
-
-        $userID = Yii::app()->user->getState('userID');
-
-        $this->pageTitle = 'Каталог';
-
-        $criteria = new CDbCriteria();
-        $criteria->addCondition('userID=:userID');
-        $criteria->params = array(
-            ':userID' => $userID,
-        );
-
-        $dataProvider = new CActiveDataProvider('Product', array(
-            'criteria' => $criteria,
-            'pagination' => array(
-                'pageSize' => 20,
-            ),
-            'sort' => array(
-                'defaultOrder' => 'createdOn DESC'
-            ),
-        ));
-
-        $this->render('self', array(
-            'dataProvider' => $dataProvider,
-        ));
-    }
-
-    public function actionAdd()
-    {
-        $this->render('add');
-    }
-
-    public function actionUpload()
-    {
-        if (!Yii::app()->user->hasState('userID')) {
-            Yii::app()->end(-1);
-        }
-
-        $userID = Yii::app()->user->getState('userID');
-
-        /** @var $file CUploadedFile */
-        $file = CUploadedFile::getInstanceByName('file');
-
-        // создать продукт
-        $product = new Product();
-        $product->productStatusID = 1;
-        $product->userID = $userID;
-
-        // если продукт успешно сохранен
-        if ($product->save()) {
-            // преобразовать имя файла в уникальное, сохраняя расширение файла
-            $originalFilename = $file->getName();
-            $fileExtension = strtolower(substr($originalFilename, strripos($originalFilename, '.')));
-            $filename = md5(crypt($originalFilename)) . $fileExtension;
-
-            // определение пути сохранения файлов
-            $pathLarge = 'img/product/large/' . $filename;
-
-            // если большое изображение успешно сохранено
-            if ($file->saveAs($pathLarge)) {
-                // создать модель фото продукта
-                $picture = new Picture();
-                $picture->productID = $product->productID;
-                $picture->filename = $filename;
-                $picture->save();
-
-                $picture->createThumbnail();
-
-                $picture->setWatermark();
-            }
-        } else {
-            return false;
-        }
     }
 
 

@@ -163,34 +163,31 @@ class ProductController extends BackendController
      */
     public function actionUploadPicture($productID)
     {
-        /** @var $files CUploadedFile[] */
-        $files = CUploadedFile::getInstancesByName('file');
-        foreach ($files as $file) {
+        /** @var $file CUploadedFile */
+        $file = CUploadedFile::getInstanceByName('file');
 
-            // преобразовать имя файла в уникальное, сохраняя расширение файла
-            $originalFilename = $file->getName();
-            $fileExtension = strtolower(substr($originalFilename, strripos($originalFilename, '.')));
-            $filename = md5(crypt($originalFilename)) . $fileExtension;
+        // преобразовать имя файла в уникальное, сохраняя расширение файла
+        $originalFilename = $file->getName();
+        $fileExtension = strtolower(substr($originalFilename, strripos($originalFilename, '.')));
+        $filename = md5(crypt($originalFilename)) . $fileExtension;
 
-            // определение пути сохранения файлов
-            $pathLarge = 'img/product/large/' . $filename;
-            $pathThumbnail = 'img/product/thumbnail/' . $filename;
+        // определение пути сохранения файлов
+        $pathLarge = 'img/product/large/' . $filename;
 
-            // если большое изображение успешно сохранено
-            if ($file->saveAs($pathLarge)) {
+        // если большое изображение успешно сохранено
+        if ($file->saveAs($pathLarge)) {
 
-                // создать модель фото продукта
-                $picture = new Picture();
-                $picture->productID = $productID;
-                $picture->filename = $filename;
-                $picture->save();
+            // создать модель фото продукта
+            $picture = new Picture();
+            $picture->productID = $productID;
+            $picture->filename = $filename;
+            $picture->save();
 
-                $picture->setWatermark();
+            $picture->createThumbnail();
 
-                $picture->createThumbnail();
-
-            }
+            $picture->setWatermark();
         }
+
     }
 
     /**

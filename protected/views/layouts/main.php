@@ -12,10 +12,7 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/front.main.css">
 
-    <script src="/js/jquery-2.0.3.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/page_ini.js"></script>
-
+<!--    <script src="/js/jquery-2.0.3.min.js"></script>-->
 </head>
 
 <body>
@@ -23,23 +20,86 @@
 <div class="container">
 
     <div class="row" id="header">
-        <div class="col-md-7">
+        <div class="col-md-4">
             <div id="logo">
                 <?php echo CHtml::link(CHtml::image(Yii::app()->baseUrl . '/img/logo.png'), '/') ?>
             </div>
         </div>
 
-        <div class="col-md-5" id="contacts">
+        <div class="col-md-4" id="contacts">
 
             <p>г.Пенза, ул.Окружная 3, офис ххх</p>
+
             <p>тел. 8 (8412) 123-456</p>
 
-            <form class="navbar-form  pull-right" role="search">
+
+        </div>
+
+        <div class="col-md-3 col-md-offset-1">
+            <?php
+            if (Yii::app()->user->isGuest) {
+                $model = new SignInForm();
+                /** @var CActiveForm $form */
+                $form = $this->beginWidget('CActiveForm', array(
+                    'id' => 'login-form',
+                    'action' => array('/signIn'),
+                    'focus' => array($model, 'email'),
+                    'htmlOptions' => array(
+                        'role' => 'form',
+                    ),
+                    'errorMessageCssClass' => 'text-danger'
+                )); ?>
+
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Поиск">
+                    <div class="input-group">
+                        <span style="width: 100px;" class="span2 input-group-addon">Эл.почта</span>
+                        <?php echo $form->textField($model, 'email', array('class' => 'form-control')); ?>
+                        <?php echo $form->error($model, 'email'); ?>
+                    </div>
                 </div>
-                <button type="submit" class="btn btn-default">Найти</button>
-            </form>
+
+                <div class="form-group">
+                    <div class="input-group">
+                        <span style="width: 100px;"
+                              class="input-group-addon"><?php echo $model->getAttributeLabel('password') ?></span>
+                        <?php echo $form->passwordField($model, 'password', array('class' => 'form-control')); ?>
+                        <?php echo $form->error($model, 'password'); ?>
+                    </div>
+                </div>
+
+                <div class="checkbox">
+                    <?php echo $form->label($model, 'rememberMe'); ?>
+                    <?php echo $form->checkBox($model, 'rememberMe'); ?>
+                    <?php echo $form->error($model, 'rememberMe'); ?>
+                </div>
+
+                <div class="form-group">
+                    <?php echo CHtml::submitButton('Войти', array('style' => 'width: 100px;', 'class' => 'btn btn-default')); ?>
+                    <div class="pull-right text-right">
+                        <?php echo CHtml::link('Регистрация', array('/signUp')); ?><br>
+
+                        <?php echo CHtml::link('Забыли пароль?', array('/')); ?>
+                    </div>
+                </div>
+
+                <?php $this->endWidget();
+
+            } else {
+                $userID = Yii::app()->user->getState('userID');
+                /** @var User $user */
+                $user = User::model()->findByPk($userID);
+                if ($user) {
+                    ?>
+                    <div><?php echo CHtml::image($user->photo(), '', array('class' => 'img-rounded','style' => 'height: 96px;')) ?></div>
+                    <div><?php echo $user->fullName(); ?></div>
+
+                    <div><?php echo CHtml::link('Мой профиль', array('/user/view', 'id' => $userID)); ?></div>
+                    <div><?php echo CHtml::link('Мои товары', array('/myProduct/index')); ?></div>
+                    <div><?php echo CHtml::link('Выйти', array('/signOut'), array()); ?></div>
+                <?php
+                }
+            }
+            ?>
         </div>
     </div>
 
@@ -62,24 +122,26 @@
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
                     <?php $this->widget('zii.widgets.CMenu', array(
                         'items' => array(
+                            array('label' => 'Главная', 'url' => Yii::app()->homeUrl),
                             array('label' => 'Новости', 'url' => array('/news/index')),
                             array('label' => 'Мастера', 'url' => array('/user/index')),
                             array('label' => 'Каталог', 'url' => array('/product/index')),
                             array('label' => 'О нас', 'url' => array('/about')),
                             array('label' => 'Контакты', 'url' => array('/contacts')),
-
-                            array('label' => 'Вход', 'url' => array('/signIn'), 'visible' => Yii::app()->user->isGuest),
-                            array('label' => 'Регистрация', 'url' => array('/signUp'), 'visible' => Yii::app()->user->isGuest),
-                            array('label' => 'Мой профиль', 'url' => array('/user/view', 'id' => Yii::app()->user->getState('userID')), 'visible' => !Yii::app()->user->isGuest),
-                            array('label' => 'Мои товары', 'url' => array('/product/self'), 'visible' => !Yii::app()->user->isGuest),
-                            array('label' => 'Выйти', 'url' => array('/signOut'), 'visible' => !Yii::app()->user->isGuest),
                         ),
                         'htmlOptions' => array(
                             'class' => 'nav navbar-nav',
                         )
                     )); ?>
+
+                    <form class="navbar-form navbar-right" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Поиск">
+                        </div>
+                        <button type="submit" class="btn btn-default">Найти</button>
+                    </form>
+
                 </div>
-                <!-- /.navbar-collapse -->
             </nav>
         </div>
     </div>
@@ -122,6 +184,10 @@
     </footer>
 
 </div>
+
+
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/page_ini.js"></script>
 
 </body>
 </html>

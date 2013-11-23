@@ -24,17 +24,15 @@ if ($index % 4 == 0) {
             <?php echo CHtml::link($data->name, array('view', 'id' => $data->productID)); ?>
         </div>
         <div class="product-price">
-            <!--            --><?php //echo CHtml::link('', '', array('class' => 'to-basket-button', 'productID' => $data->productID)); ?>
-            <p class="product-to-cart">
-                <?php echo CHtml::link('В корзину', '', array('class' => 'to-basket-button', 'productID' => $data->productID)); ?>
-            </p>
             <p class="product-price-text" <?php echo ($data->discount > 0) ? "style='color: #FF622B;'" : '' ?>><?php echo $data->priceCurrency(); ?></p>
+
+            <?php if ($data->discount > 0) { ?>
+                <span class="product-discount">Скидка <?php echo $data->discount . '%' ?></span>
+            <?php } ?>
         </div>
         <!--    <a href="javascript:void(0)" class="new-icon"></a>-->
         <!--    <a href="javascript:void(0)" class="top-icon"></a>-->
-        <?php if ($data->discount > 0) { ?>
-            <span class="sale-icon"><?php echo $data->discount . '%' ?></span>
-        <?php } ?>
+
     </div>
     <!--.products-item-->
 

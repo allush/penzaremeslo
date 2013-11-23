@@ -10,6 +10,7 @@ if ($index == 0) {
         <th class="col-md-1"><?php echo CHtml::encode($data->getAttributeLabel('productID')); ?></th>
         <th class="col-md-2">Картинка</th>
         <th class="col-md-2"><?php echo CHtml::encode($data->getAttributeLabel('name')); ?></th>
+        <th class="col-md-1"><?php echo CHtml::encode($data->getAttributeLabel('existence')); ?></th>
         <th class="col-md-1"><?php echo CHtml::encode($data->getAttributeLabel('productStatusID')); ?></th>
         <th class="col-md-1"><?php echo CHtml::encode($data->getAttributeLabel('discount')); ?></th>
         <th class="col-md-1"><?php echo CHtml::encode($data->getAttributeLabel('createdOn')); ?></th>
@@ -23,6 +24,7 @@ if ($index == 0) {
     <td class="col-md-1"><?php echo CHtml::link($data->productID, array('view', 'id' => $data->productID)); ?></td>
     <td class="col-md-2"><?php echo CHtml::link(CHtml::image($data->thumbnail(), '', array('style' => 'height: 80px;')), array('view', 'id' => $data->productID)); ?></td>
     <td class="col-md-2"><?php echo CHtml::link($data->name, array('view', 'id' => $data->productID)); ?></td>
+    <td class="col-md-1"><?php echo CHtml::encode($data->existence); ?></td>
     <td class="col-md-1"><?php echo CHtml::encode(ProductStatus::model()->findByPk($data->productStatusID)->name); ?></td>
     <td class="col-md-1"><?php echo CHtml::encode($data->discount); ?></td>
     <td class="col-md-1">

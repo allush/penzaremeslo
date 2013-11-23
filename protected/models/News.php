@@ -7,6 +7,8 @@
  * @property integer $newsID
  * @property string $header
  * @property string $content
+ * @property integer $createdOn
+ * @property integer $modifiedOn
  */
 class News extends CActiveRecord
 {
@@ -37,6 +39,7 @@ class News extends CActiveRecord
         // will receive user inputs.
         return array(
             array('header', 'required'),
+            array('createdOn, modifiedOn', 'numerical'),
             array('header', 'length', 'max' => 255),
             array('content', 'safe'),
         );
@@ -61,6 +64,8 @@ class News extends CActiveRecord
             'newsID' => 'News',
             'header' => 'Заголовок',
             'content' => 'Содержание',
+            'createdOn' => 'Дата создания',
+            'modifiedOn' => 'Дата изменения'
         );
     }
 
@@ -74,6 +79,16 @@ class News extends CActiveRecord
         }
 
         return substr($this->content, 0, $trimmingPos);
+    }
 
+    protected function beforeSave()
+    {
+        $time = time();
+        if ($this->isNewRecord) {
+            $this->createdOn = $time;
+        }
+        $this->modifiedOn = $time;
+
+        return parent::beforeSave();
     }
 }

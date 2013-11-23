@@ -4,6 +4,7 @@
 /* @var $form CActiveForm */
 ?>
 
+
 <div class="row">
     <div class="col-md-3">
         <?php echo CHtml::image($model->thumbnail(), '', array('id' => 'mainPicture', 'style' => 'max-width: 260px;max-height: 195px;')); ?>
@@ -11,7 +12,7 @@
             <?php
             foreach ($model->pictures as $picture) {
                 echo '<div class="col-md-4">';
-                echo CHtml::image($picture->thumbnail(), '',array('style' => "width: 64px;"));
+                echo CHtml::image($picture->thumbnail(), '', array('style' => "width: 64px;"));
 
                 echo '<small>';
                 echo CHtml::link('Удалить', '#', array(
@@ -39,6 +40,7 @@
         'action' => array('update', 'id' => $model->productID),
         'id' => 'product-form',
         'enableAjaxValidation' => true,
+        'clientOptions'=>array('validateOnSubmit'=>true),
         'htmlOptions' => array(
             'class' => 'form-horizontal',
             'role' => 'form'
@@ -71,23 +73,6 @@
     </div>
 
     <div class="col-md-4">
-        <!--        <div>--><?php //echo 'Создан:' . date("H:i:s d/m/Y", $model->createdOn);?><!--</div>-->
-        <!--        <div>--><?php //echo 'Изменен:' . date("H:i:s d/m/Y", $model->modifiedOn);?><!--</div>-->
-
-        <div class="form-group">
-            <?php echo $form->labelEx($model, 'userID', array('class' => 'col-md-3 control-label')); ?>
-            <div class="col-md-9">
-                <?php
-                echo $form->dropDownList($model, 'userID',
-
-                    CHtml::listData(User::model()->findAll(), 'userID', 'surname'),array(
-                        'class' => 'form-control',
-                        'title' => $model->getAttributeLabel('userID'),
-                    ));
-                echo $form->error($model, 'userID');  ?>
-            </div>
-        </div>
-
         <div class="form-group">
             <?php echo $form->labelEx($model, 'productStatusID', array('class' => 'col-md-3 control-label')); ?>
             <div class="col-md-9">
@@ -163,9 +148,7 @@
             </div>
         </div>
     </div>
-</div>
-</div>
-<?php $this->endWidget(); ?>
+    <?php $this->endWidget(); ?>
 </div>
 
 <br>

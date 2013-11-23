@@ -1,3 +1,6 @@
+#header{
+    margin-top: 12px;
+}
 #menu {
     margin-bottom: 12px;
 }
@@ -54,6 +57,8 @@
     display: inline-block;
     text-align: right;
     width: 102px;
+    margin-top: 2px;
+    float: right;
 }
 
 .products-item .product-price .product-to-cart {
@@ -67,6 +72,18 @@
 .products-item .product-price .to-basket-button {
     font-size: 14px;
     color: #428bca;
+}
+.product-discount{
+    background-color: #FF622B;
+    color: white;
+    padding: 2px 4px;
+    display: inline-block;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    width: 79px;
+    position: relative;
+    top: 4px;
 }
 
 .popular-news-item {

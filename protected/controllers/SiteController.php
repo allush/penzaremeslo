@@ -42,7 +42,21 @@ class SiteController extends FrontController
         ));
 
         $this->layout = 'catalog';
-        $this->render('index');
+
+        $masters = User::model()->findAll(array(
+            'order' => 'userID DESC'
+        ));
+
+        $products = Product::model()->findAll(array(
+            'condition' => 'deleted=0',
+            'order' => 'productID DESC'
+        ));
+
+        $this->render('index', array(
+            'masters' => $masters,
+            'products' => $products
+        ));
+
     }
 
     /**

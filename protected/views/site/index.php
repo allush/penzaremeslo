@@ -1,5 +1,7 @@
 <?php
 /* @var $this SiteController */
+/* @var $masters User[] */
+/* @var $products Product[] */
 
 if (Yii::app()->user->hasFlash('signUp') and Yii::app()->user->getFlash('signUp') == true) {
     ?>
@@ -18,7 +20,7 @@ if (Yii::app()->user->hasFlash('activated')) {
             <p>Профиль активирован!</p>
         </div>
     <?php
-    }else{
+    } else {
         ?>
         <div class="alert alert-warning">
             <p>Активация профиля не удалась!</p>
@@ -43,17 +45,51 @@ if (Yii::app()->user->hasFlash('activated')) {
 
         <h1>Мастера</h1>
 
-        <div>
-            mastersmasters mastersm astersmaste rsmastersmastersmastersm astersmast ersmaste rsmastersmastersma
-            stersmast ersmastersmastersmas tersmastersm astersmas tersmasters
+        <div class="row">
+            <?php
+                foreach ($masters as $master) {
+                ?>
+                <div class="col-md-3 products-item">
+                    <div class="product-image">
+                        <?php echo CHtml::link(CHtml::image($master->photo()), array('/user/view', 'id' => $master->userID)); ?>
+                    </div>
+                    <div class="name-product">
+                        <?php echo CHtml::link($master->fullName(), array('/user/view', 'id' => $master->userID)); ?>
+                    </div>
+                    <div class="product-price">
+
+                    </div>
+                </div>
+            <?php
+            }
+            ?>
         </div>
 
         <h1>Магазин</h1>
 
-        <div>
-            shop shop shop shop shop shop shop shop shop shop shop shop shop
-            shop shop shop shop shop shop shop shop shop shop shop shop shop
-            shop shop shop shop shop shop shop shop shop shop shop shop shop shop shop shop
+        <div class="row">
+            <?php
+            foreach ($products as $product) {
+                ?>
+                <div class="col-md-4 products-item">
+                    <div class="product-image">
+                        <?php echo CHtml::link(CHtml::image($product->thumbnail()), array('/user/view', 'id' => $product->productID)); ?>
+                    </div>
+                    <div class="name-product">
+                        <?php echo CHtml::link($product->name, array('/product/view', 'id' => $product->productID)); ?>
+                    </div>
+
+                    <div class="product-price">
+                        <p class="product-price-text" <?php echo ($product->discount > 0) ? "style='color: #FF622B;'" : '' ?>><?php echo $product->priceCurrency(); ?></p>
+
+                        <?php if ($product->discount > 0) { ?>
+                            <span class="product-discount">Скидка <?php echo $product->discount . '%' ?></span>
+                        <?php } ?>
+                    </div>
+                </div>
+            <?php
+            }
+            ?>
         </div>
     </div>
 </div>
