@@ -12,7 +12,7 @@ $this->breadcrumbs = array(
 <div class="row">
     <div class="col-md-3">
         <div class="text-center" style="margin-bottom: 12px;">
-            <?php echo CHtml::image($model->photo(), '', array('class' => 'img-rounded')); ?>
+            <?php echo CHtml::image($model->photo(), '', array('class' => 'img-rounded','style' => 'max-width: 200px;')); ?>
         </div>
 
         <div class="text-center"><?php echo $model->fullName(); ?></div>
