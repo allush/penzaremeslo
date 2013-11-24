@@ -179,7 +179,7 @@
     <footer class="row" id="footer">
         <div class="col-md-12">
             <div class="well">
-                Copyright &copy; <?php echo date('Y'); ?> by <a href="coderoom.ru">CodeRoom.ru</a>
+                Copyright &copy; <?php echo date('Y'); ?> by <a href="http://coderoom.ru">CodeRoom.ru</a>
             </div>
 
         </div>
