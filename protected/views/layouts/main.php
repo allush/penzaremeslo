@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/front.main.css">
 
-<!--    <script src="/js/jquery-2.0.3.min.js"></script>-->
 </head>
 
 <body>
@@ -179,15 +178,17 @@
 
     <footer class="row" id="footer">
         <div class="col-md-12">
-            Copyright &copy; <?php echo date('Y'); ?> by CodeRoom.ru.<br/>
+            <div class="well">
+                Copyright &copy; <?php echo date('Y'); ?> by <a href="coderoom.ru">CodeRoom.ru</a>
+            </div>
+
         </div>
     </footer>
 
 </div>
 
-
+<?php Yii::app()->getClientScript()->registerCoreScript('jquery'); ?>
 <script src="/js/bootstrap.min.js"></script>
-<script src="/js/page_ini.js"></script>
 
 </body>
 </html>

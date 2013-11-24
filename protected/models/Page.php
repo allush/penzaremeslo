@@ -85,4 +85,15 @@ class Page extends CActiveRecord
             'criteria' => $criteria,
         ));
     }
+
+    public function trimmedContent()
+    {
+        $trimmingPos = stripos($this->content, '<div style="page-break-after: always;">');
+
+        if ($trimmingPos === false) {
+            return $this->content;
+        }
+
+        return substr($this->content, 0, $trimmingPos);
+    }
 }

@@ -2,6 +2,7 @@
 /* @var $this SiteController */
 /* @var $masters User[] */
 /* @var $products Product[] */
+/* @var $aboutUs Page */
 
 if (Yii::app()->user->hasFlash('signUp') and Yii::app()->user->getFlash('signUp') == true) {
     ?>
@@ -36,18 +37,17 @@ if (Yii::app()->user->hasFlash('activated')) {
 
         <h1>О нас</h1>
 
-        <div>
-            about us about us about us about us about us about us about us
-            about usabout usabout usabout usabout usabout usabout usabout us
-            about usabout usabout usabout usabout usabout usabout usabout usabout us
-            about usabout usabout usabout usabout usabout us
+        <div class="row">
+            <div class="col-md-12">
+                <?php echo $aboutUs->trimmedContent(); ?>
+            </div>
         </div>
 
         <h1>Мастера</h1>
 
         <div class="row">
             <?php
-                foreach ($masters as $master) {
+            foreach ($masters as $master) {
                 ?>
                 <div class="col-md-3 products-item">
                     <div class="product-image">

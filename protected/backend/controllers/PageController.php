@@ -64,7 +64,6 @@ class PageController extends BackendController
             $model->attributes = $_POST['Page'];
             if ($model->save()) {
                 Yii::app()->user->setFlash('success','Страница успешно изменена!');
-                $this->redirect(array('index'));
             }
         }
 

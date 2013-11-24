@@ -9,11 +9,11 @@
 
     <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 
-    <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css"/>
     <link rel='stylesheet' href='<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap.min.css'
           type='text/css'>
     <link rel='stylesheet' href='<?php echo Yii::app()->request->baseUrl; ?>/treeview/jquery.treeview.css'
           type='text/css'>
+
 </head>
 
 <body>
@@ -87,6 +87,8 @@
             <?php echo $content; ?>
         </div>
     </div>
+
+    <?php Yii::app()->getClientScript()->registerCoreScript('jquery'); ?>
 
     <!--    <script src="//code.jquery.com/jquery.js"></script>-->
     <script type='text/javascript' src='<?php echo Yii::app()->request->baseUrl; ?>/js/bootstrap.min.js'></script>

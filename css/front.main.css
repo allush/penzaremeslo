@@ -9,6 +9,10 @@
     text-align: right;
 }
 
+#footer{
+    margin-top: 40px;
+}
+
 .products-item{
     margin-bottom: 24px;
 }

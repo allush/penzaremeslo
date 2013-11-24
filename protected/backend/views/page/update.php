@@ -12,19 +12,14 @@ $this->menu = array(
         'label' => 'Назад',
         'url' => array('index')
     ),
-    array(
-        'label' => 'Удалить',
-        'url' => '#',
-        'itemOptions' => array('class' => 'pull-right'),
-        'linkOptions' => array(
-            'class' => 'text-error',
-            'confirm' => 'Вы уверены?',
-            'submit' => array('delete', 'id' => $model->pageID),
-            'params' => array(
-                'YII_CSRF_TOKEN' => Yii::app()->request->csrfToken,
-            ),
-        )
-    ),
 );
 
+if (Yii::app()->user->hasFlash('success')) {
+    ?>
+    <div class="alert alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <?php echo Yii::app()->user->getFlash('success');?>
+    </div>
+<?php
+}
 echo $this->renderPartial('_form', array('model' => $model)); ?>

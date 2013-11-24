@@ -52,9 +52,12 @@ class SiteController extends FrontController
             'order' => 'productID DESC'
         ));
 
+        $aboutUs = Page::model()->findByPk(1);
+
         $this->render('index', array(
+            'aboutUs' => $aboutUs,
             'masters' => $masters,
-            'products' => $products
+            'products' => $products,
         ));
 
     }
