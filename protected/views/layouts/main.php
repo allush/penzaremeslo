@@ -72,12 +72,14 @@
                     <?php echo $form->error($model, 'rememberMe'); ?>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" style="line-height: 16px;">
                     <?php echo CHtml::submitButton('Войти', array('style' => 'width: 100px;', 'class' => 'btn btn-default')); ?>
                     <div class="pull-right text-right">
-                        <?php echo CHtml::link('Регистрация', array('/signUp')); ?><br>
+                        <small>
+                        <?php echo CHtml::link('Зарегистрироваться', array('/signUp')); ?><br>
 
-                        <?php echo CHtml::link('Забыли пароль?', array('/')); ?>
+                        <?php echo CHtml::link('Восстановить пароль', array('/remind')); ?>
+                        </small>
                     </div>
                 </div>
 

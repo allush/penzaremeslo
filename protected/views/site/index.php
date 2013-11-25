@@ -4,6 +4,30 @@
 /* @var $products Product[] */
 /* @var $aboutUs Page */
 
+if (Yii::app()->user->hasFlash('error')) {
+    ?>
+    <div class="alert alert-danger">
+        <?php echo Yii::app()->user->getFlash('error'); ?>
+    </div>
+<?php
+}
+
+if (Yii::app()->user->hasFlash('remind') and Yii::app()->user->getFlash('remind') == true) {
+    ?>
+    <div class="alert alert-success">
+        <p>На указанный адрес электронной почты было выслано письмо с ссылкой для восстановления пароля.</p>
+    </div>
+<?php
+}
+
+if (Yii::app()->user->hasFlash('changePassword') and Yii::app()->user->getFlash('changePassword') == true) {
+    ?>
+    <div class="alert alert-success">
+        <p>Пароль успешно изменен.</p>
+    </div>
+<?php
+}
+
 if (Yii::app()->user->hasFlash('signUp') and Yii::app()->user->getFlash('signUp') == true) {
     ?>
     <div class="alert alert-success">
@@ -13,7 +37,6 @@ if (Yii::app()->user->hasFlash('signUp') and Yii::app()->user->getFlash('signUp'
     </div>
 <?php
 }
-
 if (Yii::app()->user->hasFlash('activated')) {
     if (Yii::app()->user->getFlash('activated') == true) {
         ?>

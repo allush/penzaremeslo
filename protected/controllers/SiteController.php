@@ -2,6 +2,15 @@
 
 class SiteController extends FrontController
 {
+    public function actions()
+    {
+        return array(
+            'captcha' => array(
+                'class' => 'CCaptchaAction',
+            ),
+        );
+    }
+
     public $catalogs = array();
 
     public function actionAbout()
@@ -73,6 +82,59 @@ class SiteController extends FrontController
             else
                 $this->render('error', $error);
         }
+    }
+
+    public function actionRemind()
+    {
+        $model = new RemindForm();
+
+        if (isset($_POST['RemindForm'])) {
+            $model->attributes = $_POST['RemindForm'];
+
+            if ($model->validate() and $model->exist()) {
+                Yii::app()->user->setFlash('remind', true);
+                Yii::app()->session->add('changePassword', true);
+                $this->redirect(Yii::app()->homeUrl);
+            }
+        }
+
+        $this->render('remind', array(
+            'model' => $model,
+        ));
+    }
+
+    public function actionChangePassword($c)
+    {
+        // проверяем наличие ключа сессии для возможности смены пароля
+        if (Yii::app()->session->get('changePassword') === null) {
+            Yii::app()->user->setFlash('error', 'Некорректная ссылка.');
+            $this->redirect(Yii::app()->homeUrl);
+        }
+
+        // проверяем наличие пользователя
+        /** @var User $user */
+        $user = User::model()->find('md5(email)=:email', array(
+            ':email' => $c
+        ));
+        if ($user === null) {
+            Yii::app()->user->setFlash('error', 'Некорректная ссылка.');
+            $this->redirect(Yii::app()->homeUrl);
+        }
+
+        $model = new ChangePasswordForm();
+
+        if (isset($_POST['ChangePasswordForm'])) {
+            $model->attributes = $_POST['ChangePasswordForm'];
+
+            if ($model->validate() and $model->change($user)) {
+                Yii::app()->user->setFlash('changePassword', true);
+                Yii::app()->session->remove('changePassword');
+                $this->redirect(Yii::app()->homeUrl);
+            }
+        }
+        $this->render('changePassword', array(
+            'model' => $model,
+        ));
     }
 
     public function actionSignUp()
