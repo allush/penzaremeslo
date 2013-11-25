@@ -53,12 +53,15 @@ class SiteController extends FrontController
         $this->layout = 'catalog';
 
         $masters = User::model()->findAll(array(
-            'order' => 'userID DESC'
+            'condition' => 'activated=1',
+            'order' => 'userID DESC',
+            'limit' => 4
         ));
 
         $products = Product::model()->findAll(array(
             'condition' => 'deleted=0',
-            'order' => 'productID DESC'
+            'order' => 'productID DESC',
+            'limit' => 4
         ));
 
         $aboutUs = Page::model()->findByPk(1);

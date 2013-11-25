@@ -59,10 +59,14 @@ class ProductController extends FrontController
     /**
      * Lists all models.
      */
-    public function actionIndex($c = null, $key = null)
+    public function actionIndex($c = null)
     {
         $this->layout = 'catalog';
         $this->pageTitle = 'Каталог';
+
+        $this->breadcrumbs = array(
+            'Каталог'
+        );
 
         $this->catalogs = Catalog::model()->findAll(array(
             'condition' => 'parent IS NULL',
@@ -72,8 +76,20 @@ class ProductController extends FrontController
         $criteria = new CDbCriteria();
 
         if ($c !== null and $c != 0) {
+
+            /** @var Catalog $catalog */
             $catalog = Catalog::model()->findByPk($c);
+
             if ($catalog !== null) {
+
+                $this->breadcrumbs = array(
+                    'Каталог' => array('index'),
+                );
+                foreach ($catalog->parents() as $parentCatalog) {
+                    $this->breadcrumbs[$parentCatalog->name] = array('index', 'c' => $parentCatalog->catalogID);
+                }
+                $this->breadcrumbs[] = $catalog->name;
+
                 $this->pageTitle .= ' - ' . $catalog->name;
 
                 $catalogIDs = array();
@@ -83,25 +99,8 @@ class ProductController extends FrontController
             } else {
                 $criteria->condition = 'catalogID IS NOT NULL AND deleted=0 AND existence>0';
             }
-
         } else {
             $criteria->condition = 'catalogID IS NOT NULL AND deleted=0 AND existence>0';
-        }
-
-        if ($key !== null && strlen($key) > 0) {
-            $criteria->addCondition("name LIKE '%" . $key . "%'");
-        }
-
-        if (isset($_GET['target'])) {
-            if ($_GET['target'] == 'new') {
-                // добавленные в течение недели
-                $criteria->addCondition('(UNIX_TIMESTAMP()-createdOn)<604800');
-            } elseif ($_GET['target'] == 'top') {
-                // по убыванию кол-ва просмотров
-                $criteria->order = 'views DESC';
-            } elseif ($_GET['target'] == 'sale') {
-                $criteria->addCondition('discount IS NOT NULL AND discount > 0');
-            }
         }
 
         $dataProvider = new CActiveDataProvider('Product', array(

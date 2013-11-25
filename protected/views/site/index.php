@@ -56,7 +56,7 @@ if (Yii::app()->user->hasFlash('activated')) {
 
 
 <div class="row">
-    <div class="col-md-9">
+    <div class="col-md-12">
 
         <h1>О нас</h1>
 
@@ -94,7 +94,7 @@ if (Yii::app()->user->hasFlash('activated')) {
             <?php
             foreach ($products as $product) {
                 ?>
-                <div class="col-md-4 products-item">
+                <div class="col-md-3 products-item">
                     <div class="product-image">
                         <?php echo CHtml::link(CHtml::image($product->thumbnail()), array('/user/view', 'id' => $product->productID)); ?>
                     </div>

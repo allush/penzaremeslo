@@ -1,118 +1,67 @@
 <?php
 /* @var $this ProductController */
 /* @var $model Product */
-/* @var $relatedProducts Product[] */
-/* @var $similarProducts Product[] */
+
 
 $this->breadcrumbs = array(
     'Каталог' => array('index'),
-    $model->catalog->name => array('index', 'c' => $model->catalogID !== null ? $model->catalogID : -1),
-    $model->name,
 );
+foreach ($model->catalog->parents() as $catalog) {
+    $this->breadcrumbs[$catalog->name] = array('index', 'c' => $catalog->catalogID);
+}
+$this->breadcrumbs[$model->catalog->name] = array('index', 'c' => $model->catalogID !== null ? $model->catalogID : -1);
+$this->breadcrumbs[] = $model->name;
+
 
 $this->menu = array(
     array('label' => 'Назад', 'url' => array('index', 'c' => $model->catalogID !== null ? $model->catalogID : -1)),
 );
 ?>
 
-<div id="line-blue">
-    <div id="line-blue-wrap">
-        <?php
-        $this->widget('zii.widgets.CBreadcrumbs', array(
-            'links' => $this->breadcrumbs,
-            'separator' => '<span class="arrow">></span>',
-            'tagName' => 'div',
-            'htmlOptions' => array(
-                'class' => 'site-path'
-            ),
-        ));
-        ?><!-- breadcrumbs -->
+<style type="text/css">
+    .product-card h2 {
+        margin-top: 0px;;
+    }
+
+    .product-card .product-price {
+        font-size: 24px;
+        color: white;
+        background-color: #69A7DD;
+        display: inline-block;
+        padding: 1px 13px;
+        border-radius: 6px;
+        border: 1px solid #6D9FCA;
+    }
+
+    .product-card .product-price.discount {
+        background-color: #F7855E;
+        border: 1px solid #D87F61;
+    }
+</style>
+
+<div class="row product-card">
+    <div class="col-md-3 text-center">
+        <?php echo CHtml::image($model->thumbnail(), '', array('style' => 'max-width: 290px;')); ?>
     </div>
-    <!--#line-blue-wrap-->
-</div><!--#line-blue-->
 
-<div class="main-content">
-    <div class="product-item">
-        <div class="product-images">
-            <div class="big-img-container">
-                <?php echo CHtml::image($model->thumbnail(), '', array('class' => 'big-img')); ?>
-            </div>
-            <div class="gallery">
-                <ul>
-                    <?php
-                    foreach ($model->pictures as $picture) {
-                        echo '<li>' . CHtml::link(CHtml::image($picture->thumbnail()), 'javascript:void(0)') . '</li>';
-                    }
-                    ?>
-                </ul>
-                <div class="clear"></div>
-            </div>
-            <!--.gallery-->
-        </div>
-        <!--.product-images-->
-        <div class="product-description">
-            <h1><?php echo CHtml::encode($model->name); ?></h1>
+    <div class="col-md-8 col-md-offset-1">
+        <h2><?php echo $model->name; ?></h2>
 
-            <p><?php echo CHtml::encode($model->description); ?></p>
+        <p><?php echo $model->description; ?></p>
 
-            <div class="product-description-buttons">
-                <?php if ($model->discount > 0) { ?>
-                    <div style="margin-bottom: 20px;">
-                        <span style="color: #FF622B;font-size: 18px;font-weight: bold; margin-right: 24px;" >Скидка <?php echo $model->discount;?>%</span>
-                        <span style="color: #aaaaaa;font-size: 14px;font-weight: bold;">Старая цена: <?php echo $model->price.' руб.'?></span>
-                    </div>
+        <p>
+            <small>Автор: <?php echo $model->user->fullName(); ?></small>
+        </p>
 
-                <?php } ?>
-                <div class="product-price"><?php echo CHtml::encode($model->priceCurrency()); ?></div>
-                <?php echo CHtml::link('', '', array('class' => 'add-basket-button', 'productID' => $model->productID)); ?>
-                <div class="clear"></div>
-            </div>
 
-            <?php if (count($similarProducts) > 0) { ?>
+        <p class="product-price <?php if ($model->discount > 0) echo 'discount'; ?>">
+            <?php echo $model->priceCurrency(); ?>
 
-                <h1><?php echo CHtml::encode('Похожие товары'); ?></h1>
-                <?php
-                echo '<table style="width: 100%;">';
-                foreach ($similarProducts as $oneSimilarProduct) {
-                    echo '<tr>';
-                    echo '<td>' . CHtml::link(CHtml::image($oneSimilarProduct->thumbnail(), '', array('style' => 'width: 100px;')), array('view', 'id' => $oneSimilarProduct->productID)) . '</td>';
-                    echo '<td>' . CHtml::link($oneSimilarProduct->name, array('view', 'id' => $oneSimilarProduct->productID),array('style' => 'color: #333333;')) . '</td>';
-                    echo '<td>' . $oneSimilarProduct->priceCurrency() . '</td>';
-                    echo '<td>' . CHtml::link('', '', array('class' => 'to-basket-button-immediate', 'productID' => $oneSimilarProduct->productID)) . '</td>';
-                    echo '</tr>';
-                }
+        </p>
 
-                echo '</table>';
-            }
-            ?>
-        </div>
-        <!--.product-description-->
-        <div class="clear"></div>
+        <?php if ($model->discount > 0) { ?>
+            <p style="position: relative;top: -6px;"><small>С учетом скидки <?php echo $model->discount; ?>%</small></p>
+        <?php } ?>
     </div>
-    <!--.product-item-->
-    <div class="header-wrapper">
-        <div class="header-wave-blue">
-            <div class="header">
-                <h2>С этим товаром покупают</h2>
-            </div>
-        </div>
-    </div>
-    <!--.header-wrapper-->
-    <div class="products-line four-item">
-        <?php
-        foreach ($relatedProducts as $oneRelatedProduct) {
-            echo '<div class="products-item">';
-            echo '<div class="product-image">' . CHtml::link(CHtml::image($oneRelatedProduct->thumbnail()), array('view', 'id' => $oneRelatedProduct->productID)) . '</div>';
-            echo '<div class="name-product">' . CHtml::link($oneRelatedProduct->name, array('view', 'id' => $oneRelatedProduct->productID), array('class' => '')) . '</div>';
-            echo '<div class="product-price">';
-            echo CHtml::link('', '', array('class' => 'to-basket-button', 'productID' => $oneRelatedProduct->productID));
-            echo '<span>' . $oneRelatedProduct->priceCurrency() . '</span>';
-            echo '</div>';
+</div>
 
-            echo '</div>';
-        }
-        ?>
-        <div class="clear"></div>
-    </div>
-    <!--.products-line-->
-</div><!--.main-content-->

@@ -27,6 +27,7 @@
  * @property Picture[] $pictures
  * @property ProductStatus $productStatus
  * @property Catalog $catalog
+ * @property User $user
  */
 class Product extends CActiveRecord
 {
@@ -80,6 +81,7 @@ class Product extends CActiveRecord
             'pictures' => array(self::HAS_MANY, 'Picture', 'productID'),
             'productStatus' => array(self::BELONGS_TO, 'ProductStatus', 'productStatusID'),
             'catalog' => array(self::BELONGS_TO, 'Catalog', 'catalogID'),
+            'user' => array(self::BELONGS_TO, 'User', 'userID'),
         );
     }
 

@@ -3,10 +3,6 @@
 /* @var $dataProvider CActiveDataProvider */
 /* @var $hierarchy array */
 
-$this->breadcrumbs = array(
-    'Каталог',
-);
-
 $this->widget('zii.widgets.CListView', array(
     'dataProvider' => $dataProvider,
     'itemView' => '_view',

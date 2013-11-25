@@ -124,6 +124,46 @@ class Catalog extends CActiveRecord
     }
 
     /**
+     * @return Catalog|null
+     */
+    public function parent()
+    {
+        return Catalog::model()->findByPk($this->parent);
+    }
+
+    /**
+     * @param Catalog $catalog
+     * @param Catalog[] $parents
+     */
+    private function _parents($catalog, &$parents)
+    {
+        if ($catalog === null) {
+            return;
+        }
+
+        $parent = $catalog->parent();
+        if ($parent) {
+            $parents[] = $parent;
+        }
+
+        $this->_parents($parent, $parents);
+    }
+
+    /**
+     * @return Catalog[]
+     */
+    public function parents()
+    {
+        $parents = array();
+
+        $this->_parents($this, $parents);
+
+        $parents = array_reverse($parents);
+
+        return $parents;
+    }
+
+    /**
      * @return Catalog[]
      */
     public function children()
@@ -181,7 +221,7 @@ class Catalog extends CActiveRecord
                 ->query()
                 ->rowCount;
             $catalogArr = array();
-            $catalogArr['text'] = CHtml::link('<span class="glyphicon glyphicon-edit"></span>', array("/catalog/update", 'id' => $catalog->catalogID), array('data-toggle'=>'tooltip' , 'title'=>'Редактировать'));
+            $catalogArr['text'] = CHtml::link('<span class="glyphicon glyphicon-edit"></span>', array("/catalog/update", 'id' => $catalog->catalogID), array('data-toggle' => 'tooltip', 'title' => 'Редактировать'));
 
             $catalogArr['text'] .= ' <span class="badge pull-right">' . $productCount . '</span>';
             $catalogArr['text'] .= CHtml::link($catalog->name, array("/product/index", 'c' => $catalog->catalogID));
