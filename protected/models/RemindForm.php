@@ -50,17 +50,19 @@ class RemindForm extends CFormModel
             'email' => $this->email,
         ));
 
-        if($user !== null){
+        if ($user !== null) {
 
-            $message = 'Для смены пароля на сайте "'.Yii::app()->name.'" перейдите по ссылке: ' . Yii::app()->createAbsoluteUrl('changePassword',array('c' => md5($user->email)));
+            $url = Yii::app()->createAbsoluteUrl('site/changePassword', array('c' => md5($user->email)));
+
+            $message = 'Для смены пароля на сайте "' . Yii::app()->name . '" перейдите по ссылке: ' . $url;
 
             $mailer = new Mailer();
-            $mailer->sendMailSimple($user, 'Регистрация на сайте "' . Yii::app()->name . '"', $message);
+            $mailer->sendMailSimple($user, 'Смена пароля на сайте "' . Yii::app()->name . '"', $message);
 
             return true;
         }
 
-        $this->addError('email','Пользователь с такой почтой не найден');
+        $this->addError('email', 'Пользователь с такой почтой не найден');
         return false;
     }
 }
