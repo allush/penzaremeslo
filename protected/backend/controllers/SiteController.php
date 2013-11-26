@@ -23,12 +23,12 @@ class SiteController extends BackendController
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
                 'actions' => array(
                     'login',
+                    'logout',
                 ),
                 'users' => array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
                 'actions' => array(
-                    'logout',
                     'index',
                     'error',
                 ),
@@ -67,6 +67,10 @@ class SiteController extends BackendController
      */
     public function actionLogin()
     {
+        if (!Yii::app()->user->isGuest) {
+            $this->redirect(Yii::app()->homeUrl);
+        }
+
         $this->layout = "clear";
         $model = new BackendLoginForm();
 
@@ -74,8 +78,9 @@ class SiteController extends BackendController
         if (isset($_POST['BackendLoginForm'])) {
             $model->attributes = $_POST['BackendLoginForm'];
             // validate user input and redirect to the previous page if valid
-            if ($model->validate() && $model->login())
+            if ($model->validate() && $model->login()) {
                 $this->redirect(Yii::app()->user->returnUrl);
+            }
         }
         // display the login form
         $this->render('login', array('model' => $model));

@@ -23,7 +23,6 @@
  * @property integer $userID
  *
  * The followings are the available model relations:
- * @property OrderItem[] $orderItems
  * @property Picture[] $pictures
  * @property ProductStatus $productStatus
  * @property Catalog $catalog
@@ -77,7 +76,6 @@ class Product extends CActiveRecord
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            'orderItems' => array(self::HAS_MANY, 'OrderItem', 'productID'),
             'pictures' => array(self::HAS_MANY, 'Picture', 'productID'),
             'productStatus' => array(self::BELONGS_TO, 'ProductStatus', 'productStatusID'),
             'catalog' => array(self::BELONGS_TO, 'Catalog', 'catalogID'),
@@ -168,7 +166,7 @@ class Product extends CActiveRecord
      */
     public function thumbnail($index = 0)
     {
-        if (count($this->pictures) > 0){
+        if (count($this->pictures) > 0) {
             return $this->pictures[$index]->thumbnail();
         }
 
@@ -204,5 +202,15 @@ class Product extends CActiveRecord
             $price = round($this->price - ($this->price * $this->discount / 100));
         }
         return $price;
+    }
+
+    public function author()
+    {
+        $author = 'не указан';
+        if ($this->user) {
+            $author = $this->user->fullName();
+        }
+
+        return $author;
     }
 }

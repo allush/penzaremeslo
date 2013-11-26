@@ -16,7 +16,7 @@ $this->widget('zii.widgets.CListView', array(
     'template' => '{items} {pager}',
     'summaryText' => '',
     'emptyText' => '',
-    'pagerCssClass' => 'pager',
+    'pagerCssClass' => '',
     'pager' => array(
         'firstPageLabel' => '<<',
         'prevPageLabel' => '<',
@@ -24,9 +24,10 @@ $this->widget('zii.widgets.CListView', array(
         'lastPageLabel' => '>>',
         'maxButtonCount' => '7',
         'header' => '',
-        'cssFile' => '',
         'selectedPageCssClass' => 'active',
+        'htmlOptions' => array(
+            'class' => 'pagination',
+        )
     ),
-    'id' => 'product-container',
 ));
 

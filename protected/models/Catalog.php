@@ -198,9 +198,7 @@ class Catalog extends CActiveRecord
     {
         /** @var $catalogs Catalog[] */
         $catalogs = Catalog::model()->findAllByAttributes(
-            array(
-                'parent' => $parent !== null ? $parent->catalogID : null,
-            ),
+            array('parent' => ($parent !== null ? $parent->catalogID : null),),
             array('order' => 'name asc')
         );
         foreach ($catalogs as $catalog) {
@@ -216,10 +214,14 @@ class Catalog extends CActiveRecord
                 ->where('product.catalogID IN (' . $ids . ') AND deleted=0')
                 ->query()
                 ->rowCount;
-            $catalogArr = array();
-            $catalogArr['text'] = CHtml::link('<span class="glyphicon glyphicon-edit"></span>', array("/catalog/update", 'id' => $catalog->catalogID), array('data-toggle' => 'tooltip', 'title' => 'Редактировать'));
 
-            $catalogArr['text'] .= ' <span class="badge pull-right">' . $productCount . '</span>';
+            $catalogArr = array();
+            $catalogArr['text'] = '';
+            if ($mode == 'edit') {
+                $catalogArr['text'] = CHtml::link('<span class="glyphicon glyphicon-edit"></span>', array("/catalog/update", 'id' => $catalog->catalogID), array('data-toggle' => 'tooltip', 'title' => 'Редактировать'));
+
+            }
+            $catalogArr['text'] .= ' <span title="Количество товаров в каталоге" class="badge pull-right">' . $productCount . '</span>';
             $catalogArr['text'] .= CHtml::link($catalog->name, array("/product/index", 'c' => $catalog->catalogID));
 
 

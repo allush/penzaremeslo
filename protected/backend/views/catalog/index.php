@@ -6,7 +6,6 @@ $this->breadcrumbs = array(
     'Каталоги',
 );
 
-
 $this->menu = array(
     array('label' => 'Создать', 'url' => array('create')),
 );
