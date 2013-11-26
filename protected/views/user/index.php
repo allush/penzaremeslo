@@ -2,6 +2,8 @@
 /* @var $this NewsController */
 /* @var $dataProvider CActiveDataProvider */
 
+$this->pageTitle = 'Мастера';
+$this->pageDescription = 'Мастера';
 
 $this->breadcrumbs = array(
     'Мастера',

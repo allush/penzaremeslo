@@ -62,16 +62,11 @@ class ProductController extends FrontController
     public function actionIndex($c = null)
     {
         $this->layout = 'catalog';
-        $this->pageTitle = 'Каталог';
 
+        $this->pageTitle = 'Каталог';
         $this->breadcrumbs = array(
             'Каталог'
         );
-
-        $this->catalogs = Catalog::model()->findAll(array(
-            'condition' => 'parent IS NULL',
-            'order' => 'name ASC'
-        ));
 
         $criteria = new CDbCriteria();
 
@@ -79,7 +74,6 @@ class ProductController extends FrontController
 
             /** @var Catalog $catalog */
             $catalog = Catalog::model()->findByPk($c);
-
             if ($catalog !== null) {
 
                 $this->breadcrumbs = array(
@@ -90,7 +84,7 @@ class ProductController extends FrontController
                 }
                 $this->breadcrumbs[] = $catalog->name;
 
-                $this->pageTitle .= ' - ' . $catalog->name;
+                $this->pageTitle = $catalog->name . ' - ' . $this->pageTitle;
 
                 $catalogIDs = array();
                 Catalog::childrenRecursively($catalogIDs, $c);
@@ -115,7 +109,6 @@ class ProductController extends FrontController
 
         $this->render('index', array(
             'dataProvider' => $dataProvider,
-            'catalogs' => $this->catalogs,
         ));
     }
 

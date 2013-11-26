@@ -2,6 +2,9 @@
 /* @var $this NewsController */
 /* @var $model News */
 
+$this->pageTitle = $model->header . ' - Новости';
+$this->pageDescription = $model->header;
+
 ?>
 <style type="text/css">
     .action {

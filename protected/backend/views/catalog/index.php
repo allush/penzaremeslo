@@ -12,7 +12,7 @@ $this->menu = array(
 );
 
 $this->widget('system.web.widgets.CTreeView', array(
-    'data' => $this->hierarchy(),
+    'data' => Catalog::hierarchy(),
     'collapsed' => false,
     'unique' => false,
     'persist' => 'location',

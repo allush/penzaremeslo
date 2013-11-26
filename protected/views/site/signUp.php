@@ -3,6 +3,8 @@
 /* @var $model SignUpForm */
 /* @var $form CActiveForm */
 
+$this->pageTitle = 'Регистрация';
+
 $this->breadcrumbs = array(
     'Регистрация',
 );

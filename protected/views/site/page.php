@@ -3,6 +3,5 @@
 /* @var $data */
 
 echo $data;
-?>
 
 

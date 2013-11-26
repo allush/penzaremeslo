@@ -1,7 +1,6 @@
 <?php
 /* @var $this ProductController */
 /* @var $dataProvider CActiveDataProvider */
-/* @var $hierarchy array */
 
 $this->widget('zii.widgets.CListView', array(
     'dataProvider' => $dataProvider,

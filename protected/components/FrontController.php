@@ -8,22 +8,29 @@
  */
 class FrontController extends CController
 {
-    public $pageTitleBase = 'penzaremeslo.ru';
+    public $pageDescription = null;
 
-    public $pageTitle = 'Ремесленная палата Пензенской области';
-    public $description = 'Ремесленная палата Пензенской области';
-
-    public $sigInForm = null;
-
-    public function __construct($id, $module){
-        $this->sigInForm = new SignInForm();
-        parent::__construct($id, $module);
-    }
     public function pageTitle()
     {
-        return $this->pageTitleBase . ' - ' . $this->pageTitle;
+        $pageTitle = Yii::app()->name;
+
+        if (strlen($this->pageTitle) > 0) {
+            $pageTitle = $this->pageTitle . ' - ' . $pageTitle;
+        }
+
+        return $pageTitle;
     }
 
+    public function pageDescription()
+    {
+        $pageDescription = Yii::app()->name;
+
+        if (strlen($this->pageDescription) > 0) {
+            $pageDescription = $this->pageDescription . ' - ' . $pageDescription;
+        }
+
+        return $pageDescription;
+    }
     /**
      * @var string the default layout for the controller view. Defaults to '//layouts/column1',
      * meaning using a single column layout. See 'protected/views/layouts/column1.php'.

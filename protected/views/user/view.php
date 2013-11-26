@@ -2,17 +2,19 @@
 /* @var $this UserController */
 /* @var $model User */
 
+$this->pageTitle = $model->fullName() . ' - Мастера';
+$this->pageDescription = 'Мастер ' . $model->fullName();
+
 $this->breadcrumbs = array(
     'Мастера' => array('index'),
     $model->fullName(),
 );
-
 ?>
 
 <div class="row">
     <div class="col-md-3">
         <div class="text-center" style="margin-bottom: 12px;">
-            <?php echo CHtml::image($model->photo(), '', array('class' => 'img-rounded','style' => 'max-width: 200px;')); ?>
+            <?php echo CHtml::image($model->photo(), '', array('class' => 'img-rounded', 'style' => 'max-width: 200px;')); ?>
         </div>
 
         <div class="text-center"><?php echo $model->fullName(); ?></div>
@@ -25,7 +27,6 @@ $this->breadcrumbs = array(
     </div>
 
     <div class="col-md-9">
-
         <?php echo $model->description; ?>
     </div>
 </div>

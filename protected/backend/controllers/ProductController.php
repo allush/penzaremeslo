@@ -271,8 +271,7 @@ class ProductController extends BackendController
      */
     public function actionIndex($c = null, $key = null)
     {
-        $hierarchy = array();
-        Catalog::_loadHierarchy($hierarchy, null, 'view');
+        $hierarchy = Catalog::hierarchy('edit');
 
         $criteria = new CDbCriteria();
         $criteria->condition = 'catalogID IS NOT NULL AND deleted=0';

@@ -3,6 +3,8 @@
 /* @var $model SignInForm */
 /* @var $form CActiveForm */
 
+$this->pageTitle = 'Вход';
+
 $this->breadcrumbs = array(
     'Вход',
 );

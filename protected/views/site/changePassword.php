@@ -3,6 +3,8 @@
 /* @var $model ChangePasswordForm */
 /* @var $form CActiveForm */
 
+$this->pageTitle = 'Восстановление пароля';
+
 $this->breadcrumbs = array(
     'Восстановление пароля',
 );

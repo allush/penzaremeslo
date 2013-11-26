@@ -110,12 +110,4 @@ class CatalogController extends BackendController
             throw new CHttpException(404, 'The requested page does not exist.');
         return $model;
     }
-
-
-    public function hierarchy()
-    {
-        $result = array();
-        Catalog::_loadHierarchy($result);
-        return $result;
-    }
 }

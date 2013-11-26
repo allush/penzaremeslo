@@ -3,7 +3,8 @@
 <html lang="ru">
 
 <head>
-    <title><?php echo CHtml::encode($this->pageTitle); ?></title>
+    <title><?php echo CHtml::encode($this->pageTitle()); ?></title>
+    <meta name="description" content="<?php echo CHtml::encode($this->pageDescription()); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -11,7 +12,6 @@
 
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/front.main.css">
-
 </head>
 
 <body>

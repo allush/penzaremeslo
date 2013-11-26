@@ -168,13 +168,9 @@ class Catalog extends CActiveRecord
      */
     public function children()
     {
-        $children = array();
-        if (!$this->isNewRecord) {
-            $children = Catalog::model()->findAllByAttributes(array(
-                'parent' => $this->catalogID,
-            ));
-        }
-        return $children;
+        return Catalog::model()->findAllByAttributes(array(
+            'parent' => $this->catalogID,
+        ));
     }
 
     public static function childrenRecursively(&$catalogIDs, $catalogID)
@@ -198,7 +194,7 @@ class Catalog extends CActiveRecord
      * @param $parent Catalog|null
      * @return array
      */
-    public static function _loadHierarchy(&$result, $parent = null, $mode = 'edit')
+    public static function _loadHierarchy(&$result, $mode, $parent = null)
     {
         /** @var $catalogs Catalog[] */
         $catalogs = Catalog::model()->findAllByAttributes(
@@ -228,11 +224,18 @@ class Catalog extends CActiveRecord
 
 
             $children = array();
-            self::_loadHierarchy($children, $catalog, $mode);
+            self::_loadHierarchy($children, $mode, $catalog);
             $catalogArr['children'] = $children;
             $result[] = $catalogArr;
             $children = array();
             unset($children);
         }
+    }
+
+    public static function hierarchy($mode = 'view')
+    {
+        $result = array();
+        Catalog::_loadHierarchy($result, $mode);
+        return $result;
     }
 }

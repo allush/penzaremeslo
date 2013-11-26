@@ -11,8 +11,6 @@ class SiteController extends FrontController
         );
     }
 
-    public $catalogs = array();
-
     public function actionAbout()
     {
         $this->breadcrumbs = array(
@@ -45,11 +43,6 @@ class SiteController extends FrontController
      */
     public function actionIndex()
     {
-        $this->catalogs = Catalog::model()->findAll(array(
-            'condition' => 'parent IS NULL',
-            'order' => 'name ASC'
-        ));
-
         $this->layout = 'catalog';
 
         $masters = User::model()->findAll(array(

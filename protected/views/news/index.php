@@ -3,6 +3,8 @@
 /* @var $dataProvider CActiveDataProvider */
 /* @var $popularNews CActiveDataProvider */
 
+$this->pageTitle = 'Новости';
+$this->pageDescription = 'Новости';
 
 $this->breadcrumbs = array(
     'Новости',
