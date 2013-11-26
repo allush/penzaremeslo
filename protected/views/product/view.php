@@ -8,11 +8,11 @@ $this->breadcrumbs = array(
 foreach ($model->catalog->parents() as $catalog) {
     $this->breadcrumbs[$catalog->name] = array('index', 'c' => $catalog->catalogID);
 }
-$this->breadcrumbs[$model->catalog->name] = array('index', 'c' => $model->catalogID !== null ? $model->catalogID : -1);
+$this->breadcrumbs[$model->catalog->name] = array('index', 'c' => $model->catalogID);
 $this->breadcrumbs[] = $model->name;
 
 $this->menu = array(
-    array('label' => 'Назад', 'url' => (isset(Yii::app()->request->urlReferrer) ? Yii::app()->request->urlReferrer : array('index', 'c' => $model->catalogID !== null ? $model->catalogID : -1))),
+    array('label' => 'Назад', 'url' => (isset(Yii::app()->request->urlReferrer) ? Yii::app()->request->urlReferrer : array('index', 'c' => $model->catalogID))),
 );
 ?>
 

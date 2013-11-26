@@ -91,21 +91,6 @@ class UserController extends FrontController
     {
         $model = $this->loadModel($id);
 
-        if ($model->userID == Yii::app()->user->getState('userID')) {
-            $this->menu = array(
-                array('label' => 'Редактировать', 'url' => array('update', 'id' => $model->userID)),
-            );
-
-            $this->breadcrumbs = array(
-                'Мой профиль',
-            );
-        } else {
-            $this->breadcrumbs = array(
-                'Мастера' => array('index'),
-                $model->fullName(),
-            );
-        }
-
         $this->render('view', array(
             'model' => $model,
         ));

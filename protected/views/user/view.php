@@ -5,9 +5,20 @@
 $this->pageTitle = $model->fullName() . ' - Мастера';
 $this->pageDescription = 'Мастер ' . $model->fullName();
 
-$this->breadcrumbs = array(
-    'Мастера' => array('index'),
-    $model->fullName(),
+if ($model->userID == Yii::app()->user->getState('userID')) {
+    $this->breadcrumbs = array(
+        'Мой профиль',
+    );
+} else {
+    $this->breadcrumbs = array(
+        'Мастера' => array('index'),
+        $model->fullName(),
+    );
+}
+
+$this->menu = array(
+    array('label' => 'Назад', 'url' => array('index')),
+    array('label' => 'Редактировать', 'url' => array('update', 'id' => $model->userID), 'visible' => $model->userID == Yii::app()->user->getState('userID')),
 );
 ?>
 
@@ -20,9 +31,9 @@ $this->breadcrumbs = array(
         <div class="text-center"><?php echo $model->fullName(); ?></div>
         <div class="text-center"><?php echo $model->phone; ?></div>
         <div class="text-center"><?php echo $model->email; ?></div>
-
+        <br>
         <div class="text-center">
-            <?php echo CHtml::link('Посмотреть работы мастера', array(), array('class' => 'btn btn-default')) ?>
+            <?php echo CHtml::link('Посмотреть работы мастера', array('/product/index','userID' => $model->userID), array('class' => 'btn btn-default btn-sm')) ?>
         </div>
     </div>
 
