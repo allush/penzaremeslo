@@ -1,13 +1,6 @@
 <?php
 /** @var $data News */
 ?>
-
-<div class="form-group">
-
-    <div class="checkbox">
-        <?php
-        echo CHtml::checkBox('');
-        echo CHtml::link($data->header, array("update", "id" => $data->newsID));
-        ?>
-    </div>
-</div>
+<li>
+    <?php echo '<small>'.date('d.m.Y', $data->createdOn) . '</small> ' . CHtml::link($data->header, array("update", "id" => $data->newsID)); ?>
+</li>

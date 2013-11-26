@@ -9,20 +9,15 @@ $this->breadcrumbs = array(
 $this->menu = array(
     array('label' => 'Создать', 'url' => array('create')),
 );
-$form = $this->beginWidget('CActiveForm', array(
-    'action' => array('groupAction'),
-    'id' => 'product-form',
-    'enableAjaxValidation' => false,
-    'htmlOptions' => array(),
-));
 
 $this->widget('zii.widgets.CListView', array(
     'dataProvider' => $dataProvider,
     'itemView' => '_view',
-    'itemsTagName' => 'table',
-    'itemsCssClass' => 'table table-bordered table-condensed table-hover',
+    'itemsTagName' => 'ul',
+    'itemsCssClass' => 'list-unstyled',
     'sortableAttributes' => array(
         'header',
+        'createdOn'
     ),
     'template' => '{summary} {sorter} {items} {pager}',
     'summaryText' => '{start} - {end} из {count}',
@@ -42,5 +37,3 @@ $this->widget('zii.widgets.CListView', array(
         )
     ),
 ));
-
-$this->endWidget();

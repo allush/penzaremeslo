@@ -22,7 +22,9 @@ $this->pageDescription = $model->header;
 </style>
 
 <?php
-echo CHtml::link('<= Все новости', array('index'), array('class' => 'btn btn-default'));
+$this->menu = array(
+    array('label' => 'Назад', 'url' => array('index')),
+);
 ?>
 
 <div class="action">

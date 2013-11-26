@@ -22,6 +22,8 @@ if (Yii::app()->user->hasFlash('success')) {
 $this->widget('zii.widgets.CListView', array(
     'dataProvider' => $dataProvider,
     'itemView' => '_view',
-    'summaryText' => '{start} - {end} из {count}',
+    'itemsTagName' => 'ul',
+    'itemsCssClass' => 'list-unstyled',
+    'template' => '{items}',
     'emptyText' => 'У вас пока нет ни одной страницы',
 ));

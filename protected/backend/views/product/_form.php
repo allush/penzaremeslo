@@ -80,7 +80,7 @@
                 <?php
                 echo $form->dropDownList($model, 'userID',
 
-                    CHtml::listData(User::model()->findAll(), 'userID', 'surname'),array(
+                    CHtml::listData(User::model()->findAll(array('order' => 'surname ASC')), 'userID', 'surname'),array(
                         'class' => 'form-control',
                         'title' => $model->getAttributeLabel('userID'),
                     ));
@@ -106,7 +106,7 @@
             <div class="col-md-9">
                 <?php
                 echo $form->dropDownList($model, 'catalogID',
-                    CHtml::listData(Catalog::model()->findAll(), 'catalogID', 'name'),
+                    CHtml::listData(Catalog::model()->findAll(array('order' => 'name ASC')), 'catalogID', 'name'),
                     array('class' => 'form-control', 'title' => $model->getAttributeLabel('catalogID'), 'prompt' => '')
                 );
                 echo $form->error($model, 'catalogID');

@@ -6,6 +6,7 @@
  * Time: 23:09
  * To change this template use File | Settings | File Templates.
  */
+
 $this->menu = array(
     array('label' => 'Все товары', 'url' => array('/product/index')),
     array('label' => 'Добавить товары', 'url' => array('/product/create')),

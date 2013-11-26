@@ -6,15 +6,11 @@ $this->breadcrumbs = array(
     'Пользователи',
 );
 
-$this->menu = array(
-    array('label' => 'Создать', 'url' => array('create')),
-);
-
 $this->widget('zii.widgets.grid.CGridView', array(
     'dataProvider' => $dataProvider,
     'summaryText' => '{start} - {end} из {count}',
     'summaryCssClass' => 'pull-right',
-    'itemsCssClass' => 'table table-bordered table-condensed table-hover',
+    'itemsCssClass' => 'table table-condensed table-hover',
     'pagerCssClass' => 'pagination',
     'pager' => array(
         'firstPageLabel' => '<<',
@@ -26,6 +22,8 @@ $this->widget('zii.widgets.grid.CGridView', array(
         'cssFile' => '',
         'selectedPageCssClass' => 'active',
     ),
+    'showTableOnEmpty' => false,
+    'emptyText' => 'Нет ни одного пользователя',
     'columns' => array(
         array(
             'header' => 'ФИО',
@@ -44,8 +42,5 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'value' => '($data->isAdmin == 1)?"Да":"Нет"'
         ),
     ),
-
-    'showTableOnEmpty' => false,
-    'emptyText' => 'Нет ни одного пользователя',
 ));
 

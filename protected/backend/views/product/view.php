@@ -13,7 +13,7 @@ $this->menu = array(
         'label' => 'Удалить',
         'url' => '#',
         'linkOptions' => array(
-            'class' => 'text-error',
+            'class' => 'text-danger',
             'submit' => array('delete', 'id' => $model->productID),
             'confirm' => 'Are you sure you want to delete this item?',
             'params' => array(

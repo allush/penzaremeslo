@@ -11,6 +11,8 @@
 
     <link rel='stylesheet' href='<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap.min.css'
           type='text/css'>
+    <link rel='stylesheet' href='<?php echo Yii::app()->request->baseUrl; ?>/css/backend.main.css'
+          type='text/css'>
     <link rel='stylesheet' href='<?php echo Yii::app()->request->baseUrl; ?>/treeview/jquery.treeview.css'
           type='text/css'>
 
@@ -71,7 +73,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="submenu">
+            <div id="submenu">
                 <?php
                 $this->widget('zii.widgets.CMenu', array(
                     'items' => $this->menu,

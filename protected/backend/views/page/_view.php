@@ -3,6 +3,4 @@
 /* @var $data Page */
 ?>
 
-<div class="page">
-    <?php echo ($index + 1) . '. ' . CHtml::link($data->name, array('update', 'id' => $data->pageID)); ?>
-</div>
+<li><?php echo CHtml::link($data->name, array('update', 'id' => $data->pageID)); ?></li>

@@ -15,8 +15,22 @@
 
 
 
+.news{
+    padding-bottom: 20px;
+    background: url(/img/divider_up.png) no-repeat 50% 100%;
+}
+
+.news .news-createdOn{
+    color: #666;
+    font-size: 13px;
+}
+.news .news-content{
+}
+
+
+
 .product-card h2 {
-    margin-top: 0px;;
+    margin-top: 0px;
 }
 
 .product-card .product-price {

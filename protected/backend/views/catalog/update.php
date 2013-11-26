@@ -15,7 +15,7 @@ $this->menu = array(
         'label' => 'Удалить',
         'url' => '#',
         'linkOptions' => array(
-            'class' => 'text-error',
+            'class' => 'text-danger',
             'submit' => array('delete', 'id' => $model->catalogID),
             'confirm' => 'Вы уверены? Подкаталоги(если они есть) станут каталогами верхнего уровня, а все товары ДАННОГО каталога не будут привязаны ни к одному каталогу.',
             'params' => array(
