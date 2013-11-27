@@ -8,8 +8,15 @@ $this->breadcrumbs = array(
 $this->menu = array(
     array('label' => 'Назад', 'url' => array('index')),
 );
-
 ?>
+
+<div class="panel panel-danger">
+    <div class="panel-heading">Внимание!</div>
+    <div class="panel-body">
+        <p>Максимальный размер загружаемого изображения: 8 Мб.</p>
+        <p>Для каждой загружаемой фотографии будет создан отдельный товар. Добавить дополнительные картинки к товару можно при его редактировании.</p>
+    </div>
+</div>
 
 <style type="text/css">@import url(/plupload/js/jquery.plupload.queue/css/jquery.plupload.queue.css);</style>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>

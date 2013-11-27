@@ -18,8 +18,8 @@ $this->widget('zii.widgets.CListView', array(
     'sortableAttributes' => array(
         'name',
         'existence',
-        'discount',
-        'productStatusID',
+        'price',
+        'catalogID',
         'createdOn',
         'modifiedOn',
     ),

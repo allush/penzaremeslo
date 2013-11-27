@@ -4,33 +4,62 @@
 /* @var $form CActiveForm */
 ?>
 
+<style type="text/css">
+    .thumb {
+        padding: 4px 8px 4px 4px;
+        margin-top: 4px;
+        border-bottom: 1px solid #ccc;
+    }
 
+    .thumb:hover {
+        background-color: #efefef;
+    }
+
+    .thumb.active {
+        background-color: #F5D7D7;
+    }
+</style>
 <div class="row">
     <div class="col-md-3">
         <?php echo CHtml::image($model->thumbnail(), '', array('id' => 'mainPicture', 'style' => 'max-width: 260px;max-height: 195px;')); ?>
-        <div class="row thumbnails" style="margin-top: 12px;">
+        <div class="myProduct-thumbnails"
+        ">
+        <?php
+        foreach ($model->pictures as $picture) {
+        ?>
+        <div class="thumb <?php echo($picture->cover == 1 ? 'active' : ''); ?>">
             <?php
-            foreach ($model->pictures as $picture) {
-                echo '<div class="col-md-4">';
-                echo CHtml::image($picture->thumbnail(), '', array('style' => "width: 64px;"));
+            echo CHtml::image($picture->thumbnail(), '', array('style' => "width: 64px; cursor: pointer;"));
 
-                echo '<small>';
-                echo CHtml::link('Удалить', '#', array(
-                    'class' => 'text-error',
+            echo CHtml::link(
+                '<span class="glyphicon glyphicon-trash"></span>',
+                '#',
+                array(
+                    'style' => 'position: relative; top: 10px;',
+                    'title' => 'Удалить',
+                    'class' => 'btn btn-xs btn-danger pull-right',
                     'submit' => array('deletePicture', 'productPictureID' => $picture->productPictureID),
                     'confirm' => 'Вы уверены?',
                     'params' => array('YII_CSRF_TOKEN' => Yii::app()->request->csrfToken),
                 ));
-                echo '</small>';
 
-                echo '</div>';
+            echo CHtml::link(
+                '<span class="glyphicon glyphicon-picture"></span>',
+                array('setCover', 'pictureID' => $picture->productPictureID, 'id' => $model->productID),
+                array(
+                    'style' => 'position: relative; top: 10px; right: 4px;',
+                    'title' => 'Сделать главной',
+                    'class' => 'btn btn-xs btn-info pull-right',
+                ));
+
+            echo '</div>';
             }
             ?>
         </div>
     </div>
 
     <script type="text/javascript">
-        $('.thumbnails img').click(function () {
+        $('.myProduct-thumbnails img').click(function () {
             $('#mainPicture').attr('src', $(this).attr('src'));
         });
     </script>
@@ -40,7 +69,7 @@
         'action' => array('update', 'id' => $model->productID),
         'id' => 'product-form',
         'enableAjaxValidation' => true,
-        'clientOptions'=>array('validateOnSubmit'=>true),
+        'clientOptions' => array('validateOnSubmit' => true),
         'htmlOptions' => array(
             'class' => 'form-horizontal',
             'role' => 'form'
@@ -150,9 +179,8 @@
     </div>
     <?php $this->endWidget(); ?>
 </div>
-
 <br>
-
+<h4>Добавление дополнительных картинок</h4>
 <div class="row">
     <div class="col-md-12">
         <style type="text/css">@import url(/plupload/js/jquery.plupload.queue/css/jquery.plupload.queue.css);</style>

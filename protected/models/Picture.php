@@ -7,6 +7,7 @@
  * @property integer $productPictureID
  * @property string $filename
  * @property integer $productID
+ * @property integer $cover
  *
  * The followings are the available model relations:
  * @property Product $product
@@ -40,7 +41,7 @@ class Picture extends CActiveRecord
         // will receive user inputs.
         return array(
             array('filename, productID', 'required'),
-            array('productID', 'numerical', 'integerOnly' => true),
+            array('productID, cover', 'numerical', 'integerOnly' => true),
             array('filename', 'length', 'max' => 255),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
@@ -69,6 +70,7 @@ class Picture extends CActiveRecord
             'productPictureID' => 'Product Picture',
             'filename' => 'Filename',
             'productID' => 'Product',
+            'cover' => 'Обложка'
         );
     }
 

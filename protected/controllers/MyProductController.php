@@ -98,6 +98,7 @@ class MyProductController extends FrontController
                 $picture = new Picture();
                 $picture->productID = $product->productID;
                 $picture->filename = $filename;
+                $picture->cover = 1;
                 $picture->save();
 
                 $picture->createThumbnail();
@@ -147,6 +148,21 @@ class MyProductController extends FrontController
         @unlink($base . $picture->thumbnail());
         @unlink($base . $picture->watermark());
 
+        if ($picture->cover == 1) {
+            /** @var Picture $anotherPicture */
+            $anotherPicture = Picture::model()->find(
+                'productID=:productID AND productPictureID<>:productPictureID',
+                array(
+                    ':productID' => $picture->productID,
+                    ':productPictureID' => $picture->productPictureID,
+                )
+            );
+            if ($anotherPicture !== null) {
+                $anotherPicture->cover = 1;
+                $anotherPicture->save();
+            }
+        }
+
         $picture->delete();
 
         $this->redirect(Yii::app()->request->urlReferrer);
@@ -160,6 +176,28 @@ class MyProductController extends FrontController
         $model->save();
 
         $this->redirect(array('index'));
+    }
+
+    public function actionSetCover($pictureID, $id)
+    {
+        /** @var Picture $picture */
+        $picture = Picture::model()->findByPk($pictureID);
+        if ($picture !== null) {
+
+           Picture::model()->updateAll(
+                array('cover' => 0),
+                'productID=:productID',
+                array(':productID' => $id)
+            );
+
+            $picture->cover = 1;
+            $picture->save();
+        }
+        if (Yii::app()->request->isAjaxRequest) {
+            Yii::app()->end();
+        }
+
+        $this->redirect(array('view', 'id' => $id));
     }
 
     /**

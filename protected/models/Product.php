@@ -135,39 +135,56 @@ class Product extends CActiveRecord
     }
 
     /**
-     * @param int $index
+     * @return Picture|null
+     */
+    public function cover(){
+
+        return Picture::model()->find(
+            'cover=:cover AND productID=:productID',
+            array(
+                ':cover' => 1,
+                ':productID' => $this->productID,
+            )
+        );
+    }
+
+    /**
      * @return null|string
      */
-    public function large($index = 0)
+    public function large()
     {
-        if (count($this->pictures) > 0) {
-            return $this->pictures[$index]->large();
+        $cover = $this->cover();
+
+        if($cover !== null){
+            return $cover->large();
         }
 
         return null;
     }
 
     /**
-     * @param int $index
      * @return null|string
      */
-    public function watermark($index = 0)
+    public function watermark()
     {
-        if (count($this->pictures) > 0) {
-            return $this->pictures[$index]->watermark();
+        $cover = $this->cover();
+
+        if($cover !== null){
+            return $cover->watermark();
         }
 
         return null;
     }
 
     /**
-     * @param int $index
      * @return null|string
      */
-    public function thumbnail($index = 0)
+    public function thumbnail()
     {
-        if (count($this->pictures) > 0) {
-            return $this->pictures[$index]->thumbnail();
+        $cover = $this->cover();
+
+        if($cover !== null){
+            return $cover->thumbnail();
         }
 
         return null;
@@ -212,5 +229,15 @@ class Product extends CActiveRecord
         }
 
         return $author;
+    }
+
+    public function createdOn()
+    {
+        return date('d.m.Y\<\b\r\>H:i:s', $this->createdOn);
+    }
+
+    public function modifiedOn()
+    {
+        return date('d.m.Y\<\b\r\>H:i:s', $this->modifiedOn);
     }
 }
