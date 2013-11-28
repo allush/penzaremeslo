@@ -94,25 +94,80 @@ class Picture extends CActiveRecord
         ));
     }
 
+//    /**
+//     * На исходном изображении поставить водяной знак, сохранив новое изображение как копию
+//     */
+//    public function setWatermark()
+//    {
+//        $logo = Yii::app()->basePath . '/../img/watermark.png';
+//
+//        if (!file_exists($logo) or is_file($logo)) {
+//            return false;
+//        }
+//
+//        $largePath = Yii::app()->basePath . '/..' . $this->large();
+//        $watermarkPath = Yii::app()->basePath . '/..' . $this->watermark();
+//
+//        $ih = new CImageHandler();
+//        $ih->load($largePath)
+//            ->watermark($logo, 15, 20, CImageHandler::CORNER_CENTER_TOP)
+//            ->save($watermarkPath);
+//    }
+
     /**
      * На исходном изображении поставить водяной знак, сохранив новое изображение как копию
      */
     public function setWatermark()
     {
-        $logo = Yii::app()->basePath . '/../img/watermark.png';
+        $logo_name = Yii::app()->basePath . '/../img/watermark.png';
 
-        if(!file_exists($logo) or is_file($logo)){
+        if (!file_exists($logo_name) or !is_file($logo_name)) {
             return false;
         }
 
-        $largePath = Yii::app()->basePath . '/..' . $this->large();
-        $watermarkPath = Yii::app()->basePath . '/..' .$this->watermark();
+        $watermarkPath = Yii::app()->basePath . '/..' . $this->watermark();
 
-        $ih = new CImageHandler();
-        $ih->load($largePath)
-            ->watermark($logo, 15, 20, CImageHandler::CORNER_RIGHT_BOTTOM)
-            ->save($watermarkPath);
+        $largePath = Yii::app()->basePath . '/..' . $this->large();
+        $image = @imagecreatefromjpeg($largePath);
+
+        $w = imagesx($image);
+        $h = imagesy($image);
+
+        $logo_img = @imagecreatefrompng($logo_name);
+        if ($logo_img) {
+            //Высота исходного изоборажения логотипа
+            $h_logo_src = imagesy($logo_img);
+
+            //Ищем гипотенузу
+            $c = 0;
+            $c = sqrt(pow($w, 2) + pow($h, 2));
+
+            //Ищем угол наклона гипотенузы
+            $rad_angle = asin($h / $c);
+            $deg_angle = rad2deg($rad_angle);
+
+            //Поворачиваем логотип
+            $logo_img = imagerotate($logo_img, $deg_angle, imageColorAllocateAlpha($logo_img, 0, 0, 0, 127));
+
+            //Высота логотипа после поворота
+            $w_logo = imagesx($logo_img);
+            $h_logo = imagesy($logo_img);
+
+            //Кол-во логотипов для данного изображения
+            $num_logo = $c / $w_logo;
+
+            //Добавочная высота и ширина
+            $d_h = $h_logo_src * abs(sin(deg2rad(90 - $deg_angle)));
+            $d_w = -$h_logo_src * abs(cos(deg2rad(90 - $deg_angle)));
+
+            for ($i = 0; $i < $num_logo + 1; $i++) {
+                imagecopy($image, $logo_img, $i * $w_logo + ($i + 1) * $d_w - $d_w / 2, $h - ($i + 1) * $h_logo + ($i + 1) * $d_h - $d_h / 2, 0, 0, $w_logo, $h_logo);
+            }
+        }
+
+        imagejpeg($image, $watermarkPath, 100);
     }
+
 
     /**
      * Из большого изображения с водяным знаком создать миниатюру

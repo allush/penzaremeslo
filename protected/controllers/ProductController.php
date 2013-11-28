@@ -77,9 +77,9 @@ class ProductController extends FrontController
             }
         }
 
-        if($sorting !== null){
+        if ($sorting !== null) {
             $sorting = (int)$sorting;
-            switch($sorting){
+            switch ($sorting) {
                 case self::SORTING_PRICE_DESC:
                     $criteria->order = 't.price DESC';
                     break;
@@ -126,29 +126,7 @@ class ProductController extends FrontController
     {
         $dataProvider = $this->_fetchData($c, $userID, $sorting);
 
-        $this->widget('zii.widgets.CListView', array(
-            'dataProvider' => $dataProvider,
-            'itemView' => '_view',
-            'viewData' => array(
-                'itemCount' => $dataProvider->itemCount,
-            ),
-            'template' => '{items} {pager}',
-            'summaryText' => '',
-            'emptyText' => '',
-            'pagerCssClass' => '',
-            'pager' => array(
-                'firstPageLabel' => '<<',
-                'prevPageLabel' => '<',
-                'nextPageLabel' => '>',
-                'lastPageLabel' => '>>',
-                'maxButtonCount' => '7',
-                'header' => '',
-                'selectedPageCssClass' => 'active',
-                'htmlOptions' => array(
-                    'class' => 'pagination',
-                )
-            ),
-        ));
+        $this->renderPartial('_index', array('dataProvider' => $dataProvider));
     }
 
     /**
@@ -182,7 +160,8 @@ class ProductController extends FrontController
         $this->render('index', array(
             'dataProvider' => $dataProvider,
             'authors' => $authors,
-            'author' => $userID
+            'author' => $userID,
+            'sorting' => $sorting
         ));
     }
 

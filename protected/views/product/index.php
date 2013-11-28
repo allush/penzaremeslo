@@ -3,6 +3,7 @@
 /* @var $dataProvider CActiveDataProvider */
 /* @var $authors array() */
 /* @var $author int */
+/* @var $sorting int */
 ?>
     <div class="row">
         <div class="col-md-12">
@@ -24,7 +25,12 @@
                                 'ajax' => array(
                                     'type' => 'get',
                                     'url' => '/product/fetchData',
-                                    'update' => '#product-container',
+//                                    'update' => '#product-container',
+                                    'success' =>'function(data){
+                                                    $("#product-container").html(data);
+                                                    var url = "?c='.(isset($_GET['c']) ? $_GET['c'] : '').'&userID="+$(\'#userID\').attr(\'value\')+"&sorting="+$(\'#sorting\').attr(\'value\');
+                                                    history.pushState(null, null,url);
+                                                 }',
                                     'data' => array(
                                         'userID' => 'js:$(this).attr(\'value\')',
                                         'sorting' => 'js:$(\'#sorting\').attr(\'value\')',
@@ -40,7 +46,7 @@
                         echo CHtml::label('', '', array('class' => 'sr-only'));
                         echo CHtml::dropDownList(
                             'sorting',
-                            '',
+                            $sorting,
                             array(
                                 ProductController::SORTING_DATE_DESC => 'Новые вверху',
                                 ProductController::SORTING_DATE_ASC => 'Новые внизу',
@@ -57,7 +63,12 @@
                                 'ajax' => array(
                                     'type' => 'get',
                                     'url' => '/product/fetchData',
-                                    'update' => '#product-container',
+//                                    'update' => '#product-container',
+                                    'success' =>'function(data){
+                                                    $("#product-container").html(data);
+                                                    var url = "?c='.(isset($_GET['c']) ? $_GET['c'] : '').'&userID="+$(\'#userID\').attr(\'value\')+"&sorting="+$(\'#sorting\').attr(\'value\');
+                                                    history.pushState(null, null,url);
+                                                 }',
                                     'data' => array(
                                         'userID' => 'js:$(\'#userID\').attr(\'value\')',
                                         'sorting' => 'js:$(this).attr(\'value\')',
@@ -73,27 +84,4 @@
         </div>
     </div>
 
-<?php $this->widget('zii.widgets.CListView', array(
-    'dataProvider' => $dataProvider,
-    'itemView' => '_view',
-    'viewData' => array(
-        'itemCount' => $dataProvider->itemCount,
-    ),
-    'id' => 'product-container',
-    'template' => '{items} {pager}',
-    'summaryText' => '',
-    'emptyText' => '',
-    'pagerCssClass' => '',
-    'pager' => array(
-        'firstPageLabel' => '<<',
-        'prevPageLabel' => '<',
-        'nextPageLabel' => '>',
-        'lastPageLabel' => '>>',
-        'maxButtonCount' => '7',
-        'header' => '',
-        'selectedPageCssClass' => 'active',
-        'htmlOptions' => array(
-            'class' => 'pagination',
-        )
-    ),
-));
+<?php $this->renderPartial('_index', array('dataProvider' => $dataProvider)); ?>

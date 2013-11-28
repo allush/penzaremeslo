@@ -190,7 +190,9 @@
 </div>
 
 <?php Yii::app()->getClientScript()->registerCoreScript('jquery'); ?>
-<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.scrollto.js"></script>
+
+<script src="<?php echo Yii::app()->baseUrl;?>/js/bootstrap.min.js"></script>
 
 </body>
 </html>

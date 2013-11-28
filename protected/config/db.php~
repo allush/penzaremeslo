@@ -1,0 +1,8 @@
+<?php
+return array(
+    'connectionString' => 'mysql:host=localhost;dbname=attribute',
+    'emulatePrepare' => true,
+    'username' => 'root',
+    'password' => '8534i6282',
+    'charset' => 'utf8',
+);
