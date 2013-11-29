@@ -8,7 +8,6 @@ $this->widget('zii.widgets.CListView', array(
     'viewData' => array(
         'itemCount' => $dataProvider->itemCount,
     ),
-    'ajaxUpdate' => 'product-container',
     'id' => 'product-container',
     'template' => '{items} {pager}',
     'summaryText' => '',
@@ -26,12 +25,6 @@ $this->widget('zii.widgets.CListView', array(
             'class' => 'pagination',
         )
     ),
-    'afterAjaxUpdate' => 'pageLoaded',
+    'ajaxUpdate' => 'product-container',
+    'afterAjaxUpdate' => 'productPageLoaded',
 ));
-?>
-
-<script type="text/javascript">
-    function pageLoaded() {
-        $('html,body').scrollTo(0, $('#content'));
-    }
-</script>

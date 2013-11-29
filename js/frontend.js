@@ -1,0 +1,54 @@
+/**
+ * Файл скриптов, приемяемых на фронте
+ */
+
+
+function productPageLoaded(id, data) {
+    $('html,body').scrollTo(0, $('#content'));
+}
+
+function productPushState() {
+
+    var query = location.search.replace('?', '');
+    var variables = query.split('&');
+    var variablesNew = [];
+    for (var i = 0; i < variables.length; i++) {
+        var temp = variables[i].split('=');
+        variablesNew[temp[0]] = temp[1];
+        variablesNew.length++;
+    }
+
+    var catalogID = parseInt(variablesNew['c']);
+    var sorting = parseInt($('#sorting').attr('value'));
+    var userID = parseInt($('#userID').attr('value'));
+
+    var url = '';
+    if (!isNaN(catalogID)) {
+        if (url.length == 0) {
+            url += '?';
+        } else {
+            url += '&';
+        }
+        url += 'c=' + catalogID;
+    }
+
+    if (!isNaN(userID)) {
+        if (url.length == 0) {
+            url += '?';
+        } else {
+            url += '&';
+        }
+        url += 'userID=' + userID;
+    }
+
+    if (!isNaN(sorting)) {
+        if (url.length == 0) {
+            url += '?';
+        } else {
+            url += '&';
+        }
+        url += 'sorting=' + sorting;
+    }
+
+    history.replaceState(null, null, url);
+}

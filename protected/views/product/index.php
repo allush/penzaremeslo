@@ -25,11 +25,9 @@
                                 'ajax' => array(
                                     'type' => 'get',
                                     'url' => '/product/fetchData',
-//                                    'update' => '#product-container',
-                                    'success' =>'function(data){
+                                    'success' => 'function(data){
                                                     $("#product-container").html(data);
-                                                    var url = "?c='.(isset($_GET['c']) ? $_GET['c'] : '').'&userID="+$(\'#userID\').attr(\'value\')+"&sorting="+$(\'#sorting\').attr(\'value\');
-                                                    history.pushState(null, null,url);
+                                                    productPushState();
                                                  }',
                                     'data' => array(
                                         'userID' => 'js:$(this).attr(\'value\')',
@@ -63,11 +61,9 @@
                                 'ajax' => array(
                                     'type' => 'get',
                                     'url' => '/product/fetchData',
-//                                    'update' => '#product-container',
-                                    'success' =>'function(data){
+                                    'success' => 'function(data){
                                                     $("#product-container").html(data);
-                                                    var url = "?c='.(isset($_GET['c']) ? $_GET['c'] : '').'&userID="+$(\'#userID\').attr(\'value\')+"&sorting="+$(\'#sorting\').attr(\'value\');
-                                                    history.pushState(null, null,url);
+                                                    productPushState();
                                                  }',
                                     'data' => array(
                                         'userID' => 'js:$(\'#userID\').attr(\'value\')',
