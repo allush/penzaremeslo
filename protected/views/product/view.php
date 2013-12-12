@@ -18,7 +18,7 @@ $this->menu = array(
 
 <div class="row product-card">
     <div class="col-md-3 text-center">
-        <?php echo CHtml::link(CHtml::image($model->thumbnail(), $model->name, array('title' => 'e', 'style' => 'max-width: 260px;')), $model->watermark(), array('class' => 'fancybox', 'rel' => 'group')); ?>
+        <?php echo CHtml::link(CHtml::image($model->thumbnail(), $model->name, array('style' => 'max-width: 260px;')), $model->watermark(), array('class' => 'fancybox', 'rel' => 'group')); ?>
 
         <?php if (count($model->additionalPictures()) > 0) { ?>
             <div class="row" style="margin-top: 9px;">
