@@ -240,4 +240,50 @@ class Catalog extends CActiveRecord
         Catalog::_loadHierarchy($result, $mode);
         return $result;
     }
+
+
+    /**
+     * @param array $result
+     * @param array $exclude
+     * @param int $depth
+     * @param Catalog | null $parent
+     */
+    private static function _dropDownHierarchy(&$result, $exclude = array(), $depth = 0, $parent = null)
+    {
+        $criteria = new CDbCriteria();
+        if ($parent === null) {
+            $criteria->addCondition('parent IS NULL');
+        } else {
+            $criteria->addCondition('parent=:parent');
+            $criteria->params = array(
+                ':parent' => ($parent !== null ? $parent->catalogID : null),
+            );
+        }
+        $criteria->addNotInCondition('catalogID', $exclude);
+        $criteria->order = 'name ASC';
+
+        /** @var $catalogs Catalog[] */
+        $catalogs = Catalog::model()->findAll($criteria);
+
+        foreach ($catalogs as $catalog) {
+            $d = '';
+            for ($i = 0; $i < $depth; $i++) {
+                $d .= '- - ';
+            }
+            $result[$catalog->catalogID] = $d . $catalog->name;
+
+            self::_dropDownHierarchy($result, $exclude, $depth + 1, $catalog);
+        }
+    }
+
+    /**
+     * @param array $exclude Исключить каталоги с указанными идентификаторами
+     * @return array
+     */
+    public static function dropDownHierarchy($exclude = array())
+    {
+        $result = array();
+        Catalog::_dropDownHierarchy($result, $exclude);
+        return $result;
+    }
 }

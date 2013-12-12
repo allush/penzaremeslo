@@ -106,7 +106,7 @@
             <div class="col-md-9">
                 <?php
                 echo $form->dropDownList($model, 'catalogID',
-                    CHtml::listData(Catalog::model()->findAll(array('order' => 'name ASC')), 'catalogID', 'name'),
+                    Catalog::dropDownHierarchy(),
                     array('class' => 'form-control', 'title' => $model->getAttributeLabel('catalogID'), 'prompt' => '')
                 );
                 echo $form->error($model, 'catalogID');

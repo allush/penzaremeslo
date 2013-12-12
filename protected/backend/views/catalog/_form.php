@@ -18,20 +18,13 @@
         </div>
 
         <div class="form-group">
-            <?php echo $form->labelEx($model, 'parent'); ?>
-
             <?php
-            $criteria = new CDbCriteria();
-            $criteria->order = 'name ASC';
-            // если каталог редактируется, то не показывать в качестве родительского каталога самого себя
-            if (!$model->isNewRecord) {
-                $criteria->condition = 'catalogID<>:catalogID';
-                $criteria->params = array(':catalogID' => $model->catalogID);
-            }
-
-            $htmlOptions = array('class' => 'form-control', 'prompt' => '');
-
-            echo $form->dropDownList($model, 'parent', CHtml::listData(Catalog::model()->findAll($criteria), 'catalogID', 'name'), $htmlOptions);
+            echo $form->labelEx($model, 'parent');
+            echo $form->dropDownList($model, 'parent', Catalog::dropDownHierarchy($model->isNewRecord ? array() : array($model->catalogID)),
+                array(
+                    'class' => 'form-control',
+                    'prompt' => ''
+                ));
             echo $form->error($model, 'parent'); ?>
         </div>
 
