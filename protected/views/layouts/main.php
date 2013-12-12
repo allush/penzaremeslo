@@ -11,6 +11,11 @@
     <meta name="language" content="en"/>
 
     <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+    <link rel="stylesheet" href="/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7" type="text/css" media="screen" />
+
+
     <link rel="stylesheet" href="/css/front.main.css">
 </head>
 
@@ -26,12 +31,8 @@
         </div>
 
         <div class="col-md-4" id="contacts">
-
             <p>г.Пенза, ул.Окружная 3, офис ххх</p>
-
             <p>тел. 8 (8412) 123-456</p>
-
-
         </div>
 
         <div class="col-md-3 col-md-offset-1">
@@ -194,6 +195,8 @@
 
 <script src="/js/bootstrap.min.js"></script>
 
+<script type="text/javascript" src="/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<script type="text/javascript" src="/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
 <script src="/js/frontend.js"></script>
 
 </body>

@@ -1,7 +1,22 @@
 /**
  * Файл скриптов, приемяемых на фронте
  */
-
+$(document).ready(function () {
+    $(".fancybox").fancybox({
+        loop: false,
+        prevEffect: 'none',
+        nextEffect: 'none',
+        helpers: {
+            title: {
+                type: 'outside'
+            },
+            thumbs: {
+                width: 80,
+                height: 80
+            }
+        }
+    });
+});
 
 function productPageLoaded(id, data) {
     $('html,body').scrollTo(0, $('#content'));

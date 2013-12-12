@@ -18,7 +18,15 @@ $this->menu = array(
 
 <div class="row product-card">
     <div class="col-md-3 text-center">
-        <?php echo CHtml::image($model->thumbnail(), '', array('style' => 'max-width: 290px;')); ?>
+        <?php echo CHtml::link(CHtml::image($model->thumbnail(), $model->name, array('title' => 'e', 'style' => 'max-width: 260px;')), $model->watermark(), array('class' => 'fancybox', 'rel' => 'group')); ?>
+
+        <?php if (count($model->additionalPictures()) > 0) { ?>
+            <div class="row" style="margin-top: 9px;">
+                <?php foreach ($model->additionalPictures() as $picture) {
+                    echo '<div class="col-md-4" style="margin-bottom: 8px;">' . CHtml::link(CHtml::image($picture->thumbnail(), $picture->product->name, array('style' => 'max-width: 80px; max-height: 60px;')), $picture->watermark(), array('class' => 'fancybox', 'rel' => 'group')) . '</div>';
+                } ?>
+            </div>
+        <?php } ?>
     </div>
 
     <div class="col-md-8 col-md-offset-1">
@@ -26,9 +34,9 @@ $this->menu = array(
 
         <p><?php echo $model->description; ?></p>
 
-            <p>
-                <small>Автор: <?php echo $model->author(); ?></small>
-            </p>
+        <p>
+            <small>Автор: <?php echo $model->author(); ?></small>
+        </p>
 
         <p class="product-price <?php if ($model->discount > 0) echo 'discount'; ?>"><?php echo $model->priceCurrency(); ?></p>
 

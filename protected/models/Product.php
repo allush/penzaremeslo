@@ -149,6 +149,19 @@ class Product extends CActiveRecord
     }
 
     /**
+     * @return Picture[]|array
+     */
+    public function additionalPictures(){
+        return Picture::model()->findAll(
+            'cover=:cover AND productID=:productID',
+            array(
+                ':cover' => 0,
+                ':productID' => $this->productID,
+            )
+        );
+    }
+
+    /**
      * @return null|string
      */
     public function large()
