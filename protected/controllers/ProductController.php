@@ -57,12 +57,12 @@ class ProductController extends FrontController
                 $catalogIDs = array();
                 Catalog::childrenRecursively($catalogIDs, $c);
                 $criteria->addInCondition('catalogID', $catalogIDs);
-                $criteria->addCondition('deleted=0 AND existence>0');
+                $criteria->addCondition('price IS NOT NULL AND deleted=0 AND existence>0');
             } else {
-                $criteria->condition = 'catalogID IS NOT NULL AND deleted=0 AND existence>0';
+                $criteria->condition = 'price IS NOT NULL AND catalogID IS NOT NULL AND deleted=0 AND existence>0';
             }
         } else {
-            $criteria->condition = 'catalogID IS NOT NULL AND deleted=0 AND existence>0';
+            $criteria->condition = 'price IS NOT NULL AND catalogID IS NOT NULL AND deleted=0 AND existence>0';
         }
 
         if ($userID !== null) {

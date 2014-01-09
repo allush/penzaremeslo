@@ -52,7 +52,7 @@ class SiteController extends FrontController
         ));
 
         $products = Product::model()->findAll(array(
-            'condition' => 'deleted=0',
+            'condition' => 'price IS NOT NULL AND catalogID IS NOT NULL AND deleted=0 AND existence>0',
             'order' => 'productID DESC',
             'limit' => 4
         ));

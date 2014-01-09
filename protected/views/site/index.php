@@ -57,9 +57,6 @@ if (Yii::app()->user->hasFlash('activated')) {
 
 <div class="row">
     <div class="col-md-12">
-
-        <h1 style='margin-top: 0;'>О нас</h1>
-
         <div class="row">
             <div class="col-md-12">
                 <?php echo $aboutUs->trimmedContent(); ?>
