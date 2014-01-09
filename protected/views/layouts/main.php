@@ -31,8 +31,8 @@
         </div>
 
         <div class="col-md-4" id="contacts">
-            <p>г.Пенза, ул.Окружная 3, офис ххх</p>
-            <p>тел. 8 (8412) 123-456</p>
+            <p> г. Пенза, ул. Окружная, 3 (Бизнес-инкубатор "Татлин")</p>
+            <p>тел. 8 (8412) 29-10-40</p>
         </div>
 
         <div class="col-md-3 col-md-offset-1">
@@ -74,14 +74,15 @@
                 </div>
 
                 <div class="form-group" style="line-height: 16px;">
-                    <?php echo CHtml::submitButton('Войти', array('style' => 'width: 100px;', 'class' => 'btn btn-default')); ?>
                     <div class="pull-right text-right">
                         <small>
-                        <?php echo CHtml::link('Зарегистрироваться', array('/signUp')); ?><br>
+                            <?php echo CHtml::link('Зарегистрироваться', array('/signUp')); ?><br>
 
-                        <?php echo CHtml::link('Восстановить пароль', array('/remind')); ?>
+                            <?php echo CHtml::link('Восстановить пароль', array('/remind')); ?>
                         </small>
                     </div>
+                    <?php echo CHtml::submitButton('Войти', array('style' => 'width: 100px;', 'class' => 'btn btn-default')); ?>
+
                 </div>
 
                 <?php $this->endWidget();
