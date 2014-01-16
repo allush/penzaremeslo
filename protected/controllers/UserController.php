@@ -9,6 +9,7 @@ class UserController extends FrontController
                 'condition' => 'activated=1',
                 'order' => 'userID DESC',
             ),
+            'pagination'=> false
         ));
 
         $this->render('index', array(
