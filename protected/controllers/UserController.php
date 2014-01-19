@@ -9,7 +9,7 @@ class UserController extends FrontController
                 'condition' => 'activated=1',
                 'order' => 'userID DESC',
             ),
-            'pagination'=> false
+            'pagination' => false
         ));
 
         $this->render('index', array(
@@ -69,12 +69,15 @@ class UserController extends FrontController
             if ($model->save()) {
                 if ($file) {
                     $path = Yii::app()->basePath . '/../img/user/' . $model->photo;
-                    $file->saveAs($path);
+                    if ($file->saveAs($path)) {
 
-                    $ih = new CImageHandler();
-                    $ih->load($path);
+                        $ih = new CImageHandler();
+                        $ih->load($path);
 
-                    $ih->thumb(400, 300)->save();
+                        $ih->thumb(400, 300)->save();
+                    }else{
+                        throw new CHttpException('500', 'Ошибка загрузки фотографии');
+                    }
                 }
                 $this->redirect(array('view', 'id' => $model->userID));
             }
