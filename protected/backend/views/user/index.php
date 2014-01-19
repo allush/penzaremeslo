@@ -11,7 +11,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'summaryText' => '{start} - {end} из {count}',
     'summaryCssClass' => 'pull-right',
     'itemsCssClass' => 'table table-condensed table-hover',
-    'pagerCssClass' => 'pagination',
+    'pagerCssClass' => 'yiiPager pull-left',
     'pager' => array(
         'firstPageLabel' => '<<',
         'prevPageLabel' => '<',
@@ -21,6 +21,10 @@ $this->widget('zii.widgets.grid.CGridView', array(
         'header' => '',
         'cssFile' => '',
         'selectedPageCssClass' => 'active',
+        'hiddenPageCssClass' => '',
+        'htmlOptions' => array(
+            'class' => 'pagination',
+        )
     ),
     'showTableOnEmpty' => false,
     'emptyText' => 'Нет ни одного пользователя',

@@ -8,7 +8,7 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => 'Назад', 'url' => array('index')),
+    array('label' => 'Назад', 'url' => (isset(Yii::app()->request->urlReferrer)) ? Yii::app()->request->urlReferrer .'#product_'.$model->productID: array('index')),
     array(
         'label' => 'Удалить',
         'url' => '#',

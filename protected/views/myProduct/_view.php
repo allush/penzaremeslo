@@ -19,7 +19,7 @@ if ($index == 0) {
 }
 ?>
 
-<tr>
+<tr id="product_<?php echo $data->productID;?>">
     <td><?php echo CHtml::link(CHtml::image($data->thumbnail(), '', array('style' => 'height: 80px;')), array('view', 'id' => $data->productID)); ?></td>
     <td><?php echo CHtml::link($data->name, array('view', 'id' => $data->productID)); ?></td>
     <td><?php echo CHtml::encode($data->existence); ?></td>
