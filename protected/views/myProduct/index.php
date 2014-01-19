@@ -23,6 +23,7 @@ $this->widget('zii.widgets.CListView', array(
         'createdOn',
         'modifiedOn',
     ),
+    'enableHistory' => true,
     'template' => '  {pager}{summary}{sorter}{items}{pager}',
     'summaryText' => '{start} - {end} из {count}',
     'pagerCssClass' => 'yiiPager pull-left',
