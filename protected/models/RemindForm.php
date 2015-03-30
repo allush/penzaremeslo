@@ -56,8 +56,7 @@ class RemindForm extends CFormModel
 
             $message = 'Для смены пароля на сайте "' . Yii::app()->name . '" перейдите по ссылке: ' . $url;
 
-            $mailer = new Mailer();
-            $mailer->sendMailSimple($user, 'Смена пароля на сайте "' . Yii::app()->name . '"', $message);
+            Mailer::send(array($user->email),'Смена пароля на сайте "' . Yii::app()->name . '"',$message);
 
             return true;
         }
