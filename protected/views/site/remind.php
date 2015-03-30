@@ -39,7 +39,7 @@ $this->breadcrumbs = array(
                     )); ?> </div>
                 <?php
                 echo $form->labelEx($model, 'verifyCode');
-                echo $form->telField($model, 'verifyCode', array('class' => 'form-control'));
+                echo $form->textField($model, 'verifyCode', array('class' => 'form-control'));
                 echo $form->error($model, 'verifyCode');
             }?>
         </div>

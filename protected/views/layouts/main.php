@@ -12,8 +12,8 @@
 
     <link rel="stylesheet" href="/css/bootstrap.min.css">
 
-    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
-    <link rel="stylesheet" href="/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7" type="text/css" media="screen" />
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7" type="text/css" media="screen"/>
 
 
     <link rel="stylesheet" href="/css/front.main.css">
@@ -32,6 +32,7 @@
 
         <div class="col-md-4" id="contacts">
             <p> г. Пенза, ул. Окружная, 3 (Бизнес-инкубатор "Татлин")</p>
+
             <p>тел. 8 (8412) 29-10-40</p>
         </div>
 
@@ -93,7 +94,7 @@
                 $user = User::model()->findByPk($userID);
                 if ($user) {
                     ?>
-                    <div><?php echo CHtml::image($user->photo(), '', array('class' => 'img-rounded','style' => 'height: 96px;')) ?></div>
+                    <div><?php echo CHtml::image($user->photo(), '', array('class' => 'img-rounded', 'style' => 'height: 96px;')) ?></div>
                     <div><?php echo $user->fullName(); ?></div>
 
                     <div><?php echo CHtml::link('Мой профиль', array('/user/view', 'id' => $userID)); ?></div>
@@ -180,16 +181,67 @@
         </div>
     </div>
 
-    <footer class="row" id="footer">
-        <div class="col-md-12">
-            <div class="well">
+    <div class="well">
+        <footer class="row" id="footer">
+            <div class="col-md-6">
                 &copy; <?php echo date('Y'); ?> developed by <a href="http://allush.github.io">allush</a>
             </div>
 
-        </div>
-    </footer>
 
+            <div class="col-md-6 text-right">
+
+                <!-- Yandex.Metrika informer -->
+                <a href="https://metrika.yandex.ru/stat/?id=29371565&amp;from=informer"
+                   target="_blank" rel="nofollow"><img
+                        src="//bs.yandex.ru/informer/29371565/1_0_FFFFFFFF_EFEFEFFF_0_pageviews"
+                        style="width:80px; height:15px; border:0;" alt="Яндекс.Метрика"
+                        title="Яндекс.Метрика: данные за сегодня (просмотры)"
+                        onclick="try{Ya.Metrika.informer({i:this,id:29371565,lang:'ru'});return false}catch(e){}"/></a>
+                <!-- /Yandex.Metrika informer -->
+
+                <!-- Yandex.Metrika counter -->
+                <script type="text/javascript">
+                    (function (d, w, c) {
+                        (w[c] = w[c] || []).push(function () {
+                            try {
+                                w.yaCounter29371565 = new Ya.Metrika({
+                                    id: 29371565,
+                                    webvisor: true,
+                                    clickmap: true,
+                                    trackLinks: true,
+                                    accurateTrackBounce: true
+                                });
+                            } catch (e) {
+                            }
+                        });
+
+                        var n = d.getElementsByTagName("script")[0],
+                            s = d.createElement("script"),
+                            f = function () {
+                                n.parentNode.insertBefore(s, n);
+                            };
+                        s.type = "text/javascript";
+                        s.async = true;
+                        s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+
+                        if (w.opera == "[object Opera]") {
+                            d.addEventListener("DOMContentLoaded", f, false);
+                        } else {
+                            f();
+                        }
+                    })(document, window, "yandex_metrika_callbacks");
+                </script>
+                <noscript>
+                    <div><img src="//mc.yandex.ru/watch/29371565" style="position:absolute; left:-9999px;" alt=""/>
+                    </div>
+                </noscript>
+                <!-- /Yandex.Metrika counter -->
+            </div>
+        </footer>
+    </div>
 </div>
+
+
 
 <?php Yii::app()->getClientScript()->registerCoreScript('jquery'); ?>
 <script src="/js/jquery.scrollto.js"></script>

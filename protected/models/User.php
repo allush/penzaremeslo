@@ -132,12 +132,18 @@ class User extends CActiveRecord
 
     public function photo()
     {
-        $url = Yii::app()->baseUrl . '/img/user/' . $this->photo;
-        $path = Yii::app()->basePath . '/..' . $url;
-        if (file_exists($path) and is_file($path)) {
-            return $url;
-        }
+        if ($this->hasPhoto())
+            return Yii::app()->baseUrl . '/img/user/' . $this->photo;
 
         return Yii::app()->baseUrl . '/img/user/photo_no_available.jpg';
+    }
+
+    public function hasPhoto()
+    {
+        $path = Yii::app()->basePath . '/../img/user/' . $this->photo;
+        if (file_exists($path) and is_file($path))
+            return true;
+
+        return false;
     }
 }
