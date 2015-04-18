@@ -66,9 +66,17 @@ if (Yii::app()->user->hasFlash('activated')) {
         <h1>Мастера</h1>
 
         <div class="row">
-            <?php foreach ($masters as $master) {
+            <?php
+            $count = 0;
+            foreach ($masters as $master) {
+                if ($count >= 4)
+                    break;
+
                 if (!$master->hasPhoto())
-                    continue; ?>
+                    continue;
+
+                $count++;
+                ?>
                 <div class="col-md-3 products-item">
                     <div class="product-image">
                         <?php echo CHtml::link(CHtml::image($master->photo()), array('/user/view', 'id' => $master->userID)); ?>

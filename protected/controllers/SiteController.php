@@ -48,7 +48,7 @@ class SiteController extends FrontController
         $masters = User::model()->findAll(array(
             'condition' => 'activated=1',
             'order' => 'userID DESC',
-            'limit' => 4
+            'limit' => 10
         ));
 
         $products = Product::model()->findAll(array(
