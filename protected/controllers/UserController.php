@@ -7,7 +7,7 @@ class UserController extends FrontController
         $dataProvider = new CActiveDataProvider('User', [
             'criteria' => [
                 'condition' => 'activated=1',
-                'order' => 'userID DESC',
+                'order' => 'userID ASC',
             ],
             'pagination' => false,
         ]);
