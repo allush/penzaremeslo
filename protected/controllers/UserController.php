@@ -4,32 +4,32 @@ class UserController extends FrontController
 {
     public function actionIndex()
     {
-        $dataProvider = new CActiveDataProvider('User', array(
-            'criteria' => array(
+        $dataProvider = new CActiveDataProvider('User', [
+            'criteria' => [
                 'condition' => 'activated=1',
                 'order' => 'userID DESC',
-            ),
-            'pagination' => false
-        ));
+            ],
+            'pagination' => false,
+        ]);
 
-        $this->render('index', array(
+        $this->render('index', [
             'dataProvider' => $dataProvider,
-        ));
+        ]);
     }
 
     public function actionActivate($c)
     {
         /** @var $user User */
-        $user = User::model()->find(array(
+        $user = User::model()->find([
             'condition' => 'MD5(`email`)=:email and (activated=0 OR activated IS NULL)',
-            'params' => array(
+            'params' => [
                 ':email' => $c,
-            ),
-        ));
+            ],
+        ]);
 
-        if ($user !== null) {
+        if($user !== null) {
             $user->activated = 1;
-            if ($user->save()) {
+            if($user->save()) {
                 Yii::app()->user->setFlash('activated', true);
                 $this->redirect(Yii::app()->homeUrl);
             }
@@ -39,70 +39,37 @@ class UserController extends FrontController
         $this->redirect(Yii::app()->homeUrl);
     }
 
-    /**
-     * Updates a particular model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id the ID of the model to be updated
-     */
     public function actionUpdate($id)
     {
         $model = $this->loadModel($id);
 
-        if (Yii::app()->user->getState('userID') != $model->userID) {
-            $this->redirect(array('view', 'id' => $model->userID));
+        if(Yii::app()->user->getState('userID') != $model->userID) {
+            $this->redirect(['view', 'id' => $model->userID]);
         }
 
-        if (isset($_POST['User'])) {
-
-            $photoExists = $model->photo;
-
+        if(isset($_POST['User'])) {
             $model->attributes = $_POST['User'];
 
-            /** @var $files CUploadedFile[] */
-            $file = CUploadedFile::getInstanceByName('User[photo]');
-            if ($file) {
-                $model->photo = md5(crypt($file->getName())) . ".jpg";
-            } else {
-                $model->photo = $photoExists;
-            }
-
-            if ($model->save()) {
-                if ($file) {
-                    $path = Yii::app()->basePath . '/../img/user/' . $model->photo;
-                    if ($file->saveAs($path)) {
-
-                        $ih = new CImageHandler();
-                        $ih->load($path);
-
-                        $ih->thumb(400, 300)->save();
-                    }else{
-                        throw new CHttpException('500', 'Ошибка загрузки фотографии');
-                    }
-                }
-                $this->redirect(array('view', 'id' => $model->userID));
+            if($model->save()) {
+                $this->redirect(['view', 'id' => $model->userID]);
             }
         }
 
-        $this->render('update', array(
+        $this->render('update', [
             'model' => $model,
-        ));
+        ]);
     }
 
-    /**
-     * Lists all models.
-     */
     public function actionView($id)
     {
         $model = $this->loadModel($id);
 
-        $this->render('view', array(
+        $this->render('view', [
             'model' => $model,
-        ));
+        ]);
     }
 
     /**
-     * Returns the data model based on the primary key given in the GET variable.
-     * If the data model is not found, an HTTP exception will be raised.
      * @param integer $id the ID of the model to be loaded
      * @return User the loaded model
      * @throws CHttpException
@@ -110,8 +77,9 @@ class UserController extends FrontController
     public function loadModel($id)
     {
         $model = User::model()->findByPk($id);
-        if ($model === null)
+        if($model === null) {
             throw new CHttpException(404, 'The requested page does not exist.');
+        }
         return $model;
     }
 }

@@ -13,98 +13,130 @@ Yii::app()->clientScript->registerScriptFile(
 );
 
 /** @var CActiveForm $form */
-$form = $this->beginWidget('CActiveForm', array(
+$form = $this->beginWidget('CActiveForm', [
     'id' => 'user-form',
     'enableAjaxValidation' => false,
-    'htmlOptions' => array(
-        'role' => "form"
-    )
-));
-?>
-    <div class="row">
-        <div class="col-md-4">
+    'htmlOptions' => [
+        'role' => 'form',
+        'enctype' => 'multipart/form-data',
+    ],
+    'errorMessageCssClass' => 'text-danger',
+]); ?>
 
-            <div class="form-group">
-                <?php echo $form->labelEx($model, 'surname', array()); ?>
-                <?php echo $form->textField($model, 'surname', array('class' => 'form-control', 'maxlength' => 255)); ?>
-                <?php echo $form->error($model, 'surname'); ?>
-            </div>
-
-            <div class="form-group">
-                <?php echo $form->labelEx($model, 'name', array()); ?>
-                <?php echo $form->textField($model, 'name', array('class' => 'form-control', 'maxlength' => 255)); ?>
-                <?php echo $form->error($model, 'name'); ?>
-            </div>
-
-            <div class="form-group">
-                <?php echo $form->labelEx($model, 'patronymic', array()); ?>
-                <?php echo $form->textField($model, 'patronymic', array('class' => 'form-control', 'maxlength' => 255)); ?>
-                <?php echo $form->error($model, 'patronymic'); ?>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="form-group">
-                <?php echo $form->labelEx($model, 'email', array()); ?>
-                <?php echo $form->emailField($model, 'email', array('class' => 'form-control', 'maxlength' => 255)); ?>
-                <?php echo $form->error($model, 'email'); ?>
-
-            </div>
-
-            <div class="form-group">
-                <?php echo $form->labelEx($model, 'phone', array()); ?>
-                <?php echo $form->telField($model, 'phone', array('class' => 'form-control', 'maxlength' => 255)); ?>
-                <?php echo $form->error($model, 'phone'); ?>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="form-group">
-                <?php echo $form->labelEx($model, 'country', array()); ?>
-                <?php echo $form->textField($model, 'country', array('class' => 'form-control', 'maxlength' => 255)); ?>
-                <?php echo $form->error($model, 'country'); ?>
-            </div>
-
-            <div class="form-group">
-                <?php echo $form->labelEx($model, 'region', array()); ?>
-                <?php echo $form->textField($model, 'region', array('class' => 'form-control', 'maxlength' => 255)); ?>
-                <?php echo $form->error($model, 'region'); ?>
-            </div>
-
-            <div class="form-group">
-                <?php echo $form->labelEx($model, 'city', array()); ?>
-                <?php echo $form->textField($model, 'city', array('class' => 'form-control', 'maxlength' => 255)); ?>
-                <?php echo $form->error($model, 'city'); ?>
-            </div>
-
-            <div class="form-group">
-                <?php echo $form->labelEx($model, 'index', array()); ?>
-                <?php echo $form->textField($model, 'index', array('class' => 'form-control')); ?>
-                <?php echo $form->error($model, 'index'); ?>
-            </div>
-
-            <div class="form-group">
-                <?php echo $form->labelEx($model, 'address', array()); ?>
-                <?php echo $form->textField($model, 'address', array('class' => 'form-control', 'maxlength' => 255)); ?>
-                <?php echo $form->error($model, 'address'); ?>
-            </div>
+<div class="row">
+    <div class="col-md-4 col-sm-4">
+        <div class="form-group">
+            <?= $form->labelEx($model, 'photoFile'); ?>
+            <p>
+                <?php
+                if($model->photo()) {
+                    echo CHtml::image($model->photo(), '', [
+                        'style' => 'max-height: 260px; max-width: 260px; margin-bottom: 20px;',
+                    ]);
+                }
+                ?>
+            </p>
+            <?= $form->fileField($model, 'photoFile'); ?>
+            <?= $form->error($model, 'photoFile'); ?>
         </div>
 
     </div>
-
-    <div class="row">
-        <div class="col-md-12">
+    <div class="col-md-4 col-sm-4">
+        <div class="well">
             <div class="form-group">
-                <?php echo $form->labelEx($model, 'description', array()); ?>
-                <?php echo $form->textArea($model, 'description', array('class' => 'form-control', 'rows' => 6)); ?>
-                <?php echo $form->error($model, 'description'); ?>
+                <div class="checkbox">
+                    <?= $form->checkBox($model, 'is_founder'); ?>
+                    <?= $model->getAttributeLabel('is_founder') ?>
+                </div>
+                <?= $form->error($model, 'is_founder'); ?>
             </div>
+
+            <div class="form-group">
+                <?= $form->labelEx($model, 'pos'); ?>
+                <?= $form->numberField($model, 'pos', ['class' => 'form-control']); ?>
+                <?= $form->error($model, 'pos'); ?>
+            </div>
+        </div>
+        <div class="form-group">
+            <?= $form->labelEx($model, 'surname'); ?>
+            <?= $form->textField($model, 'surname', ['class' => 'form-control', 'maxlength' => 255]); ?>
+            <?= $form->error($model, 'surname'); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $form->labelEx($model, 'name'); ?>
+            <?= $form->textField($model, 'name', ['class' => 'form-control', 'maxlength' => 255]); ?>
+            <?= $form->error($model, 'name'); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $form->labelEx($model, 'patronymic'); ?>
+            <?= $form->textField($model, 'patronymic', ['class' => 'form-control', 'maxlength' => 255]); ?>
+            <?= $form->error($model, 'patronymic'); ?>
+        </div>
+        <div class="form-group">
+            <?= $form->labelEx($model, 'email'); ?>
+            <?= $form->emailField($model, 'email', ['class' => 'form-control', 'maxlength' => 255]); ?>
+            <?= $form->error($model, 'email'); ?>
+
+        </div>
+
+        <div class="form-group">
+            <?= $form->labelEx($model, 'phone'); ?>
+            <?= $form->telField($model, 'phone', ['class' => 'form-control', 'maxlength' => 255]); ?>
+            <?= $form->error($model, 'phone'); ?>
         </div>
     </div>
 
-    <div class="form-group">
-        <?php echo CHtml::submitButton($model->isNewRecord ? 'Создать' : 'Сохранить', array('class' => 'btn btn-default form-control')); ?>
+    <div class="col-md-4 col-sm-4">
+        <div class="form-group">
+            <?= $form->labelEx($model, 'country'); ?>
+            <?= $form->textField($model, 'country', ['class' => 'form-control', 'maxlength' => 255]); ?>
+            <?= $form->error($model, 'country'); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $form->labelEx($model, 'region'); ?>
+            <?= $form->textField($model, 'region', ['class' => 'form-control', 'maxlength' => 255]); ?>
+            <?= $form->error($model, 'region'); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $form->labelEx($model, 'city'); ?>
+            <?= $form->textField($model, 'city', ['class' => 'form-control', 'maxlength' => 255]); ?>
+            <?= $form->error($model, 'city'); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $form->labelEx($model, 'index'); ?>
+            <?= $form->textField($model, 'index', ['class' => 'form-control']); ?>
+            <?= $form->error($model, 'index'); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $form->labelEx($model, 'address'); ?>
+            <?= $form->textField($model, 'address', ['class' => 'form-control', 'maxlength' => 255]); ?>
+            <?= $form->error($model, 'address'); ?>
+        </div>
     </div>
+
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            <?= $form->labelEx($model, 'description'); ?>
+            <?= $form->textArea($model, 'description', ['class' => 'form-control', 'rows' => 6]); ?>
+            <?= $form->error($model, 'description'); ?>
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <?= CHtml::submitButton($model->isNewRecord ? 'Создать' : 'Сохранить', [
+        'class' => 'btn btn-primary',
+    ]); ?>
+</div>
 
 <?php $this->endWidget(); ?>
 

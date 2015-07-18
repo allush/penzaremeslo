@@ -2,9 +2,6 @@
 
 class UserController extends BackendController
 {
-    /**
-     * @return array action filters
-     */
     public function filters()
     {
         return array(
@@ -13,11 +10,6 @@ class UserController extends BackendController
         );
     }
 
-    /**
-     * Specifies the access control rules.
-     * This method is used by the 'accessControl' filter.
-     * @return array access control rules
-     */
     public function accessRules()
     {
         return array(
@@ -30,10 +22,6 @@ class UserController extends BackendController
         );
     }
 
-    /**
-     * Creates a new model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     */
     public function actionCreate()
     {
         $model = new User;
@@ -49,11 +37,6 @@ class UserController extends BackendController
         ));
     }
 
-    /**
-     * Updates a particular model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id the ID of the model to be updated
-     */
     public function actionUpdate($id)
     {
         $model = $this->loadModel($id);
@@ -69,11 +52,6 @@ class UserController extends BackendController
         ));
     }
 
-    /**
-     * Deletes a particular model.
-     * If deletion is successful, the browser will be redirected to the 'admin' page.
-     * @param integer $id the ID of the model to be deleted
-     */
     public function actionDelete($id)
     {
         $this->loadModel($id)->delete();
@@ -83,9 +61,6 @@ class UserController extends BackendController
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
     }
 
-    /**
-     * Lists all models.
-     */
     public function actionView($id)
     {
         $model = $this->loadModel($id);
@@ -95,9 +70,6 @@ class UserController extends BackendController
         ));
     }
 
-    /**
-     * Lists all models.
-     */
     public function actionIndex()
     {
         $dataProvider = new CActiveDataProvider('User');
@@ -107,8 +79,6 @@ class UserController extends BackendController
     }
 
     /**
-     * Returns the data model based on the primary key given in the GET variable.
-     * If the data model is not found, an HTTP exception will be raised.
      * @param integer $id the ID of the model to be loaded
      * @return User the loaded model
      * @throws CHttpException

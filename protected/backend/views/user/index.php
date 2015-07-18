@@ -2,17 +2,17 @@
 /* @var $this UserController */
 /* @var $dataProvider CActiveDataProvider */
 
-$this->breadcrumbs = array(
+$this->breadcrumbs = [
     'Пользователи',
-);
+];
 
-$this->widget('zii.widgets.grid.CGridView', array(
+$this->widget('zii.widgets.grid.CGridView', [
     'dataProvider' => $dataProvider,
     'summaryText' => '{start} - {end} из {count}',
     'summaryCssClass' => 'pull-right',
     'itemsCssClass' => 'table table-condensed table-hover',
     'pagerCssClass' => 'yiiPager pull-left',
-    'pager' => array(
+    'pager' => [
         'firstPageLabel' => '<<',
         'prevPageLabel' => '<',
         'nextPageLabel' => '>',
@@ -22,29 +22,35 @@ $this->widget('zii.widgets.grid.CGridView', array(
         'cssFile' => '',
         'selectedPageCssClass' => 'active',
         'hiddenPageCssClass' => '',
-        'htmlOptions' => array(
+        'htmlOptions' => [
             'class' => 'pagination',
-        )
-    ),
+        ],
+    ],
+    'rowCssClassExpression' => '!$data->isShown() ? "danger": ""',
     'showTableOnEmpty' => false,
     'emptyText' => 'Нет ни одного пользователя',
-    'columns' => array(
-        array(
+    'columns' => [
+        [
+            'header' => 'Фото',
+            'type' => 'raw',
+            'value' => 'CHtml::image($data->photo(),"",["style" => "width: 80px;"])',
+        ],
+        [
             'header' => 'ФИО',
             'name' => 'surname',
             'type' => 'raw',
             'value' => 'CHtml::link($data->surname." ".$data->name." ".$data->patronymic, array("update","id"=>$data->userID))',
-        ),
+        ],
         'email',
         'phone',
-        array(
-            'name' =>'activated',
-            'value' => '($data->activated == 1)?"Да":"Нет"'
-        ),
-        array(
-            'name' =>'isAdmin',
-            'value' => '($data->isAdmin == 1)?"Да":"Нет"'
-        ),
-    ),
-));
+        [
+            'name' => 'is_founder',
+            'value' => '($data->is_founder == 1)?"Да":"Нет"',
+        ],
+        [
+            'name' => 'activated',
+            'value' => '($data->activated == 1)?"Да":"Нет"',
+        ],
+    ],
+]);
 

@@ -13,93 +13,99 @@ Yii::app()->clientScript->registerScriptFile(
 );
 
 /** @var CActiveForm $form */
-$form = $this->beginWidget('CActiveForm', array(
+$form = $this->beginWidget('CActiveForm', [
     'id' => 'user-form',
     'enableAjaxValidation' => false,
-    'htmlOptions' => array(
+    'htmlOptions' => [
         'role' => 'form',
-        'enctype' => 'multipart/form-data'
-    )
-));
+        'enctype' => 'multipart/form-data',
+    ],
+    'errorMessageCssClass' => 'text-danger',
+]);
 ?>
+
+<?php if(!$model->hasPhoto()) {
+    $this->renderPartial('_hidden');
+} ?>
+
 <div class="row">
     <div class="col-md-4">
 
         <div class="form-group">
-            <?php echo $form->labelEx($model, 'photo', array()); ?>
+            <?php echo $form->labelEx($model, 'photoFile', []); ?>
             <p>
-            <?php
-            if ($model->photo()) {
-                echo CHtml::image($model->photo(), '', array('style' => 'max-width: 360px; margin-bottom: 20px;'));
-            }
-            ?>
+                <?php
+                if($model->photo()) {
+                    echo CHtml::image($model->photo(), '', ['style' => 'max-width: 360px; margin-bottom: 20px;']);
+                }
+                ?>
             </p>
-            <?php echo $form->fileField($model, 'photo', array()); ?>
-            <?php echo $form->error($model, 'photo'); ?>
+            <?php echo $form->fileField($model, 'photoFile', []); ?>
+            <?php echo $form->error($model, 'photoFile'); ?>
         </div>
 
-        <div class="form-group">
-            <?php echo $form->labelEx($model, 'surname', array()); ?>
-            <?php echo $form->textField($model, 'surname', array('class' => 'form-control', 'maxlength' => 255)); ?>
-            <?php echo $form->error($model, 'surname'); ?>
-        </div>
-
-        <div class="form-group">
-            <?php echo $form->labelEx($model, 'name', array()); ?>
-            <?php echo $form->textField($model, 'name', array('class' => 'form-control', 'maxlength' => 255)); ?>
-            <?php echo $form->error($model, 'name'); ?>
-        </div>
-
-        <div class="form-group">
-            <?php echo $form->labelEx($model, 'patronymic', array()); ?>
-            <?php echo $form->textField($model, 'patronymic', array('class' => 'form-control', 'maxlength' => 255)); ?>
-            <?php echo $form->error($model, 'patronymic'); ?>
-        </div>
     </div>
 
     <div class="col-md-4">
         <div class="form-group">
-            <?php echo $form->labelEx($model, 'email', array()); ?>
-            <?php echo $form->emailField($model, 'email', array('class' => 'form-control', 'maxlength' => 255)); ?>
+            <?php echo $form->labelEx($model, 'surname', []); ?>
+            <?php echo $form->textField($model, 'surname', ['class' => 'form-control', 'maxlength' => 255]); ?>
+            <?php echo $form->error($model, 'surname'); ?>
+        </div>
+
+        <div class="form-group">
+            <?php echo $form->labelEx($model, 'name', []); ?>
+            <?php echo $form->textField($model, 'name', ['class' => 'form-control', 'maxlength' => 255]); ?>
+            <?php echo $form->error($model, 'name'); ?>
+        </div>
+
+        <div class="form-group">
+            <?php echo $form->labelEx($model, 'patronymic', []); ?>
+            <?php echo $form->textField($model, 'patronymic', ['class' => 'form-control', 'maxlength' => 255]); ?>
+            <?php echo $form->error($model, 'patronymic'); ?>
+        </div>
+        <div class="form-group">
+            <?php echo $form->labelEx($model, 'email', []); ?>
+            <?php echo $form->emailField($model, 'email', ['class' => 'form-control', 'maxlength' => 255]); ?>
             <?php echo $form->error($model, 'email'); ?>
 
         </div>
 
         <div class="form-group">
-            <?php echo $form->labelEx($model, 'phone', array()); ?>
-            <?php echo $form->telField($model, 'phone', array('class' => 'form-control', 'maxlength' => 255)); ?>
+            <?php echo $form->labelEx($model, 'phone', []); ?>
+            <?php echo $form->telField($model, 'phone', ['class' => 'form-control', 'maxlength' => 255]); ?>
             <?php echo $form->error($model, 'phone'); ?>
         </div>
     </div>
 
     <div class="col-md-4">
         <div class="form-group">
-            <?php echo $form->labelEx($model, 'country', array()); ?>
-            <?php echo $form->textField($model, 'country', array('class' => 'form-control', 'maxlength' => 255)); ?>
+            <?php echo $form->labelEx($model, 'country', []); ?>
+            <?php echo $form->textField($model, 'country', ['class' => 'form-control', 'maxlength' => 255]); ?>
             <?php echo $form->error($model, 'country'); ?>
         </div>
 
         <div class="form-group">
-            <?php echo $form->labelEx($model, 'region', array()); ?>
-            <?php echo $form->textField($model, 'region', array('class' => 'form-control', 'maxlength' => 255)); ?>
+            <?php echo $form->labelEx($model, 'region', []); ?>
+            <?php echo $form->textField($model, 'region', ['class' => 'form-control', 'maxlength' => 255]); ?>
             <?php echo $form->error($model, 'region'); ?>
         </div>
 
         <div class="form-group">
-            <?php echo $form->labelEx($model, 'city', array()); ?>
-            <?php echo $form->textField($model, 'city', array('class' => 'form-control', 'maxlength' => 255)); ?>
+            <?php echo $form->labelEx($model, 'city', []); ?>
+            <?php echo $form->textField($model, 'city', ['class' => 'form-control', 'maxlength' => 255]); ?>
             <?php echo $form->error($model, 'city'); ?>
         </div>
 
         <div class="form-group">
-            <?php echo $form->labelEx($model, 'index', array()); ?>
-            <?php echo $form->textField($model, 'index', array('class' => 'form-control')); ?>
+            <?php echo $form->labelEx($model, 'index', []); ?>
+            <?php echo $form->textField($model, 'index', ['class' => 'form-control']); ?>
             <?php echo $form->error($model, 'index'); ?>
         </div>
 
         <div class="form-group">
-            <?php echo $form->labelEx($model, 'address', array()); ?>
-            <?php echo $form->textField($model, 'address', array('class' => 'form-control', 'maxlength' => 255)); ?>
+            <?php echo $form->labelEx($model, 'address', []); ?>
+            <?php echo $form->textField($model, 'address', ['class' => 'form-control', 'maxlength' => 255]); ?>
             <?php echo $form->error($model, 'address'); ?>
         </div>
     </div>
@@ -109,15 +115,15 @@ $form = $this->beginWidget('CActiveForm', array(
 <div class="row">
     <div class="col-md-12">
         <div class="form-group">
-            <?php echo $form->labelEx($model, 'description', array()); ?>
-            <?php echo $form->textArea($model, 'description', array('class' => 'form-control', 'rows' => 6)); ?>
+            <?php echo $form->labelEx($model, 'description', []); ?>
+            <?php echo $form->textArea($model, 'description', ['class' => 'form-control', 'rows' => 6]); ?>
             <?php echo $form->error($model, 'description'); ?>
         </div>
     </div>
 </div>
 
 <div class="form-group">
-    <?php echo CHtml::submitButton($model->isNewRecord ? 'Создать' : 'Сохранить', array('class' => 'btn btn-default form-control')); ?>
+    <?php echo CHtml::submitButton($model->isNewRecord ? 'Создать' : 'Сохранить', ['class' => 'btn btn-primary']); ?>
 </div>
 
 <?php $this->endWidget(); ?>

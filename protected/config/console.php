@@ -11,14 +11,7 @@ return array(
 
 	// application components
 	'components'=>array(
-
-		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=nakasse',
-			'emulatePrepare' => true,
-			'username' => 'root',
-			'password' => '8534i6282',
-			'charset' => 'utf8',
-		),
+		'db' => require(dirname(__FILE__) . '/db.php'),
 		'log'=>array(
 			'class'=>'CLogRouter',
 			'routes'=>array(

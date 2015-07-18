@@ -2,13 +2,27 @@
 /* @var $this UserController */
 /* @var $model User */
 
-$this->menu = array(
-    array('label' => 'Редактировать', 'url' => array('update', 'id' => $model->userID)),
-);
+$this->menu = [
+    ['label' => 'Редактировать', 'url' => ['update', 'id' => $model->userID]],
+];
 
-$this->widget('zii.widgets.CDetailView', array(
+$this->breadcrumbs = [
+    'Пользователи' => ['index'],
+    $model->surname . ' ' . $model->name,
+];
+
+$this->widget('zii.widgets.CDetailView', [
     'data' => $model,
-    'attributes' => array(
+    'attributes' => [
+        [
+            'name' => 'Фото',
+            'type' => 'raw',
+            'value' => CHtml::image($model->photo(), "", ["style" => "width: 80px;"]),
+        ],
+        [
+            'name' => 'is_founder',
+            'value' => ($model->activated == 1 ? 'Да' : 'Нет'),
+        ],
         'surname',
         'name',
         'patronymic',
@@ -19,12 +33,12 @@ $this->widget('zii.widgets.CDetailView', array(
         'city',
         'email',
         'phone',
-        array(
+        [
             'name' => 'activated',
-            'value' => ($model->activated == 1 ? 'Да' : 'Нет')
-        ),
-    ),
-    'htmlOptions' => array(
-        'class' => 'table table-striped table-condensed'
-    )
-));
+            'value' => ($model->activated == 1 ? 'Да' : 'Нет'),
+        ],
+    ],
+    'htmlOptions' => [
+        'class' => 'table table-striped table-condensed',
+    ],
+]);

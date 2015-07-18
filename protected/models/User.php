@@ -1,9 +1,6 @@
 <?php
 
 /**
- * This is the model class for table "user".
- *
- * The followings are the available columns in table 'user':
  * @property integer $userID
  * @property string $surname
  * @property string $name
@@ -22,12 +19,15 @@
  * @property boolean $isAdmin
  * @property string $photo
  * @property string $description
+ * @property boolean $is_founder
+ * @property boolean $pos
  *
  */
 class User extends CActiveRecord
 {
+    public $photoFile;
+
     /**
-     * Returns the static model of the specified AR class.
      * @param string $className active record class name.
      * @return User the static model class
      */
@@ -36,49 +36,45 @@ class User extends CActiveRecord
         return parent::model($className);
     }
 
-    /**
-     * @return string the associated database table name
-     */
     public function tableName()
     {
         return 'user';
     }
 
-    /**
-     * @return array validation rules for model attributes.
-     */
     public function rules()
     {
-        // NOTE: you should only define rules for those attributes that
-        // will receive user inputs.
-        return array(
-            array('name, email, password', 'required'),
-            array('activated, index, createdOn, lastVisit', 'numerical', 'integerOnly' => true),
-            array('email', 'unique'),
-            array('isAdmin', 'boolean'),
-            array('surname, name, patronymic, email, password, address, country, phone, region, city, photo', 'length', 'max' => 255),
-            array('description', 'safe'),
-        );
+        return [
+            ['name, email, password', 'required'],
+            ['activated, index, createdOn, lastVisit, is_founder, pos', 'numerical', 'integerOnly' => true],
+            ['email', 'unique'],
+            ['isAdmin', 'boolean'],
+            [
+                'surname, name, patronymic, email, password, address, country, phone, region, city, photo',
+                'length',
+                'max' => 255,
+            ],
+            ['description', 'safe'],
+            [
+                'photoFile',
+                'file',
+                'mimeTypes' => 'image/jpeg',
+                'maxSize' => 1024 * 1024 * 2,
+                'allowEmpty' => true,
+                'tooLarge' => 'Загружаемый файл слишком большой. Максимальный размер - 2 Мб.'
+            ],
+        ];
     }
 
-    /**
-     * @return array relational rules.
-     */
     public function relations()
     {
-        // NOTE: you may need to adjust the relation name and the related
-        // class name for the relations automatically generated below.
-        return array(
-            'orders' => array(self::HAS_MANY, 'Order', 'userID'),
-        );
+        return [
+            'orders' => [self::HAS_MANY, 'Order', 'userID'],
+        ];
     }
 
-    /**
-     * @return array customized attribute labels (name=>label)
-     */
     public function attributeLabels()
     {
-        return array(
+        return [
             'userID' => 'User',
             'surname' => 'Фамилия',
             'name' => 'Имя',
@@ -96,8 +92,11 @@ class User extends CActiveRecord
             'city' => 'Город',
             'isAdmin' => 'Администратор',
             'description' => 'О себе',
-            'photo' => 'Фотография'
-        );
+            'photo' => 'Фотография',
+            'photoFile' => 'Фотография',
+            'is_founder' => 'Учредитель',
+            'pos' => 'Позиция'
+        ];
     }
 
     public function fullName()
@@ -132,8 +131,9 @@ class User extends CActiveRecord
 
     public function photo()
     {
-        if ($this->hasPhoto())
+        if($this->hasPhoto()) {
             return Yii::app()->baseUrl . '/img/user/' . $this->photo;
+        }
 
         return Yii::app()->baseUrl . '/img/user/photo_no_available.jpg';
     }
@@ -141,9 +141,33 @@ class User extends CActiveRecord
     public function hasPhoto()
     {
         $path = Yii::app()->basePath . '/../img/user/' . $this->photo;
-        if (file_exists($path) and is_file($path))
+        if(file_exists($path) and is_file($path)) {
             return true;
+        }
 
         return false;
+    }
+
+    public function beforeSave()
+    {
+        /** @var $file CUploadedFile */
+        $file = CUploadedFile::getInstance($this, 'photoFile');
+        if($file) {
+            $this->photo = md5(crypt(microtime() . $file->getName())) . ".jpg";
+            $path = Yii::app()->basePath . '/../img/user/' . $this->photo;
+            if($file->saveAs($path)) {
+                $ih = new CImageHandler();
+                $ih->load($path)
+                    ->thumb(400, 300)
+                    ->save();
+            }
+        }
+
+        return parent::beforeSave();
+    }
+
+    public function isShown()
+    {
+        return $this->hasPhoto() && $this->activated;
     }
 }
