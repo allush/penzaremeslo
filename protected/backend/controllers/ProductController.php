@@ -29,7 +29,27 @@ class ProductController extends BackendController
             ),
         );
     }
+    public function actionSetCover($pictureID, $id)
+    {
+        /** @var Picture $picture */
+        $picture = Picture::model()->findByPk($pictureID);
+        if ($picture !== null) {
 
+            Picture::model()->updateAll(
+                array('cover' => 0),
+                'productID=:productID',
+                array(':productID' => $id)
+            );
+
+            $picture->cover = 1;
+            $picture->save();
+        }
+        if (Yii::app()->request->isAjaxRequest) {
+            Yii::app()->end();
+        }
+
+        $this->redirect(array('view', 'id' => $id));
+    }
     public function actionSetWatermarkAndThumbnail()
     {
         set_time_limit(0);
