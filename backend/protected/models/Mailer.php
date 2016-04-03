@@ -56,6 +56,7 @@ class Mailer
             $mail->AddAddress($email);
 
             if (!$mail->Send()) {
+                $mail->ErrorInfo;
                 return false;
             }
         }
