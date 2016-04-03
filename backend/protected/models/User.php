@@ -23,6 +23,8 @@
  * @property boolean $hidden
  * @property integer $pos
  *
+ * @property Product[] $products
+ *
  */
 class User extends CActiveRecord
 {
@@ -69,7 +71,7 @@ class User extends CActiveRecord
     public function relations()
     {
         return [
-            'orders' => [self::HAS_MANY, 'Order', 'userID'],
+            'products' => [self::HAS_MANY, 'Product', 'userID'],
         ];
     }
 
@@ -166,6 +168,15 @@ class User extends CActiveRecord
         }
 
         return parent::beforeSave();
+    }
+
+    public function beforeDelete()
+    {
+        foreach ($this->products as $product) {
+            $product->delete();
+        }
+
+        return parent::beforeDelete();
     }
 
     public function isShown()

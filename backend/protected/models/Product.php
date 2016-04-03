@@ -1,9 +1,6 @@
 <?php
 
 /**
- * This is the model class for table "product".
- *
- * The followings are the available columns in table 'product':
  * @property integer $productID
  * @property string $name
  * @property string $createdOn
@@ -22,7 +19,6 @@
  * @property integer $views
  * @property integer $userID
  *
- * The followings are the available model relations:
  * @property Picture[] $pictures
  * @property ProductStatus $productStatus
  * @property Catalog $catalog
@@ -31,7 +27,6 @@
 class Product extends CActiveRecord
 {
     /**
-     * Returns the static model of the specified AR class.
      * @param string $className active record class name.
      * @return Product the static model class
      */
@@ -40,55 +35,45 @@ class Product extends CActiveRecord
         return parent::model($className);
     }
 
-    /**
-     * @return string the associated database table name
-     */
     public function tableName()
     {
         return 'product';
     }
 
-    /**
-     * @return array validation rules for model attributes.
-     */
     public function rules()
     {
-        // NOTE: you should only define rules for those attributes that
-        // will receive user inputs.
-        return array(
-            array('productStatusID', 'required'),
-            array('productStatusID, group, catalogID, discount, createdOn, modifiedOn, userID', 'numerical', 'integerOnly' => true),
-            array('deleted', 'boolean'),
-            array('price, existence, purchase', 'numerical'),
-            array('name, unit, productNumber', 'length', 'max' => 255),
-            array('description', 'safe'),
-            // The following rule is used by search().
-            // Please remove those attributes that should not be searched.
-            array('productID, name, createdOn, modifiedOn, description, unit, productStatusID, discount', 'safe', 'on' => 'search'),
-        );
+        return [
+            ['productStatusID', 'required'],
+            [
+                'productStatusID, group, catalogID, discount, createdOn, modifiedOn, userID',
+                'numerical',
+                'integerOnly' => true,
+            ],
+            ['deleted', 'boolean'],
+            ['price, existence, purchase', 'numerical'],
+            ['name, unit, productNumber', 'length', 'max' => 255],
+            ['description', 'safe'],
+            [
+                'productID, name, createdOn, modifiedOn, description, unit, productStatusID, discount',
+                'safe',
+                'on' => 'search',
+            ],
+        ];
     }
 
-    /**
-     * @return array relational rules.
-     */
     public function relations()
     {
-        // NOTE: you may need to adjust the relation name and the related
-        // class name for the relations automatically generated below.
-        return array(
-            'pictures' => array(self::HAS_MANY, 'Picture', 'productID'),
-            'productStatus' => array(self::BELONGS_TO, 'ProductStatus', 'productStatusID'),
-            'catalog' => array(self::BELONGS_TO, 'Catalog', 'catalogID'),
-            'user' => array(self::BELONGS_TO, 'User', 'userID'),
-        );
+        return [
+            'pictures' => [self::HAS_MANY, 'Picture', 'productID'],
+            'productStatus' => [self::BELONGS_TO, 'ProductStatus', 'productStatusID'],
+            'catalog' => [self::BELONGS_TO, 'Catalog', 'catalogID'],
+            'user' => [self::BELONGS_TO, 'User', 'userID'],
+        ];
     }
 
-    /**
-     * @return array customized attribute labels (name=>label)
-     */
     public function attributeLabels()
     {
-        return array(
+        return [
             'productID' => 'ID',
             'name' => 'Название',
             'createdOn' => 'Создан',
@@ -104,19 +89,15 @@ class Product extends CActiveRecord
             'productNumber' => 'Артикул',
             'group' => 'Группа',
             'views' => 'Количество просмотров',
-            'userID' => 'Автор'
-        );
+            'userID' => 'Автор',
+        ];
     }
 
     /**
-     * Retrieves a list of models based on the current search/filter conditions.
-     * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
+     * @return CActiveDataProvider
      */
     public function search()
     {
-        // Warning: Please modify the following code to remove attributes that
-        // should not be searched.
-
         $criteria = new CDbCriteria;
 
         $criteria->compare('productID', $this->productID);
@@ -129,35 +110,36 @@ class Product extends CActiveRecord
         $criteria->compare('discount', $this->discount);
         $criteria->compare('existence', $this->existence);
 
-        return new CActiveDataProvider($this, array(
+        return new CActiveDataProvider($this, [
             'criteria' => $criteria,
-        ));
+        ]);
     }
 
     /**
      * @return Picture|null
      */
-    public function cover(){
+    public function cover()
+    {
 
         return Picture::model()->find(
             'cover=:cover AND productID=:productID',
-            array(
+            [
                 ':cover' => 1,
                 ':productID' => $this->productID,
-            )
+            ]
         );
     }
 
     /**
      * @return Picture[]|array
      */
-    public function additionalPictures(){
+    public function additionalPictures()
+    {
         return Picture::model()->findAll(
-            'cover=:cover AND productID=:productID',
-            array(
+            'cover=:cover AND productID=:productID', [
                 ':cover' => 0,
                 ':productID' => $this->productID,
-            )
+            ]
         );
     }
 
@@ -168,7 +150,7 @@ class Product extends CActiveRecord
     {
         $cover = $this->cover();
 
-        if($cover !== null){
+        if ($cover !== null) {
             return $cover->large();
         }
 
@@ -182,7 +164,7 @@ class Product extends CActiveRecord
     {
         $cover = $this->cover();
 
-        if($cover !== null){
+        if ($cover !== null) {
             return $cover->watermark();
         }
 
@@ -196,7 +178,7 @@ class Product extends CActiveRecord
     {
         $cover = $this->cover();
 
-        if($cover !== null){
+        if ($cover !== null) {
             return $cover->thumbnail();
         }
 
@@ -207,8 +189,9 @@ class Product extends CActiveRecord
     protected function beforeSave()
     {
         $time = time();
-        if ($this->isNewRecord)
+        if ($this->isNewRecord) {
             $this->createdOn = $time;
+        }
         $this->modifiedOn = $time;
 
         return parent::beforeSave();
@@ -252,5 +235,11 @@ class Product extends CActiveRecord
     public function modifiedOn()
     {
         return date('d.m.Y\<\b\r\>H:i:s', $this->modifiedOn);
+    }
+
+    public function delete()
+    {
+        $this->deleted = 1;
+        return $this->save();
     }
 }

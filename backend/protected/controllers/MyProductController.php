@@ -19,9 +19,9 @@ class MyProductController extends FrontController
     {
         $model = $this->loadModel($id);
 
-        $this->render('view', array(
-            'model' => $model
-        ));
+        $this->render('view', [
+            'model' => $model,
+        ]);
     }
 
     public function actionUpdate($id)
@@ -45,24 +45,24 @@ class MyProductController extends FrontController
 
         $criteria = new CDbCriteria();
         $criteria->addCondition('userID=:userID AND deleted=:deleted');
-        $criteria->params = array(
+        $criteria->params = [
             ':userID' => $userID,
-            ':deleted' => 0
-        );
+            ':deleted' => 0,
+        ];
 
-        $dataProvider = new CActiveDataProvider('Product', array(
+        $dataProvider = new CActiveDataProvider('Product', [
             'criteria' => $criteria,
-            'pagination' => array(
+            'pagination' => [
                 'pageSize' => 20,
-            ),
-            'sort' => array(
-                'defaultOrder' => 'createdOn DESC'
-            ),
-        ));
+            ],
+            'sort' => [
+                'defaultOrder' => 'createdOn DESC',
+            ],
+        ]);
 
-        $this->render('index', array(
+        $this->render('index', [
             'dataProvider' => $dataProvider,
-        ));
+        ]);
     }
 
     public function actionCreate()
@@ -152,10 +152,10 @@ class MyProductController extends FrontController
             /** @var Picture $anotherPicture */
             $anotherPicture = Picture::model()->find(
                 'productID=:productID AND productPictureID<>:productPictureID',
-                array(
+                [
                     ':productID' => $picture->productID,
                     ':productPictureID' => $picture->productPictureID,
-                )
+                ]
             );
             if ($anotherPicture !== null) {
                 $anotherPicture->cover = 1;
@@ -170,12 +170,9 @@ class MyProductController extends FrontController
 
     public function actionDelete($id)
     {
-        $model = $this->loadModel($id);
+        $this->loadModel($id)->delete();
 
-        $model->deleted = true;
-        $model->save();
-
-        $this->redirect(array('index'));
+            $this->redirect(['index']);
     }
 
     public function actionSetCover($pictureID, $id)
@@ -184,10 +181,10 @@ class MyProductController extends FrontController
         $picture = Picture::model()->findByPk($pictureID);
         if ($picture !== null) {
 
-           Picture::model()->updateAll(
-                array('cover' => 0),
+            Picture::model()->updateAll(
+                ['cover' => 0],
                 'productID=:productID',
-                array(':productID' => $id)
+                [':productID' => $id]
             );
 
             $picture->cover = 1;
@@ -197,7 +194,7 @@ class MyProductController extends FrontController
             Yii::app()->end();
         }
 
-        $this->redirect(array('view', 'id' => $id));
+        $this->redirect(['view', 'id' => $id]);
     }
 
     /**
@@ -211,8 +208,9 @@ class MyProductController extends FrontController
     {
         /** @var $model Product */
         $model = Product::model()->findByPk($id);
-        if ($model === null || $model->deleted)
+        if ($model === null || $model->deleted) {
             throw new CHttpException(404, 'The requested page does not exist.');
+        }
         return $model;
     }
 }
