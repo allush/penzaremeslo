@@ -1,0 +1,24 @@
+{
+  "name": "app",
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "jquery-ui": "jqueryui#^1.11.4",
+    "fancyBox": "^2.1.5",
+    "ckeditor": "#full/4.5.7",
+    "jquery.jcarousellite": "jcarousellite#^1.9.3",
+    "jquery.scrollTo": "^2.1.2",
+    "jqueryui-timepicker-addon": "jQuery-Timepicker-Addon#^1.6.1"
+  }
+}

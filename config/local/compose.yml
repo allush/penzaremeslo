@@ -1,0 +1,36 @@
+backend:
+  build: ../../backend/
+  dockerfile: ./config/local/Dockerfile
+  container_name: backend.penzaremeslo.local
+  working_dir: /app
+  entrypoint: ['./config/up.sh']
+  volumes:
+    - '../../backend:/app'
+    - '../../php/config/local/php.ini:/usr/local/etc/php/conf.d/custom.ini'
+  links:
+    - 'mysql:mysql.penzaremeslo.local'
+  env_file:
+    - ./config.env
+
+http:
+  container_name: http.penzaremeslo.local
+  image: nginx
+  ports: ['80:80']
+  links:
+    - 'backend:backend.penzaremeslo.local'
+  volumes:
+    - '../../http/config/local:/etc/nginx/conf.d'
+    - '../../backend:/app'
+
+mysql:
+  image: mysql
+  container_name: mysql.penzaremeslo.local
+  ports: ['3306:3306']
+  volumes:
+    - '../../mysql/config/local:/etc/mysql/conf.d'
+    - '../../mysql/data:/var/lib/mysql'
+  environment:
+    MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    MYSQL_USER: user
+    MYSQL_PASSWORD: password
+    MYSQL_DATABASE: database

@@ -1,3 +1,4 @@
-/index.php
-/backend.php
-/index-test.php
+/sphinx/data
+/sphinx/log
+/mysql/data
+.idea

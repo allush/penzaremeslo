@@ -1,0 +1,28 @@
+backend:
+  image: allush/yii-app
+  container_name: backend.penzaremeslo.production
+  working_dir: /app
+  environment: ['PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/app/vendor/.bin']
+  entrypoint: ['./config/up.sh']
+  volumes:
+    - '../../backend:/app'
+    - '../../php/config/production/php.ini:/usr/local/etc/php/conf.d/custom.ini'
+  external_links:
+    - 'mysql.allush.ihor.ru'
+  links:
+    - 'mail:mail.penzaremeslo.production'
+  environment:
+    MYSQL_HOST: mysql.allush.ihor.ru
+    MYSQL_USER: penzaremeslo
+    MYSQL_PASSWORD: eZlYHWwAjj27
+    MYSQL_DATABASE: penzaremeslo
+
+http:
+  container_name: http.penzaremeslo.production
+  image: nginx
+  ports: ['1081:80']
+  links:
+    - 'backend:backend.penzaremeslo.production'
+  volumes:
+    - '../../http/config/production:/etc/nginx/conf.d'
+    - '../../backend:/app'
