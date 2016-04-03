@@ -23,6 +23,6 @@ http:
     - '../../http/config/production:/etc/nginx/conf.d'
     - '../../backend:/app'
 
-mail_shtuki_production:
+mail:
   image: onesysadmin/ubuntu-postfix
   container_name: mail.penzaremeslo.production
