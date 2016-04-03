@@ -11,6 +11,8 @@ backend:
     - 'mysql:mysql.penzaremeslo.local'
   env_file:
     - ./config.env
+  environment:
+    XDEBUG_CONFIG: remote_host=${XDEBUG_REMOTE_HOST}
 
 http:
   container_name: http.penzaremeslo.local
@@ -34,3 +36,8 @@ mysql:
     MYSQL_USER: user
     MYSQL_PASSWORD: password
     MYSQL_DATABASE: database
+
+mailcatcher_shtuki_local:
+  image: schickling/mailcatcher
+  container_name: mailcatcher.shtuki.local
+  ports: ['1080:1080']

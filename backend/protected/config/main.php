@@ -1,5 +1,4 @@
-<?php
-return [
+<?php return [
     'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..',
     'name' => 'Ремесленная палата Пензенской области',
     'defaultController' => 'site',
@@ -12,6 +11,9 @@ return [
         'admin',
     ],
     'components' => [
+        'assetManager' => [
+            'linkAssets' => true,
+        ],
         'db' => require(dirname(__FILE__) . '/db.php'),
         'request' => [
             'enableCsrfValidation' => true,

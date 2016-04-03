@@ -22,17 +22,23 @@ class Mailer
     {
         set_time_limit(0);
 
-        include_once Yii::app()->basePath . '/components/phpmailer/class.phpmailer.php';
-
         $mail = new PHPMailer();
+
+        $mail->Host = $_ENV['MAIL_HOST'];
+        $mail->Port = $_ENV['MAIL_PORT'];
 
         $mail->CharSet = 'utf-8';
         $mail->Subject = $subject;
         $mail->AltBody = '';
 
         $mail->IsSMTP();
-        $port = ini_get('smtp_port');
-        $mail->Port = empty($port) ? 25 : (int)$port;
+        $mail->SMTPOptions = array(
+            'ssl' => array(
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+            )
+        );
         $mail->SetLanguage('ru');
         $mail->SetFrom('info@penzaremeslo.ru', Yii::app()->name);
         $mail->MsgHTML($content);

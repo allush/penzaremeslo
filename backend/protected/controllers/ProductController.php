@@ -2,6 +2,17 @@
 
 class ProductController extends FrontController
 {
+    public static $sorting = [
+        self::SORTING_DATE_DESC => 'Новые вверху',
+        self::SORTING_DATE_ASC => 'Новые внизу',
+        self::SORTING_PRICE_DESC => 'Цена ↓',
+        self::SORTING_PRICE_ASC => 'Цена ↑',
+        self::SORTING_NAME_DESC => 'Наименование ↓',
+        self::SORTING_NAME_ASC => 'Наименование ↑',
+        self::SORTING_AUTHOR_DESC => 'Автор ↓',
+        self::SORTING_AUTHOR_ASC => 'Автор ↑',
+    ];
+
     const SORTING_PRICE_ASC = 1;
     const SORTING_PRICE_DESC = 2;
     const SORTING_NAME_ASC = 3;
@@ -38,16 +49,16 @@ class ProductController extends FrontController
     {
         $criteria = new CDbCriteria();
 
-        if ($c !== null) {
+        if($c !== null) {
             $c = (int)$c;
             /** @var Catalog $catalog */
             $catalog = Catalog::model()->findByPk($c);
-            if ($catalog !== null) {
+            if($catalog !== null) {
 
                 $this->breadcrumbs = array(
                     'Каталог' => array('index'),
                 );
-                foreach ($catalog->parents() as $parentCatalog) {
+                foreach($catalog->parents() as $parentCatalog) {
                     $this->breadcrumbs[$parentCatalog->name] = array('index', 'c' => $parentCatalog->catalogID);
                 }
                 $this->breadcrumbs[] = $catalog->name;
@@ -65,11 +76,11 @@ class ProductController extends FrontController
             $criteria->condition = 'price IS NOT NULL AND catalogID IS NOT NULL AND deleted=0 AND existence>0';
         }
 
-        if ($userID !== null) {
+        if($userID !== null) {
             $userID = (int)$userID;
             /** @var User $user */
             $user = User::model()->findByPk($userID);
-            if ($user !== null) {
+            if($user !== null) {
                 $criteria->addCondition('t.userID=:userID');
                 $criteria->params += array(
                     ':userID' => $user->userID,
@@ -77,9 +88,9 @@ class ProductController extends FrontController
             }
         }
 
-        if ($sorting !== null) {
+        if($sorting !== null) {
             $sorting = (int)$sorting;
-            switch ($sorting) {
+            switch($sorting) {
                 case self::SORTING_PRICE_DESC:
                     $criteria->order = 't.price DESC';
                     break;
@@ -148,12 +159,12 @@ class ProductController extends FrontController
             ->from('product as t')
             ->join('user', 'user.userID=t.userID')
             ->where($dataProvider->criteria->condition, $dataProvider->criteria->params)
-            ->order('name')
+            ->order('name ASC')
             ->group('user.userID')
             ->queryAll();
 
         $authors = array();
-        foreach ($users as $user) {
+        foreach($users as $user) {
             $authors[$user['userID']] = $user['name'];
         }
 
@@ -177,7 +188,7 @@ class ProductController extends FrontController
     {
         /** @var $model Product */
         $model = Product::model()->findByPk($id);
-        if ($model === null || $model->deleted)
+        if($model === null || $model->deleted)
             throw new CHttpException(404, 'The requested page does not exist.');
         return $model;
     }

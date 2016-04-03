@@ -2,6 +2,7 @@
   "minimum-stability": "stable",
   "require": {
     "yiisoft/yii": "1.1.17",
-    "moxiecode/plupload": "^2.1"
+    "moxiecode/plupload": "^2.1",
+    "phpmailer/phpmailer": "^5.2"
   }
 }

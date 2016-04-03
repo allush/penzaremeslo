@@ -19,7 +19,7 @@ $(document).ready(function () {
 });
 
 function productPageLoaded(id, data) {
-    $('html,body').scrollTo(0, $('#content'));
+    $('html,body').scrollTo($('#content'), 100);
 }
 
 function productPushState() {
