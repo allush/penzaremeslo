@@ -201,7 +201,7 @@ class Catalog extends CActiveRecord
             $catalogArr = array();
             $catalogArr['text'] = '';
             if ($mode == 'edit') {
-                $catalogArr['text'] = CHtml::link('<span class="glyphicon glyphicon-edit"></span>', array("/catalog/update", 'id' => $catalog->catalogID), array('data-toggle' => 'tooltip', 'title' => 'Редактировать'));
+                $catalogArr['text'] = CHtml::link('<span class="glyphicon glyphicon-edit"></span>', array("catalog/update", 'id' => $catalog->catalogID), array('data-toggle' => 'tooltip', 'title' => 'Редактировать'));
 
             }
             $catalogArr['text'] .= ' <span title="Количество товаров в каталоге" class="badge pull-right">' . $productCount . '</span>';

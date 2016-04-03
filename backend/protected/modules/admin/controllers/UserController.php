@@ -2,31 +2,31 @@
 
 class UserController extends BackendController
 {
-    public function filters()
+    public function actionIndex()
     {
-        return [
-            'accessControl', // perform access control for CRUD operations
-            'postOnly + delete', // we only allow deletion via POST request
-        ];
+        $dataProvider = new CActiveDataProvider('User', [
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+        ]);
+
+        $this->render('index', [
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
-    public function accessRules()
+    public function actionView($id)
     {
-        return [
-            [
-                'allow',
-                'users' => ['@'],
-            ],
-            [
-                'deny', // deny all users
-                'users' => ['*'],
-            ],
-        ];
+        $model = $this->loadModel($id);
+
+        $this->render('view', [
+            'model' => $model,
+        ]);
     }
 
     public function actionCreate()
     {
-        $model = new User;
+        $model = new User();
 
         if (isset($_POST['User'])) {
             $model->attributes = $_POST['User'];
@@ -60,36 +60,31 @@ class UserController extends BackendController
     {
         $this->loadModel($id)->delete();
 
-        // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-        if (!isset($_GET['ajax'])) {
-            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : ['admin']);
+        if (!Yii::app()->request->isAjaxRequest) {
+            $this->redirect(['index']);
         }
     }
 
-    public function actionView($id)
+    public function actionHide($id)
     {
-        $model = $this->loadModel($id);
+        $this->loadModel($id)->hide();
 
-        $this->render('view', [
-            'model' => $model,
-        ]);
+        if (!Yii::app()->request->isAjaxRequest) {
+            $this->redirect(['index']);
+        }
     }
-
-    public function actionIndex()
+    public function actionShow($id)
     {
-        $dataProvider = new CActiveDataProvider('User', [
-            'pagination' => [
-                'pageSize' => 20,
-            ],
-        ]);
-        $this->render('index', [
-            'dataProvider' => $dataProvider,
-        ]);
+        $this->loadModel($id)->show();
+
+        if (!Yii::app()->request->isAjaxRequest) {
+            $this->redirect(['index']);
+        }
     }
 
     /**
-     * @param integer $id the ID of the model to be loaded
-     * @return User the loaded model
+     * @param integer $id
+     * @return User
      * @throws CHttpException
      */
     public function loadModel($id)
@@ -98,6 +93,7 @@ class UserController extends BackendController
         if ($model === null) {
             throw new CHttpException(404, 'The requested page does not exist.');
         }
+
         return $model;
     }
 }

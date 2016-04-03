@@ -16,11 +16,12 @@
  * @property string $phone
  * @property string $region
  * @property string $city
- * @property boolean $isAdmin
  * @property string $photo
  * @property string $description
+ * @property boolean $isAdmin
  * @property boolean $is_founder
- * @property boolean $pos
+ * @property boolean $hidden
+ * @property integer $pos
  *
  */
 class User extends CActiveRecord
@@ -45,23 +46,23 @@ class User extends CActiveRecord
     {
         return [
             ['name, email, password', 'required'],
-            ['activated, index, createdOn, lastVisit, is_founder, pos', 'numerical', 'integerOnly' => true],
+            ['activated, index, createdOn, lastVisit, pos', 'numerical', 'integerOnly' => true],
             ['email', 'unique'],
-            ['isAdmin', 'boolean'],
+            ['isAdmin, hidden, is_founder', 'boolean'],
             [
                 'surname, name, patronymic, email, password, address, country, phone, region, city, photo',
                 'length',
                 'max' => 255,
             ],
-            ['description', 'safe'],
             [
                 'photoFile',
                 'file',
                 'mimeTypes' => 'image/jpeg',
                 'maxSize' => 1024 * 1024 * 2,
                 'allowEmpty' => true,
-                'tooLarge' => 'Загружаемый файл слишком большой. Максимальный размер - 2 Мб.'
+                'tooLarge' => 'Загружаемый файл слишком большой. Максимальный размер - 2 Мб.',
             ],
+            ['description', 'safe'],
         ];
     }
 
@@ -95,7 +96,8 @@ class User extends CActiveRecord
             'photo' => 'Фотография',
             'photoFile' => 'Фотография',
             'is_founder' => 'Учредитель',
-            'pos' => 'Позиция'
+            'pos' => 'Позиция',
+            'hidden' => 'Скрытый',
         ];
     }
 
@@ -131,7 +133,7 @@ class User extends CActiveRecord
 
     public function photo()
     {
-        if($this->hasPhoto()) {
+        if ($this->hasPhoto()) {
             return '/src/img/user/' . $this->photo;
         }
 
@@ -141,7 +143,7 @@ class User extends CActiveRecord
     public function hasPhoto()
     {
         $path = '/app/src/img/user/' . $this->photo;
-        if(file_exists($path) and is_file($path)) {
+        if (file_exists($path) and is_file($path)) {
             return true;
         }
 
@@ -152,10 +154,10 @@ class User extends CActiveRecord
     {
         /** @var $file CUploadedFile */
         $file = CUploadedFile::getInstance($this, 'photoFile');
-        if($file) {
+        if ($file) {
             $this->photo = md5(crypt(microtime() . $file->getName())) . ".jpg";
             $path = '/app/src/img/user/' . $this->photo;
-            if($file->saveAs($path)) {
+            if ($file->saveAs($path)) {
                 $ih = new CImageHandler();
                 $ih->load($path)
                     ->thumb(400, 300)
@@ -168,6 +170,18 @@ class User extends CActiveRecord
 
     public function isShown()
     {
-        return $this->hasPhoto() && $this->activated;
+        return $this->hasPhoto() && $this->activated && !$this->hidden;
+    }
+
+    public function hide()
+    {
+        $this->hidden = 1;
+        return $this->save();
+    }
+
+    public function show()
+    {
+        $this->hidden = 0;
+        return $this->save();
     }
 }

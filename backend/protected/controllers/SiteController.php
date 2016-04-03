@@ -46,13 +46,13 @@ class SiteController extends FrontController
         $this->layout = 'catalog';
 
         $masters = User::model()->findAll([
-            'condition' => 'activated=1',
+            'condition' => 'activated=1 and hidden=0',
             'order' => 'userID DESC',
             'limit' => 10,
         ]);
 
         $founders = User::model()->findAll([
-            'condition' => 'activated=1 AND is_founder=1 AND pos IS NOT NULL',
+            'condition' => 'activated=1 AND hidden=0 AND is_founder=1 AND pos IS NOT NULL',
             'order' => 'pos ASC',
         ]);
 
