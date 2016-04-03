@@ -9,6 +9,7 @@ backend:
     - '../../php/config/local/php.ini:/usr/local/etc/php/conf.d/custom.ini'
   links:
     - 'mysql:mysql.penzaremeslo.local'
+    - 'mailcatcher:mailcatcher.penzaremeslo.local'
   env_file:
     - ./config.env
   environment:
@@ -37,7 +38,7 @@ mysql:
     MYSQL_PASSWORD: password
     MYSQL_DATABASE: database
 
-mailcatcher_shtuki_local:
+mailcatcher:
   image: schickling/mailcatcher
-  container_name: mailcatcher.shtuki.local
+  container_name: mailcatcher.penzaremeslo.local
   ports: ['1080:1080']

@@ -55,8 +55,9 @@ class Mailer
             $email = trim($email);
             $mail->AddAddress($email);
 
-            if (!$mail->Send())
+            if (!$mail->Send()) {
                 return false;
+            }
         }
 
         return true;
