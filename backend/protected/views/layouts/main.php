@@ -193,12 +193,15 @@ $vendor = Yii::app()->assetManager->publish('/app/vendor');
 
     <div class="well">
         <footer class="row" id="footer">
-            <div class="col-md-6">
+            <div class="col-sm-4">
                 &copy; <?= date('Y'); ?> developed by <a href="http://allush.github.io">allush</a>
             </div>
 
+            <div class="col-sm-4 text-center">
+                <?= CHtml::link('Политика конфиденциальности', ['site/policy'])?>
+            </div>
 
-            <div class="col-md-6 text-right">
+            <div class="col-md-4 text-right">
 
                 <!-- Yandex.Metrika informer -->
                 <a href="https://metrika.yandex.ru/stat/?id=29371565&amp;from=informer"

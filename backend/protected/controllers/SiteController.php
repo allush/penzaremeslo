@@ -193,4 +193,9 @@ class SiteController extends FrontController
         Yii::app()->user->logout();
         $this->redirect(Yii::app()->homeUrl);
     }
+
+    public function actionPolicy()
+    {
+        $this->render('policy');
+    }
 }

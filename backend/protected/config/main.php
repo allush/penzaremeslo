@@ -32,6 +32,7 @@
                 '/about' => '/site/about',
                 '/remind' => '/site/remind',
                 '/contacts' => '/site/contacts',
+                '/policy' => '/site/policy',
                 '<controller:\w+>/<id:\d+>' => '<controller>/view',
                 '<controller:\w+>/<news:\w+>/<id:\d+>' => '<controller>/<news>',
                 '<controller:\w+>/<news:\w+>' => '<controller>/<news>',
